@@ -62,47 +62,107 @@
 </header>
 
 <div class="container" id="app"></div>
+function showItinerary(){
+  app.innerHTML = `
+    <div class="card">
+      <h2>Itinerary（行程表）</h2>
+      <p style="color:#666;margin-top:6px;">${trips[0].city} · ${trips[0].days} days</p>
+      <div style="margin-top:14px;">
+        ${itinerary.map(d => `
+          <div class="card" style="margin:12px 0;">
+            <h3 style="margin:0 0 6px;">Day ${d.day} (${d.date}) · ${d.city}${d.move ? ` <span style="color:#666;font-weight:400;">｜${d.move}</span>` : ""}</h3>
+            ${d.items.map(i => `
+              <div style="display:grid;grid-template-columns:70px 1fr;gap:10px;padding:6px 0;border-top:1px solid #eee;">
+                <div style="color:#666;font-size:13px;">${i.period}</div>
+                <div>
+                  <div>${i.zh}｜${i.en}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
 
 <script>
 /** --------------------------
  *  Data (你可以在這裡改成你的行程)
  * -------------------------- */
 const trips = [
-const trips = [
-  { id:"italy-2026", name:"Italy Trip", city:"Rome → Florence → Venice → Rome", days:7 }
+  { id:"italy", name:"Italy Trip", city:"Rome → Florence → Venice → Rome", days:7 }
 ];
-
 
 // places: 你可以繼續加更多
 const places = [
-  { id:"colosseum", name:"Colosseum", type:"spot", area:"Rome", tags:["history","must-go"] },
-  { id:"forum", name:"Roman Forum", type:"spot", area:"Rome", tags:["history"] },
-  { id:"trevi", name:"Trevi Fountain", type:"spot", area:"Rome", tags:["photo","night"] },
-  { id:"pizza", name:"Pizza Restaurant", type:"food", area:"Trastevere", tags:["pizza","casual"] },
-  { id:"gelato", name:"Gelato Shop", type:"dessert", area:"Rome", tags:["dessert"] },
-  { id:"coffee", name:"Coffee Bar", type:"cafe", area:"Monti", tags:["coffee","breakfast"] },
+const itinerary = [
+  {
+    day: 1, date: "4/5", city: "Florence", move: "Rome → Florence",
+    items: [
+      { period:"上午", zh:"羅馬搭高鐵前往佛羅倫斯", en:"Train from Rome to Florence" },
+      { period:"下午", zh:"佛羅倫斯主教座堂（外觀）", en:"Florence Cathedral (Duomo, exterior)" },
+      { period:"下午", zh:"主教座堂廣場", en:"Piazza del Duomo" },
+      { period:"傍晚", zh:"領主廣場", en:"Piazza della Signoria" },
+      { period:"晚上", zh:"米開朗基羅廣場看夕陽", en:"Piazzale Michelangelo viewpoint" },
+    ]
+  },
+  {
+    day: 2, date: "4/6", city: "Florence",
+    items: [
+      { period:"上午", zh:"聖母百花大教堂參觀", en:"Florence Cathedral (Duomo, exterior)" },
+      { period:"下午", zh:"比薩斜塔", en:"Pisa" },
+      { period:"傍晚", zh:"老橋夜景", en:"Ponte Vecchio" },
+    ]
+  },
+  {
+    day: 3, date: "4/7", city: "Venice", move:"Florence → Venice",
+    items: [
+      { period:"上午", zh:"佛羅倫斯搭高鐵前往威尼斯", en:"Train from Florence to Venice" },
+      { period:"下午", zh:"聖馬可廣場", en:"St Mark's Square" },
+      { period:"傍晚", zh:"聖馬可大教堂（外觀）", en:"St Mark's Basilica (exterior)" },
+      { period:"晚上", zh:"總督宮（外觀）", en:"Doge's Palace (exterior)" },
+    ]
+  },
+  {
+    day: 4, date: "4/8", city: "Venice",
+    items: [
+      { period:"上午", zh:"里亞托橋", en:"Rialto Bridge" },
+      { period:"上午", zh:"里亞托市場", en:"Rialto Market" },
+      { period:"下午", zh:"搭上浪漫的貢多拉", en:"Gondola Time" },
+      { period:"傍晚", zh:"學院橋夕景", en:"Accademia Bridge" },
+    ]
+  },
+  {
+    day: 5, date: "4/9", city: "Rome", move:"Venice → Rome",
+    items: [
+      { period:"上午", zh:"威尼斯搭高鐵回羅馬", en:"Train from Venice to Rome" },
+      { period:"下午", zh:"梵蒂岡城國散步", en:"Vatican City walk" },
+      { period:"下午", zh:"聖彼得廣場", en:"St. Peter’s Square" },
+      { period:"傍晚", zh:"聖彼得大教堂（外觀）", en:"St. Peter’s Basilica (exterior)" },
+      { period:"晚上", zh:"聖天使堡（外觀散步）", en:"Castel Sant’Angelo (exterior)" },
+    ]
+  },
+  {
+    day: 6, date: "4/10", city: "Rome",
+    items: [
+      { period:"上午", zh:"羅馬競技場", en:"Colosseum" },
+      { period:"上午", zh:"古羅馬廣場（外圍散步）", en:"Roman Forum (outside area walk)" },
+      { period:"中午", zh:"真理之口拍照", en:"Bocca della Verità" },
+      { period:"傍晚", zh:"威尼斯廣場", en:"Piazza Venezia" },
+    ]
+  },
+  {
+    day: 7, date: "4/11", city: "Rome",
+    items: [
+      { period:"上午", zh:"萬神殿（外觀）", en:"Pantheon (exterior)" },
+      { period:"中午", zh:"納沃納廣場", en:"Piazza Navona" },
+      { period:"下午", zh:"特雷維噴泉", en:"Trevi Fountain" },
+      { period:"傍晚", zh:"西班牙台階", en:"Spanish Steps" },
+    ]
+  }
 ];
 
-// itinerary: Day1~Day7（先給你示範 3 天，其他天你可以照格式補）
-const itinerary = {
-  "italy-2026": [
-    { day:1, title:"Ancient Rome", items:[
-      { time:"09:00", placeId:"colosseum", note:"建議先預約/早點去" },
-      { time:"11:30", placeId:"forum", note:"走一圈 + 拍照" },
-      { time:"13:30", placeId:"pizza", note:"簡單午餐" },
-      { time:"17:30", placeId:"trevi", note:"傍晚人比較多" },
-    ]},
-    { day:2, title:"City Walk", items:[
-      { time:"09:30", placeId:"coffee", note:"早餐咖啡" },
-      { time:"12:00", placeId:"trevi", note:"白天角度" },
-      { time:"15:30", placeId:"gelato", note:"下午點心" },
-    ]},
-    { day:3, title:"Free & Flexible", items:[
-      { time:"10:00", placeId:"coffee", note:"慢慢開始" },
-      { time:"14:00", placeId:"pizza", note:"想吃再去" },
-    ]},
-  ]
-};
 
 const placeById = Object.fromEntries(places.map(p=>[p.id,p]));
 
