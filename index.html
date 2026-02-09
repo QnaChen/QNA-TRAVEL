@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>QNA Travel</title>
+  <style>
+    body{margin:0;font-family:sans-serif;background:#f7f7f7}
+    header{background:#fff;border-bottom:1px solid #ddd;padding:12px 20px}
+    nav a{margin-right:16px;text-decoration:none;color:#333}
+    .container{max-width:900px;margin:24px auto;padding:0 16px}
+    .card{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid #ddd}
+    button{background:#111;color:#fff;border:none;border-radius:8px;padding:6px 12px}
+  </style>
+</head>
+<body>
+
+<header>
+  <strong>QNA Travel ✈️</strong>
+  <nav>
+    <a href="#" onclick="showHome()">Home</a>
+    <a href="#" onclick="showTrips()">Trips</a>
+    <a href="#" onclick="showExplore()">Explore</a>
+  </nav>
+</header>
+
+<div class="container" id="app"></div>
+
+<script>
+const trips = [
+  { id:"italy", name:"Italy Trip", city:"Rome", days:7 }
+];
+
+const places = [
+  { id:"s1", name:"Colosseum", type:"Spot", area:"Rome" },
+  { id:"f1", name:"Pizza Restaurant", type:"Food", area:"Trastevere" },
+  { id:"c1", name:"Coffee Bar", type:"Cafe", area:"Rome" }
+];
+
+function showHome(){
+  const t = trips[0];
+  app.innerHTML = `
+    <div class="card">
+      <h2>Next Trip</h2>
+      <p>${t.name}</p>
+      <p>${t.city} · ${t.days} days</p>
+    </div>
+  `;
+}
+
+function showTrips(){
+  app.innerHTML = trips.map(t=>`
+    <div class="card">
+      <h3>${t.name}</h3>
+      <p>${t.city} · ${t.days} days</p>
+    </div>
+  `).join("");
+}
+
+function showExplore(){
+  app.innerHTML = places.map(p=>`
+    <div class="card">
+      <h3>${p.name}</h3>
+      <p>${p.type} · ${p.area}</p>
+    </div>
+  `).join("");
+}
+
+showHome();
+</script>
+
+</body>
+</html>
+
