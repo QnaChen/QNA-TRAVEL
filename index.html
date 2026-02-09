@@ -506,7 +506,13 @@ function render(){
   if(r === "trips") return renderTrips();
   location.hash = "#home";
 }
+function render(){
+  const r = route();
+  setActive(r);
+  if(r === "home") return renderHome();
+  if(r === "trips") return renderTrips();
+  if(r === "itinerary") return renderItinerary();
+  if(r === "explore") return renderExplore();
+  location.hash = "#home";
+}
 render();
-</script>
-</body>
-</html>
