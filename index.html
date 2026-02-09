@@ -323,69 +323,76 @@ function renderItinerary(){
   `;
 }
 
-function renderExplore(){
-  app.innerHTML = `
-    <div class="card">
-      <div class="row" style="justify-content:space-between;align-items:flex-end;">
-        <div>
-          <div class="muted">Explore</div>
-          <h1 class="title">推薦景點 / 美食</h1>
-          <div class="muted">搜尋 + 收藏 ⭐</div>
-        </div>
-        <div class="right">
-          <input id="q" placeholder="Search name / area / tag..." />
-          <button class="btn secondary" onclick="applyFilter()">Search</button>
-        </div>
-      </div>
-      <div class="hr"></div>
-      <div class="list" id="placeList"></div>
-      <div class="footerNote">Tip：你可以把 type 改成 food/cafe/dessert 之後做分類。</div>
-    </div>
-  `;
-  applyFilter();
-}
-
 function applyFilter(){
   const q = (document.getElementById("q")?.value || "").toLowerCase().trim();
+  const type = window.__type || "all";
+
+  // 先依條件過濾
   const filtered = places.filter(p=>{
-    if(!q) return true;
-    const hay = (p.name+" "+p.area+" "+(p.tags||[]).join(" ")).toLowerCase();
-    return hay.includes(q);
+    const matchType = (type==="all") ? true : p.type === type;
+    const hay = (p.name+" "+(p.country||"")+" "+(p.area||"")+" "+(p.tags||[]).join(" ")).toLowerCase();
+    const matchQ = q ? hay.includes(q) : true;
+    return matchType && matchQ;
   });
 
   const list = document.getElementById("placeList");
-  if(!list) return;
+  if(!filtered.length){
+    list.innerHTML = `<div class="muted">沒有符合的結果，換個關鍵字或調整類型篩選試試。</div>`;
+    return;
+  }
 
-  list.innerHTML = filtered.map(p=>`
-    <div class="item">
-      <div>
-        <h3>${p.name}</h3>
-        <p>${p.area} · ${labelType(p.type)} ${p.tags?.length? "· #"+p.tags.join(" #"):""}</p>
+  // 國家排序（可自己調整）
+  const countryOrder = ["Italy"];
+  const countries = [...new Set(filtered.map(p=>p.country || "Other"))]
+    .sort((a,b)=> (countryOrder.indexOf(a) - countryOrder.indexOf(b)) || a.localeCompare(b));
+
+  // 依 國家→城市 分組
+  const byCountry = Object.groupBy ? Object.groupBy(filtered, p=>p.country || "Other")
+                                   : groupBy(filtered, p=>p.country || "Other");
+
+  list.innerHTML = countries.map(country=>{
+    const itemsInCountry = byCountry[country] || [];
+    const areas = [...new Set(itemsInCountry.map(p=>p.area || "Other"))].sort();
+
+    const byArea = Object.groupBy ? Object.groupBy(itemsInCountry, p=>p.area || "Other")
+                                  : groupBy(itemsInCountry, p=>p.area || "Other");
+
+    return `
+      <div style="margin:10px 0 18px;">
+        <div style="font-weight:800;font-size:18px;margin:10px 0;">${country}</div>
+
+        ${areas.map(area=>{
+          const itemsInArea = byArea[area] || [];
+          return `
+            <div class="card" style="margin:10px 0;">
+              <div style="font-weight:700;font-size:16px;margin-bottom:8px;">${area}</div>
+              <div class="list">
+                ${itemsInArea.map(p=>`
+                  <div class="item">
+                    <div>
+                      <h3>${p.name}</h3>
+                      <p>${labelType(p.type)}${p.tags?.length ? ` · #${p.tags.join(" #")}` : ""}</p>
+                    </div>
+                    <div class="right">
+                      <span class="star ${favs.has(p.id) ? "on" : ""}" onclick="star('${p.id}')"
+                        title="${favs.has(p.id) ? "取消收藏" : "加入收藏"}">${favs.has(p.id) ? "★" : "☆"}</span>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          `;
+        }).join("")}
       </div>
-      <div class="right">
-        <span class="star ${favs.has(p.id) ? "on" : ""}" onclick="star('${p.id}')"
-          title="${favs.has(p.id) ? "取消收藏" : "加入收藏"}">${favs.has(p.id) ? "★" : "☆"}</span>
-      </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
-function labelType(t){
-  const map = { spot:"景點", food:"美食", cafe:"咖啡", dessert:"甜點" };
-  return map[t] || t;
+/* 兼容舊瀏覽器：如果沒有 Object.groupBy 就用這個 */
+function groupBy(arr, keyFn){
+  return arr.reduce((acc, x)=>{
+    const k = keyFn(x);
+    (acc[k] ||= []).push(x);
+    return acc;
+  }, {});
 }
-
-function render(){
-  const r = route();
-  setActive(r);
-  if(r === "home") return renderHome();
-  if(r === "itinerary") return renderItinerary();
-  if(r === "explore") return renderExplore();
-  if(r === "trips") return renderTrips();
-  location.hash = "#home";
-}
-
-render();
-</script>
-</body>
-</html>
