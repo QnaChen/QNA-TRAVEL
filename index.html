@@ -52,11 +52,12 @@
   <div class="topbar">
     <div class="brand">QNA Travel ✈️</div>
     <nav id="nav">
-      <a href="#home" data-route="home" class="active">Home</a>
-      <a href="#itinerary" data-route="itinerary">Itinerary</a>
-      <a href="#trips" data-route="trips">Trips</a>
-      <a href="#explore" data-route="explore">Explore</a>
-    </nav>
+<nav>
+  <a href="#" onclick="showHome()">Home</a>
+  <a href="#" onclick="showItinerary()">Itinerary</a>
+  <a href="#" onclick="showTrips()">Trips</a>
+  <a href="#" onclick="showExplore()">Explore</a>
+</nav>
   </div>
 </header>
 
@@ -67,8 +68,10 @@
  *  Data (你可以在這裡改成你的行程)
  * -------------------------- */
 const trips = [
-  { id:"italy-2026", name:"Italy Trip", city:"Rome", days:7, date:"2026/04" }
+const trips = [
+  { id:"italy-2026", name:"Italy Trip", city:"Rome → Florence → Venice → Rome", days:7 }
 ];
+
 
 // places: 你可以繼續加更多
 const places = [
