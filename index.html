@@ -51,12 +51,11 @@
 <body>
 <header>
   <div class="topbar">
-    <div class="brand">QNA Travel ✈️</div>
+    <div class="brand">QNA & Peter Travel ✈️</div>
     <nav id="nav">
       <a href="#home" data-route="home" class="active">Home</a>
       <a href="#itinerary" data-route="itinerary">Itinerary</a>
-      <a href="#explore" data-route="explore">Explore</a>
-      <a href="#trips" data-route="trips">Trips</a>
+      <a href="#explore" data-route="explore">Explore</a
     </nav>
   </div>
 </header>
@@ -73,80 +72,107 @@ const trips = [
   { id:"italy-2026", name:"Italy Trip", city:"Rome → Florence → Venice → Rome", days:7, date:"4/5–4/11" }
 ];
 
-// Explore 用的清單（你之後可以繼續加）
-const places = [
+// ✅ 更好讀：國家 → 城市 → 類型（spot / food / cafe / dessert）
+const PLACE_DB = {
+  Italy: {
+    Rome: {
+      spot: [
+        { id:"it-rome-colosseum", name:"羅馬競技場 Colosseum", tags:["必去","古蹟"] },
+        { id:"it-rome-forum", name:"古羅馬廣場 Roman Forum", tags:["古蹟","歷史"] },
+        { id:"it-rome-pantheon", name:"萬神殿 Pantheon（外觀）", tags:["建築","市中心"] },
+        { id:"it-rome-trevi", name:"特雷維噴泉 Trevi Fountain", tags:["必去","拍照"] },
+        { id:"it-rome-spanish", name:"西班牙台階 Spanish Steps", tags:["逛街","拍照"] },
+        { id:"it-rome-navona", name:"納沃納廣場 Piazza Navona", tags:["廣場","散步"] },
+        { id:"it-rome-vatican", name:"梵蒂岡聖彼得廣場 St. Peter’s Square", tags:["宗教","地標"] },
+      ],
+      food: [
+        { id:"it-rome-armando", name:"Armando al Pantheon", tags:["傳統料理","高評價"] },
+        { id:"it-rome-daenzo", name:"Da Enzo al 29", tags:["在地人氣","排隊店"] },
+        { id:"it-rome-roscioli", name:"Roscioli Salumeria con Cucina", tags:["義大利麵","熟食"] },
+        { id:"it-rome-aimarmi", name:"Pizzeria Ai Marmi", tags:["披薩","平價"] },
+      ],
+      cafe: [
+        { id:"it-rome-greco", name:"Antico Caffè Greco", tags:["百年咖啡","經典"] },
+        { id:"it-rome-tazza", name:"Tazza d’Oro", tags:["精品咖啡","萬神殿附近"] },
+        { id:"it-rome-eustachio", name:"Sant’Eustachio Il Caffè", tags:["人氣咖啡"] },
+      ],
+      dessert: [
+        { id:"it-rome-giolitti", name:"Giolitti Gelato", tags:["冰淇淋","老店"] },
+        { id:"it-rome-teatro", name:"Gelateria del Teatro", tags:["冰淇淋","高評價"] },
+      ],
+    },
 
-/* ======================
-   Italy｜Rome 羅馬
-====================== */
+    Florence: {
+      spot: [
+        { id:"it-flo-duomo", name:"聖母百花大教堂 Florence Cathedral", tags:["必去","地標"] },
+        { id:"it-flo-duomo-square", name:"主教座堂廣場 Piazza del Duomo", tags:["市中心","散步"] },
+        { id:"it-flo-signoria", name:"領主廣場 Piazza della Signoria", tags:["雕塑","廣場"] },
+        { id:"it-flo-vecchio", name:"老橋 Ponte Vecchio", tags:["夜景","拍照"] },
+        { id:"it-flo-michelangelo", name:"米開朗基羅廣場 Piazzale Michelangelo", tags:["夕陽","展望台"] },
+        { id:"it-flo-mercato", name:"中央市場 Mercato Centrale", tags:["美食","市集"] },
+      ],
+      food: [
+        { id:"it-flo-zaza", name:"Trattoria Zà Zà", tags:["托斯卡尼料理","人氣"] },
+        { id:"it-flo-bucamario", name:"Buca Mario", tags:["丁骨牛排","老店"] },
+        { id:"it-flo-4leoni", name:"Trattoria 4 Leoni", tags:["松露義大利麵"] },
+        { id:"it-flo-santospirito", name:"Osteria Santo Spirito", tags:["在地餐館"] },
+      ],
+      cafe: [
+        { id:"it-flo-gilli", name:"Caffè Gilli", tags:["百年咖啡館"] },
+        { id:"it-flo-ditta", name:"Ditta Artigianale", tags:["精品咖啡"] },
+        { id:"it-flo-faro", name:"Faro – Caffè Specialty", tags:["手沖咖啡"] },
+      ],
+      dessert: [
+        { id:"it-flo-carraia", name:"La Carraia Gelato", tags:["冰淇淋","高評價"] },
+        { id:"it-flo-percheno", name:"Perché No! Gelato", tags:["老字號"] },
+      ],
+    },
 
-{ id:"it-rome-colosseum", name:"羅馬競技場 Colosseum", country:"Italy", area:"Rome", type:"spot", tags:["必去","古蹟"] },
-{ id:"it-rome-forum", name:"古羅馬廣場 Roman Forum", country:"Italy", area:"Rome", type:"spot", tags:["古蹟","歷史"] },
-{ id:"it-rome-pantheon", name:"萬神殿 Pantheon（外觀）", country:"Italy", area:"Rome", type:"spot", tags:["建築","市中心"] },
-{ id:"it-rome-trevi", name:"特雷維噴泉 Trevi Fountain", country:"Italy", area:"Rome", type:"spot", tags:["必去","拍照"] },
-{ id:"it-rome-spanish", name:"西班牙台階 Spanish Steps", country:"Italy", area:"Rome", type:"spot", tags:["逛街","拍照"] },
-{ id:"it-rome-navona", name:"納沃納廣場 Piazza Navona", country:"Italy", area:"Rome", type:"spot", tags:["廣場","散步"] },
-{ id:"it-rome-vatican", name:"梵蒂岡聖彼得廣場 St. Peter’s Square", country:"Italy", area:"Rome", type:"spot", tags:["宗教","地標"] },
+    Venice: {
+      spot: [
+        { id:"it-ven-stmark", name:"聖馬可廣場 St Mark’s Square", tags:["必去","地標"] },
+        { id:"it-ven-basilica", name:"聖馬可大教堂 St Mark’s Basilica", tags:["宗教","外觀"] },
+        { id:"it-ven-doge", name:"總督宮 Doge’s Palace", tags:["歷史","外觀"] },
+        { id:"it-ven-rialto", name:"里亞托橋 Rialto Bridge", tags:["拍照","運河"] },
+        { id:"it-ven-burano", name:"布拉諾彩色島 Burano", tags:["彩色小島","拍照"] },
+        { id:"it-ven-accademia", name:"學院橋 Accademia Bridge", tags:["夕陽","橋"] },
+      ],
+      food: [
+        { id:"it-ven-carampane", name:"Antiche Carampane", tags:["海鮮","高評價"] },
+        { id:"it-ven-daivo", name:"Da Ivo", tags:["傳統料理"] },
+        { id:"it-ven-madonna", name:"Trattoria Alla Madonna", tags:["老字號"] },
+        { id:"it-ven-testiere", name:"Osteria alle Testiere", tags:["小而精緻","需訂位"] },
+      ],
+      cafe: [
+        { id:"it-ven-florian", name:"Caffè Florian", tags:["百年咖啡館","聖馬可廣場"] },
+        { id:"it-ven-cannaregio", name:"Torrefazione Cannaregio", tags:["咖啡","在地"] },
+        { id:"it-ven-sullaluna", name:"Sullaluna", tags:["書店咖啡"] },
+      ],
+      dessert: [
+        { id:"it-ven-nico", name:"Gelateria Nico", tags:["冰淇淋","河岸"] },
+        { id:"it-ven-natura", name:"Gelato di Natura", tags:["手工冰淇淋"] },
+      ],
+    },
+  },
+};
 
-{ id:"it-rome-armando", name:"Armando al Pantheon", country:"Italy", area:"Rome", type:"food", tags:["傳統料理","高評價"] },
-{ id:"it-rome-daenzo", name:"Da Enzo al 29", country:"Italy", area:"Rome", type:"food", tags:["在地人氣","排隊店"] },
-{ id:"it-rome-roscioli", name:"Roscioli Salumeria con Cucina", country:"Italy", area:"Rome", type:"food", tags:["義大利麵","熟食"] },
-{ id:"it-rome-aimarmi", name:"Pizzeria Ai Marmi", country:"Italy", area:"Rome", type:"food", tags:["披薩","平價"] },
+// ✅ 轉回你原本用的 places 陣列（完全相容既有程式）
+function flattenPlaces(db){
+  const out = [];
+  for(const [country, cities] of Object.entries(db)){
+    for(const [area, types] of Object.entries(cities)){
+      for(const [type, items] of Object.entries(types)){
+        for(const item of items){
+          out.push({ ...item, country, area, type });
+        }
+      }
+    }
+  }
+  return out;
+}
 
-{ id:"it-rome-greco", name:"Antico Caffè Greco", country:"Italy", area:"Rome", type:"cafe", tags:["百年咖啡","經典"] },
-{ id:"it-rome-tazza", name:"Tazza d’Oro", country:"Italy", area:"Rome", type:"cafe", tags:["精品咖啡","萬神殿附近"] },
-{ id:"it-rome-eustachio", name:"Sant’Eustachio Il Caffè", country:"Italy", area:"Rome", type:"cafe", tags:["人氣咖啡"] },
+const places = flattenPlaces(PLACE_DB);
 
-{ id:"it-rome-giolitti", name:"Giolitti Gelato", country:"Italy", area:"Rome", type:"dessert", tags:["冰淇淋","老店"] },
-{ id:"it-rome-teatro", name:"Gelateria del Teatro", country:"Italy", area:"Rome", type:"dessert", tags:["冰淇淋","高評價"] },
-
-/* ======================
-   Italy｜Florence 佛羅倫斯
-====================== */
-
-{ id:"it-flo-duomo", name:"聖母百花大教堂 Florence Cathedral", country:"Italy", area:"Florence", type:"spot", tags:["必去","地標"] },
-{ id:"it-flo-duomo-square", name:"主教座堂廣場 Piazza del Duomo", country:"Italy", area:"Florence", type:"spot", tags:["市中心","散步"] },
-{ id:"it-flo-signoria", name:"領主廣場 Piazza della Signoria", country:"Italy", area:"Florence", type:"spot", tags:["雕塑","廣場"] },
-{ id:"it-flo-vecchio", name:"老橋 Ponte Vecchio", country:"Italy", area:"Florence", type:"spot", tags:["夜景","拍照"] },
-{ id:"it-flo-michelangelo", name:"米開朗基羅廣場 Piazzale Michelangelo", country:"Italy", area:"Florence", type:"spot", tags:["夕陽","展望台"] },
-{ id:"it-flo-mercato", name:"中央市場 Mercato Centrale", country:"Italy", area:"Florence", type:"spot", tags:["美食","市集"] },
-
-{ id:"it-flo-zaza", name:"Trattoria Zà Zà", country:"Italy", area:"Florence", type:"food", tags:["托斯卡尼料理","人氣"] },
-{ id:"it-flo-bucamario", name:"Buca Mario", country:"Italy", area:"Florence", type:"food", tags:["丁骨牛排","老店"] },
-{ id:"it-flo-4leoni", name:"Trattoria 4 Leoni", country:"Italy", area:"Florence", type:"food", tags:["松露義大利麵"] },
-{ id:"it-flo-santospirito", name:"Osteria Santo Spirito", country:"Italy", area:"Florence", type:"food", tags:["在地餐館"] },
-
-{ id:"it-flo-gilli", name:"Caffè Gilli", country:"Italy", area:"Florence", type:"cafe", tags:["百年咖啡館"] },
-{ id:"it-flo-ditta", name:"Ditta Artigianale", country:"Italy", area:"Florence", type:"cafe", tags:["精品咖啡"] },
-{ id:"it-flo-faro", name:"Faro – Caffè Specialty", country:"Italy", area:"Florence", type:"cafe", tags:["手沖咖啡"] },
-
-{ id:"it-flo-carraia", name:"La Carraia Gelato", country:"Italy", area:"Florence", type:"dessert", tags:["冰淇淋","高評價"] },
-{ id:"it-flo-percheno", name:"Perché No! Gelato", country:"Italy", area:"Florence", type:"dessert", tags:["老字號"] },
-
-/* ======================
-   Italy｜Venice 威尼斯
-====================== */
-
-{ id:"it-ven-stmark", name:"聖馬可廣場 St Mark’s Square", country:"Italy", area:"Venice", type:"spot", tags:["必去","地標"] },
-{ id:"it-ven-basilica", name:"聖馬可大教堂 St Mark’s Basilica", country:"Italy", area:"Venice", type:"spot", tags:["宗教","外觀"] },
-{ id:"it-ven-doge", name:"總督宮 Doge’s Palace", country:"Italy", area:"Venice", type:"spot", tags:["歷史","外觀"] },
-{ id:"it-ven-rialto", name:"里亞托橋 Rialto Bridge", country:"Italy", area:"Venice", type:"spot", tags:["拍照","運河"] },
-{ id:"it-ven-burano", name:"布拉諾彩色島 Burano", country:"Italy", area:"Venice", type:"spot", tags:["彩色小島","拍照"] },
-{ id:"it-ven-accademia", name:"學院橋 Accademia Bridge", country:"Italy", area:"Venice", type:"spot", tags:["夕陽","橋"] },
-
-{ id:"it-ven-carampane", name:"Antiche Carampane", country:"Italy", area:"Venice", type:"food", tags:["海鮮","高評價"] },
-{ id:"it-ven-daivo", name:"Da Ivo", country:"Italy", area:"Venice", type:"food", tags:["傳統料理"] },
-{ id:"it-ven-madonna", name:"Trattoria Alla Madonna", country:"Italy", area:"Venice", type:"food", tags:["老字號"] },
-{ id:"it-ven-testiere", name:"Osteria alle Testiere", country:"Italy", area:"Venice", type:"food", tags:["小而精緻","需訂位"] },
-
-{ id:"it-ven-florian", name:"Caffè Florian", country:"Italy", area:"Venice", type:"cafe", tags:["百年咖啡館","聖馬可廣場"] },
-{ id:"it-ven-cannaregio", name:"Torrefazione Cannaregio", country:"Italy", area:"Venice", type:"cafe", tags:["咖啡","在地"] },
-{ id:"it-ven-sullaluna", name:"Sullaluna", country:"Italy", area:"Venice", type:"cafe", tags:["書店咖啡"] },
-
-{ id:"it-ven-nico", name:"Gelateria Nico", country:"Italy", area:"Venice", type:"dessert", tags:["冰淇淋","河岸"] },
-{ id:"it-ven-natura", name:"Gelato di Natura", country:"Italy", area:"Venice", type:"dessert", tags:["手工冰淇淋"] }
-
-];
 
 
 const itinerary = [
@@ -388,6 +414,10 @@ function applyFilter(){
   }).join("");
 }
 
+  function typeEmoji(t){
+  const map = { spot:"📍", food:"🍽️", cafe:"☕", dessert:"🍰" };
+  return map[t] || "•";
+}
 /* 兼容舊瀏覽器：如果沒有 Object.groupBy 就用這個 */
 function groupBy(arr, keyFn){
   return arr.reduce((acc, x)=>{
