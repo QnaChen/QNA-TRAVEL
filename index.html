@@ -28,9 +28,9 @@
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:var(--brandText);border:none;border-radius:10px;padding:9px 12px;font-size:14px;cursor:pointer}
     .btn.secondary{background:#fff;color:#111;border:1px solid var(--border)}
-    input, select{border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:14px;background:#fff;outline:none}
-    input:focus,select:focus{border-color:#aaa}
-    .list{display:flex;flex-direction:column;gap:10px}
+    input{border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:14px;background:#fff;outline:none}
+    input:focus{border-color:#aaa}
+    .list{display:flex;flex-direction:column}
     .item{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #eee}
     .item:first-child{border-top:none}
     .item h3{margin:0;font-size:16px}
@@ -49,10 +49,29 @@
     .slot:first-of-type{border-top:none}
 
     .sectionTitle{font-weight:900;font-size:18px;margin:6px 0 10px}
-    .subTitle{font-weight:800;font-size:16px;margin:0 0 10px}
+    .subTitle{font-weight:800;font-size:16px;margin:0}
     .chipbar{display:flex;gap:8px;flex-wrap:wrap}
     .chip{border:1px solid var(--border);background:#fff;border-radius:999px;padding:6px 10px;font-size:13px;cursor:pointer}
     .chip.active{border-color:#111;background:#111;color:#fff}
+
+    /* Flight card */
+    .flightCard{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px 16px;
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+    }
+    .flightIcon{
+      width:40px;height:40px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      background:#111;color:#fff;font-size:20px;flex:0 0 auto;
+    }
+    .flightTitle{font-weight:900;margin:0 0 6px}
+    .flightLine{margin:0;color:#222;font-size:14px;line-height:1.55}
+    .flightLine span{color:var(--muted)}
   </style>
 </head>
 
@@ -99,8 +118,13 @@ function typeEmoji(t){
  * Data
  * -------------------------- */
 const trips = [
-  { id:"italy-2026", name:"Italy Trip", city:Florence🎇  Venice🍾  Rome🍕", date:"4/4–4/12" }
+  { id:"italy-2026", name:"Italy Trip", city:"Florence🎇  Venice🍾  Rome🍕", days:7, date:"4/4–4/12" }
 ];
+
+const flightInfo = {
+  outbound: { emoji:"🛫", text:"CI75 4/4 23:45 (TPE T1) → 4/5 07:55 (FCO T3)" },
+  inbound:  { emoji:"🛬", text:"CI76 4/12 11:00 (FCO T3) → 4/13 05:40 (TPE T1)" }
+};
 
 // 國家 → 城市 → 類型（spot / food / cafe / dessert）
 const PLACE_DB = {
@@ -202,11 +226,6 @@ function flattenPlaces(db){
 const places = flattenPlaces(PLACE_DB);
 
 const itinerary = [
-   { Fight, date:"4/5", city:"Florence", move:"Rome → Florence", items:[
-    { period:"去程", zh:"CI75 4/4 23:45(TPE T1) - 4/5 07:55 (FCO T3)", en:"CI75 4/4 23:45(TPE T1) - 4/5 07:55 (FCO T3)" },
-    { period:"回程", zh:"CI76 4/12 11:00(FCO  T3) – 4/13 5:40 (TPE-T1)", en:"CI76 4/12 11:00(FCO  T3) – 4/13 5:40 (TPE-T1)" },
-
-  ]},
   { day:1, date:"4/5", city:"Florence", move:"Rome → Florence", items:[
     { period:"上午", zh:"羅馬搭高鐵前往佛羅倫斯", en:"Train from Rome to Florence" },
     { period:"下午", zh:"佛羅倫斯主教座堂（外觀）", en:"Florence Cathedral (Duomo, exterior)" },
@@ -253,7 +272,7 @@ const itinerary = [
 ];
 
 /** --------------------------
- * Favorites (localStorage)
+ * Favorites
  * -------------------------- */
 const FAV_KEY = "qna_travel_favs";
 function getFavs(){ try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]")); } catch { return new Set(); } }
@@ -270,14 +289,29 @@ function toggleFav(id){
  * Router
  * -------------------------- */
 function route(){ return (location.hash || "#home").replace("#",""); }
-
 function setActive(r){
   document.querySelectorAll("#nav a").forEach(a=>{
     a.classList.toggle("active", a.dataset.route === r);
   });
 }
-
 window.addEventListener("hashchange", render);
+
+/** --------------------------
+ * Components
+ * -------------------------- */
+function renderFlightCard(){
+  return `
+    <div class="flightCard" style="margin-bottom:12px;">
+      <div class="flightIcon">✈️</div>
+      <div>
+        <div class="flightTitle">航班資訊 Flight Info</div>
+        <p class="flightLine">${flightInfo.outbound.emoji} <strong>去程</strong>：${flightInfo.outbound.text}</p>
+        <p class="flightLine">${flightInfo.inbound.emoji} <strong>回程</strong>：${flightInfo.inbound.text}</p>
+        <p class="flightLine"><span>小提醒：</span>時間/航廈若有變動，直接改 flightInfo 這兩行即可。</p>
+      </div>
+    </div>
+  `;
+}
 
 /** --------------------------
  * Views
@@ -285,6 +319,8 @@ window.addEventListener("hashchange", render);
 function renderHome(){
   const t = trips[0];
   app.innerHTML = `
+    ${renderFlightCard()}
+
     <div class="grid grid-2">
       <div class="card">
         <div class="muted">Next Trip</div>
@@ -324,21 +360,21 @@ function renderFavList(){
 }
 
 function renderTrips(){
+  const t = trips[0];
   app.innerHTML = `
+    ${renderFlightCard()}
     <div class="card">
       <h1 class="title">Trips</h1>
       <div class="list">
-        ${trips.map(t=>`
-          <div class="item">
-            <div>
-              <h3>${t.name}</h3>
-              <p>${t.city} · ${t.days} days · ${t.date}</p>
-            </div>
-            <div class="right">
-              <button class="btn secondary" onclick="location.hash='#itinerary'">Open itinerary</button>
-            </div>
+        <div class="item">
+          <div>
+            <h3>${t.name}</h3>
+            <p>${t.city} · ${t.days} days · ${t.date}</p>
           </div>
-        `).join("")}
+          <div class="right">
+            <button class="btn secondary" onclick="location.hash='#itinerary'">Open itinerary</button>
+          </div>
+        </div>
       </div>
     </div>
   `;
@@ -347,6 +383,8 @@ function renderTrips(){
 function renderItinerary(){
   const t = trips[0];
   app.innerHTML = `
+    ${renderFlightCard()}
+
     <div class="card">
       <div class="muted">Itinerary</div>
       <h1 class="title">${t.name}</h1>
@@ -374,7 +412,7 @@ function renderItinerary(){
         </div>
       `).join("")}
 
-      <div class="footerNote">想加「餐廳/咖啡」到每日行程，我也可以幫你串進去。</div>
+      <div class="footerNote">想把餐廳/咖啡「插入每日行程」我也可以幫你做。</div>
     </div>
   `;
 }
@@ -382,6 +420,8 @@ function renderItinerary(){
 function renderExplore(){
   const type = window.__type || "all";
   app.innerHTML = `
+    ${renderFlightCard()}
+
     <div class="card">
       <div class="row" style="justify-content:space-between;align-items:flex-end;">
         <div>
@@ -506,13 +546,7 @@ function render(){
   if(r === "trips") return renderTrips();
   location.hash = "#home";
 }
-function render(){
-  const r = route();
-  setActive(r);
-  if(r === "home") return renderHome();
-  if(r === "trips") return renderTrips();
-  if(r === "itinerary") return renderItinerary();
-  if(r === "explore") return renderExplore();
-  location.hash = "#home";
-}
 render();
+</script>
+</body>
+</html>
