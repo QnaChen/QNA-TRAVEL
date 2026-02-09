@@ -1,73 +1,371 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>QNA Travel</title>
   <style>
-    body{margin:0;font-family:sans-serif;background:#f7f7f7}
-    header{background:#fff;border-bottom:1px solid #ddd;padding:12px 20px}
-    nav a{margin-right:16px;text-decoration:none;color:#333}
-    .container{max-width:900px;margin:24px auto;padding:0 16px}
-    .card{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid #ddd}
-    button{background:#111;color:#fff;border:none;border-radius:8px;padding:6px 12px}
+    :root{
+      --bg:#f7f7f7; --card:#fff; --text:#111; --muted:#666; --border:#ddd;
+      --brand:#111; --brandText:#fff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--text)}
+    header{position:sticky;top:0;z-index:9;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+    .topbar{max-width:980px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{font-weight:700;letter-spacing:.2px}
+    nav{display:flex;gap:14px;flex-wrap:wrap}
+    nav a{color:var(--text);text-decoration:none;font-size:14px}
+    nav a.active{text-decoration:underline;font-weight:600}
+    .container{max-width:980px;margin:18px auto;padding:0 16px}
+    .grid{display:grid;gap:12px}
+    @media(min-width:860px){ .grid-2{grid-template-columns:1.2fr .8fr} .grid-3{grid-template-columns:repeat(3,1fr)}}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+    .title{font-size:22px;font-weight:700;margin:0 0 8px}
+    .muted{color:var(--muted);font-size:14px}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:var(--brandText);border:none;border-radius:10px;padding:8px 12px;font-size:14px;cursor:pointer}
+    .btn.secondary{background:#fff;color:#111;border:1px solid var(--border)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .pill{border:1px solid var(--border);border-radius:999px;padding:6px 10px;font-size:12px;background:#fff;cursor:pointer}
+    .pill.active{background:#111;color:#fff;border-color:#111}
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .item h3{margin:0;font-size:16px}
+    .item p{margin:3px 0 0;color:var(--muted);font-size:13px}
+    .badge{font-size:12px;border:1px solid var(--border);border-radius:10px;padding:6px 8px;background:#fff}
+    .timeline{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+    .trow{display:grid;grid-template-columns:70px 1fr;gap:12px}
+    .time{color:var(--muted);font-size:13px}
+    .hr{height:1px;background:var(--border);margin:12px 0}
+    input, select{border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:14px;background:#fff;outline:none}
+    input:focus,select:focus{border-color:#aaa}
+    .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .star{cursor:pointer;user-select:none;font-size:18px;line-height:1}
+    .star.on{color:#f5a623}
+    .small{font-size:12px;color:var(--muted)}
+    .footerNote{margin-top:10px;color:var(--muted);font-size:12px}
   </style>
 </head>
 <body>
 
 <header>
-  <strong>QNA Travel ✈️</strong>
-  <nav>
-    <a href="#" onclick="showHome()">Home</a>
-    <a href="#" onclick="showTrips()">Trips</a>
-    <a href="#" onclick="showExplore()">Explore</a>
-  </nav>
+  <div class="topbar">
+    <div class="brand">QNA Travel ✈️</div>
+    <nav id="nav">
+      <a href="#home" data-route="home" class="active">Home</a>
+      <a href="#itinerary" data-route="itinerary">Itinerary</a>
+      <a href="#trips" data-route="trips">Trips</a>
+      <a href="#explore" data-route="explore">Explore</a>
+    </nav>
+  </div>
 </header>
 
 <div class="container" id="app"></div>
 
 <script>
+/** --------------------------
+ *  Data (你可以在這裡改成你的行程)
+ * -------------------------- */
 const trips = [
-  { id:"italy", name:"Italy Trip", city:"Rome", days:7 }
+  { id:"italy-2026", name:"Italy Trip", city:"Rome", days:7, date:"2026/04" }
 ];
 
+// places: 你可以繼續加更多
 const places = [
-  { id:"s1", name:"Colosseum", type:"Spot", area:"Rome" },
-  { id:"f1", name:"Pizza Restaurant", type:"Food", area:"Trastevere" },
-  { id:"c1", name:"Coffee Bar", type:"Cafe", area:"Rome" }
+  { id:"colosseum", name:"Colosseum", type:"spot", area:"Rome", tags:["history","must-go"] },
+  { id:"forum", name:"Roman Forum", type:"spot", area:"Rome", tags:["history"] },
+  { id:"trevi", name:"Trevi Fountain", type:"spot", area:"Rome", tags:["photo","night"] },
+  { id:"pizza", name:"Pizza Restaurant", type:"food", area:"Trastevere", tags:["pizza","casual"] },
+  { id:"gelato", name:"Gelato Shop", type:"dessert", area:"Rome", tags:["dessert"] },
+  { id:"coffee", name:"Coffee Bar", type:"cafe", area:"Monti", tags:["coffee","breakfast"] },
 ];
 
-function showHome(){
+// itinerary: Day1~Day7（先給你示範 3 天，其他天你可以照格式補）
+const itinerary = {
+  "italy-2026": [
+    { day:1, title:"Ancient Rome", items:[
+      { time:"09:00", placeId:"colosseum", note:"建議先預約/早點去" },
+      { time:"11:30", placeId:"forum", note:"走一圈 + 拍照" },
+      { time:"13:30", placeId:"pizza", note:"簡單午餐" },
+      { time:"17:30", placeId:"trevi", note:"傍晚人比較多" },
+    ]},
+    { day:2, title:"City Walk", items:[
+      { time:"09:30", placeId:"coffee", note:"早餐咖啡" },
+      { time:"12:00", placeId:"trevi", note:"白天角度" },
+      { time:"15:30", placeId:"gelato", note:"下午點心" },
+    ]},
+    { day:3, title:"Free & Flexible", items:[
+      { time:"10:00", placeId:"coffee", note:"慢慢開始" },
+      { time:"14:00", placeId:"pizza", note:"想吃再去" },
+    ]},
+  ]
+};
+
+const placeById = Object.fromEntries(places.map(p=>[p.id,p]));
+
+/** --------------------------
+ *  Favorites (localStorage)
+ * -------------------------- */
+const FAV_KEY = "qna_travel_favs";
+function getFavs(){ try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]")); } catch { return new Set(); } }
+function saveFavs(set){ localStorage.setItem(FAV_KEY, JSON.stringify([...set])); }
+let favs = getFavs();
+
+function star(placeId){
+  const on = favs.has(placeId);
+  favs[on ? "delete" : "add"](placeId);
+  saveFavs(favs);
+  render(); // 重新渲染
+}
+
+/** --------------------------
+ *  Router
+ * -------------------------- */
+function setActive(route){
+  document.querySelectorAll("#nav a").forEach(a=>{
+    a.classList.toggle("active", a.dataset.route === route);
+  });
+}
+function route(){
+  const hash = (location.hash || "#home").replace("#","");
+  return hash;
+}
+window.addEventListener("hashchange", render);
+
+function render(){
+  const r = route();
+  setActive(r);
+  if(r === "home") return renderHome();
+  if(r === "trips") return renderTrips();
+  if(r === "explore") return renderExplore();
+  if(r === "itinerary") return renderItinerary();
+  // fallback
+  location.hash = "#home";
+}
+
+/** --------------------------
+ *  Views
+ * -------------------------- */
+function renderHome(){
   const t = trips[0];
   app.innerHTML = `
-    <div class="card">
-      <h2>Next Trip</h2>
-      <p>${t.name}</p>
-      <p>${t.city} · ${t.days} days</p>
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="muted">Next Trip</div>
+        <h1 class="title">${t.name}</h1>
+        <div class="muted">${t.city} · ${t.days} days · ${t.date}</div>
+        <div class="hr"></div>
+        <div class="row">
+          <button class="btn" onclick="location.hash='#itinerary'">查看行程 Itinerary</button>
+          <button class="btn secondary" onclick="location.hash='#explore'">探索推薦 Explore</button>
+        </div>
+        <div class="footerNote">Tip：收藏景點/美食會用 ⭐ 存在你的瀏覽器。</div>
+      </div>
+
+      <div class="card">
+        <div class="muted">Quick Picks</div>
+        <h2 class="title" style="font-size:18px;margin-top:6px;">熱門收藏</h2>
+        <div class="list">
+          ${renderFavList()}
+        </div>
+      </div>
     </div>
   `;
 }
 
-function showTrips(){
-  app.innerHTML = trips.map(t=>`
-    <div class="card">
-      <h3>${t.name}</h3>
-      <p>${t.city} · ${t.days} days</p>
+function renderFavList(){
+  const favArr = [...favs].map(id=>placeById[id]).filter(Boolean);
+  if(favArr.length === 0) return `<div class="muted">目前還沒有收藏，去 Explore 點 ⭐ 收藏吧。</div>`;
+  return favArr.slice(0,5).map(p=>`
+    <div class="item">
+      <div>
+        <h3>${p.name}</h3>
+        <p>${labelType(p.type)} · ${p.area}</p>
+      </div>
+      <div class="right">
+        <span class="star on" title="取消收藏" onclick="star('${p.id}')">★</span>
+      </div>
     </div>
   `).join("");
 }
 
-function showExplore(){
-  app.innerHTML = places.map(p=>`
+function renderTrips(){
+  app.innerHTML = `
     <div class="card">
-      <h3>${p.name}</h3>
-      <p>${p.type} · ${p.area}</p>
+      <h1 class="title">Trips</h1>
+      <div class="list">
+        ${trips.map(t=>`
+          <div class="item">
+            <div>
+              <h3>${t.name}</h3>
+              <p>${t.city} · ${t.days} days · ${t.date}</p>
+            </div>
+            <div class="right">
+              <button class="btn secondary" onclick="location.hash='#itinerary'">Open itinerary</button>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderItinerary(){
+  const tripId = trips[0].id;
+  const days = itinerary[tripId] || [];
+  const dayOptions = days.map(d=>`<option value="${d.day}">Day ${d.day} · ${d.title}</option>`).join("");
+  app.innerHTML = `
+    <div class="card">
+      <div class="row" style="justify-content:space-between;">
+        <div>
+          <div class="muted">Itinerary</div>
+          <h1 class="title">${trips[0].name}</h1>
+          <div class="muted">Day-by-day schedule</div>
+        </div>
+        <div class="right">
+          <span class="small">跳到：</span>
+          <select id="daySel">${dayOptions}</select>
+          <button class="btn secondary" onclick="jumpDay()">Go</button>
+        </div>
+      </div>
+      <div class="hr"></div>
+
+      ${days.length ? days.map(d=>renderDayBlock(d)).join("") : `<div class="muted">尚未建立行程。</div>`}
+
+      <div class="footerNote">想要 Day4~Day7？我可以教你照格式快速補上（超簡單）。</div>
+    </div>
+  `;
+}
+
+function renderDayBlock(dayPlan){
+  return `
+    <div class="card" id="day-${dayPlan.day}" style="margin:12px 0;">
+      <div class="row" style="justify-content:space-between;">
+        <div>
+          <h2 class="title" style="font-size:18px;margin:0;">Day ${dayPlan.day} · ${dayPlan.title}</h2>
+          <div class="muted">${dayPlan.items.length} items</div>
+        </div>
+      </div>
+      <div class="timeline">
+        ${dayPlan.items.map(it=>{
+          const p = placeById[it.placeId];
+          return `
+            <div class="trow">
+              <div class="time">${it.time}</div>
+              <div>
+                <div class="row" style="justify-content:space-between;">
+                  <div>
+                    <strong>${p ? p.name : it.placeId}</strong>
+                    <div class="muted">${p ? `${labelType(p.type)} · ${p.area}` : ""}</div>
+                    ${it.note ? `<div class="small">${it.note}</div>` : ``}
+                  </div>
+                  <div class="right">
+                    <span class="star ${favs.has(it.placeId) ? "on" : ""}" onclick="star('${it.placeId}')"
+                      title="${favs.has(it.placeId) ? "取消收藏" : "加入收藏"}">${favs.has(it.placeId) ? "★" : "☆"}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function jumpDay(){
+  const v = document.getElementById("daySel").value;
+  const el = document.getElementById("day-"+v);
+  if(el) el.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function renderExplore(){
+  app.innerHTML = `
+    <div class="card">
+      <div class="row" style="justify-content:space-between;align-items:flex-end;">
+        <div>
+          <div class="muted">Explore</div>
+          <h1 class="title">推薦景點 / 美食</h1>
+          <div class="muted">搜尋、篩選、收藏 ⭐</div>
+        </div>
+        <div class="right">
+          <input id="q" placeholder="Search name / area / tag..." oninput="applyFilter()"/>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="row" id="filters">
+        ${renderFilterPills("all")}
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="list" id="placeList"></div>
+      <div class="footerNote">Tip：點 ⭐ 會收藏；回 Home 會看到收藏清單。</div>
+    </div>
+  `;
+
+  // 初始渲染清單
+  window.__type = "all";
+  applyFilter();
+}
+
+function renderFilterPills(active){
+  const types = [
+    {k:"all", t:"All"},
+    {k:"spot", t:"Spots"},
+    {k:"food", t:"Food"},
+    {k:"cafe", t:"Cafe"},
+    {k:"dessert", t:"Dessert"},
+  ];
+  return types.map(x=>`
+    <span class="pill ${active===x.k?"active":""}" onclick="setType('${x.k}')">${x.t}</span>
+  `).join("");
+}
+
+function setType(type){
+  window.__type = type;
+  document.getElementById("filters").innerHTML = renderFilterPills(type);
+  applyFilter();
+}
+
+function applyFilter(){
+  const q = (document.getElementById("q")?.value || "").toLowerCase().trim();
+  const type = window.__type || "all";
+
+  const filtered = places.filter(p=>{
+    const matchType = (type==="all") ? true : p.type === type;
+    const hay = (p.name+" "+p.area+" "+(p.tags||[]).join(" ")).toLowerCase();
+    const matchQ = q ? hay.includes(q) : true;
+    return matchType && matchQ;
+  });
+
+  const list = document.getElementById("placeList");
+  if(!filtered.length){
+    list.innerHTML = `<div class="muted">沒有符合的結果，換個關鍵字試試。</div>`;
+    return;
+  }
+  list.innerHTML = filtered.map(p=>`
+    <div class="item">
+      <div>
+        <h3>${p.name}</h3>
+        <p>${labelType(p.type)} · ${p.area} ${p.tags?.length? "· #"+p.tags.join(" #"):""}</p>
+      </div>
+      <div class="right">
+        <span class="star ${favs.has(p.id) ? "on" : ""}" onclick="star('${p.id}')"
+          title="${favs.has(p.id) ? "取消收藏" : "加入收藏"}">${favs.has(p.id) ? "★" : "☆"}</span>
+      </div>
     </div>
   `).join("");
 }
 
-showHome();
+function labelType(t){
+  const map = { spot:"景點", food:"美食", cafe:"咖啡", dessert:"甜點" };
+  return map[t] || t;
+}
+
+render();
 </script>
-
 </body>
 </html>
-
