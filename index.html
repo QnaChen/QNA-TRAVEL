@@ -53,7 +53,76 @@
     .chipbar{display:flex;gap:8px;flex-wrap:wrap}
     .chip{border:1px solid var(--border);background:#fff;border-radius:999px;padding:6px 10px;font-size:13px;cursor:pointer}
     .chip.active{border-color:#111;background:#111;color:#fff}
+/* =========================
+   Mobile (<= 640px)
+========================= */
+@media (max-width: 640px){
 
+  .container{ padding: 0 12px; margin: 12px auto; }
+
+  .topbar{
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .brand{ font-size: 15px; }
+
+  /* 導覽列：橫向可滑動，不擠爆 */
+  nav{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 6px;
+    padding-bottom: 2px;
+  }
+  nav::-webkit-scrollbar{ display:none; }
+
+  nav a{
+    white-space: nowrap;
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  .card{
+    border-radius: 14px;
+    padding: 14px;
+  }
+
+  .title{ font-size: 20px; }
+
+  /* grid 在手機改成單欄 */
+  .grid-2{ grid-template-columns: 1fr !important; }
+
+  /* list item 間距更緊湊 */
+  .item{ gap: 10px; padding: 10px 0; }
+  .item h3{ font-size: 15px; }
+  .item p{ font-size: 12px; }
+
+  /* Itinerary：slot 在手機改上下排 */
+  .slot{
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .slot .small{
+    font-size: 12px;
+  }
+
+  /* Explore：區塊標題更清楚 */
+  .sectionTitle{ font-size: 16px; }
+  .subTitle{ font-size: 15px; }
+
+  /* chipbar 也做橫向滑動 */
+  .chipbar{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 6px;
+    padding-bottom: 2px;
+  }
+  .chipbar::-webkit-scrollbar{ display:none; }
+
+  .chip{ white-space: nowrap; font-size: 13px; }
+}
     /* Flight card */
     .flightCard{
       background:#fff;
