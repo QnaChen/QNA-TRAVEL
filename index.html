@@ -537,14 +537,28 @@ function applyFilter(){
 /** --------------------------
  * Main render
  * -------------------------- */
+function route(){
+  const r = (location.hash || "").replace("#","");
+  return r || "home"; // ✅ 沒有 hash 也直接回 home
+}
+
 function render(){
   const r = route();
   setActive(r);
+
   if(r === "home") return renderHome();
   if(r === "itinerary") return renderItinerary();
   if(r === "explore") return renderExplore();
   if(r === "trips") return renderTrips();
+
+  // ✅ 遇到未知 hash：直接渲染 home，不要只改 hash 讓畫面空白
   location.hash = "#home";
+  return renderHome();
+}
+
+window.addEventListener("hashchange", render);
+window.addEventListener("DOMContentLoaded", render); // ✅ 保證載入完就渲染
+render(); // ✅ 保底
 }
 render();
 </script>
