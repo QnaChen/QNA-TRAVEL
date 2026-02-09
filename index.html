@@ -59,7 +59,7 @@
 <body>
 <header>
   <div class="topbar">
-    <div class="brand">QNA & Peter ✈️ Italy</div>
+    <div class="brand">QNA & Peter ✈️ ITALY🍕</div>
     <nav id="nav">
       <a href="#home" data-route="home">Home</a>
       <a href="#itinerary" data-route="itinerary">Itinerary</a>
@@ -99,14 +99,9 @@ function typeEmoji(t){
  * Data
  * -------------------------- */
 const trips = [
-  { id:"italy-2026", name:"Italy Trip", city:"Rome🍾 Florence🏰  Venice🛶 → Rome", date:"4/4–4/12" }
+  { id:"italy-2026", name:"Italy Trip", city:Florence🎇  Venice🍾  Rome🍕", date:"4/4–4/12" }
 ];
 
-const flights = {
-  outbound: { no:"CI75", departDate:"4/4", departTime:"23:45", from:"TPE", fromTerminal:"T1", arriveDate:"4/5", arriveTime:"07:55", to:"FCO", toTerminal:"T3" },
-  inbound:  { no:"CI76", departDate:"4/12", departTime:"11:00", from:"FCO", fromTerminal:"T3", arriveDate:"4/13", arriveTime:"05:40", to:"TPE", toTerminal:"T1" }
-};
-  
 // 國家 → 城市 → 類型（spot / food / cafe / dessert）
 const PLACE_DB = {
   Italy: {
@@ -207,11 +202,12 @@ function flattenPlaces(db){
 const places = flattenPlaces(PLACE_DB);
 
 const itinerary = [
-    {Fight✈️, date:"4/4", city:"Taiwan", move:"Taiwan → Italy", items:[
-    { period:"去程", zh:"CI75 4/4 23:45(TPE T1) - 4/5 07:55 (FCO T3)" },
-    { period:"回程", zh:""CI76 4/12 11:00(FCO  T1) - 4/13 5:40 (TPE-T1)" },
+   { Fight, date:"4/5", city:"Florence", move:"Rome → Florence", items:[
+    { period:"去程", zh:"CI75 4/4 23:45(TPE T1) - 4/5 07:55 (FCO T3)", en:"CI75 4/4 23:45(TPE T1) - 4/5 07:55 (FCO T3)" },
+    { period:"回程", zh:"CI76 4/12 11:00(FCO  T3) – 4/13 5:40 (TPE-T1)", en:"CI76 4/12 11:00(FCO  T3) – 4/13 5:40 (TPE-T1)" },
+
   ]},
-  { day:1, date:"4/5", city:"Florence", move:"Rome ➡️ Florence", items:[
+  { day:1, date:"4/5", city:"Florence", move:"Rome → Florence", items:[
     { period:"上午", zh:"羅馬搭高鐵前往佛羅倫斯", en:"Train from Rome to Florence" },
     { period:"下午", zh:"佛羅倫斯主教座堂（外觀）", en:"Florence Cathedral (Duomo, exterior)" },
     { period:"下午", zh:"主教座堂廣場", en:"Piazza del Duomo" },
@@ -219,11 +215,11 @@ const itinerary = [
     { period:"晚上", zh:"老橋夜景", en:"Ponte Vecchio" },
   ]},
   { day:2, date:"4/6", city:"Florence", items:[
-    { period:"上午", zh:"百花大教堂", en:"Oltrarno district walk" },
-    { period:"下午", zh:"比薩斜塔", en:"Boboli Gardens" },
+    { period:"上午", zh:"Oltrarno 奧爾特拉諾生活區散步", en:"Oltrarno district walk" },
+    { period:"下午", zh:"波波里花園", en:"Boboli Gardens" },
     { period:"傍晚", zh:"米開朗基羅廣場看夕陽", en:"Piazzale Michelangelo viewpoint" },
   ]},
-  { day:3, date:"4/7", city:"Venice", move:"Florence ➡️ Venice", items:[
+  { day:3, date:"4/7", city:"Venice", move:"Florence → Venice", items:[
     { period:"上午", zh:"佛羅倫斯搭高鐵前往威尼斯", en:"Train from Florence to Venice" },
     { period:"下午", zh:"聖馬可廣場", en:"St Mark's Square" },
     { period:"傍晚", zh:"聖馬可大教堂（外觀）", en:"St Mark's Basilica (exterior)" },
@@ -235,7 +231,7 @@ const itinerary = [
     { period:"下午", zh:"布拉諾彩色島", en:"Burano Island" },
     { period:"傍晚", zh:"學院橋夕景", en:"Accademia Bridge" },
   ]},
-  { day:5, date:"4/9", city:"Rome", move:"Venice ➡️ Rome", items:[
+  { day:5, date:"4/9", city:"Rome", move:"Venice → Rome", items:[
     { period:"上午", zh:"威尼斯搭高鐵回羅馬", en:"Train from Venice to Rome" },
     { period:"下午", zh:"梵蒂岡城國散步", en:"Vatican City walk" },
     { period:"下午", zh:"聖彼得廣場", en:"St. Peter’s Square" },
