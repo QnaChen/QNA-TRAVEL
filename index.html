@@ -6,38 +6,40 @@
   <title>QNA & Peter · Italy Trip</title>
 
   <style>
+    :root{
       /* Italy vibe */
-  --it-green:#1f7a4c;
-  --it-red:#c93a2f;
-  --it-cream:#fbfaf7;
+      --it-green:#1f7a4c;
+      --it-red:#c93a2f;
+      --it-cream:#fbfaf7;
 
-  /* NEW: background layers */
-  --page:#f3f5fb;          /* 整體底色更偏灰藍一點，襯托卡片 */
-  --page-2:#eef2f8;        /* 可用在區塊背景 */
-  --card:#ffffff;          /* 卡片白 */
-  --card-2:#fcfdff;        /* 次卡片，微微不同白 */
-  --text:#101418;
-  --muted:#6b7280;
+      /* background layers */
+      --page:#f3f5fb;
+      --page-2:#eef2f8;
 
-  /* NEW: stronger border & shadow */
-  --border:rgba(17,24,39,.12);
-  --border-strong:rgba(17,24,39,.18);
-  --shadow:0 16px 40px rgba(17,24,39,.10);
-  --shadow-soft:0 10px 24px rgba(17,24,39,.08);
+      --card:#ffffff;
+      --card-2:#fcfdff;
 
-  --radius:20px;
+      --text:#101418;
+      --muted:#6b7280;
 
-  --brand:linear-gradient(135deg,var(--it-green),#2a9d6b);
-  --danger:var(--it-red);
-}
+      --border:rgba(17,24,39,.12);
+      --border-strong:rgba(17,24,39,.18);
+
+      --shadow:0 16px 40px rgba(17,24,39,.10);
+      --shadow-soft:0 10px 24px rgba(17,24,39,.08);
+
+      --radius:20px;
+      --brand:linear-gradient(135deg,var(--it-green),#2a9d6b);
+      --danger:var(--it-red);
+    }
 
     *{ box-sizing:border-box }
     body{
       margin:0;
       font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans TC",
                    "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
-      background:var(--bg);
-      color:var(--text)
+      background: radial-gradient(1200px 800px at 20% -10%, #ffffff 0%, var(--page) 55%, var(--page-2) 100%);
+      color:var(--text);
     }
 
     header{
@@ -59,19 +61,19 @@
     .brand .sub{ font-size:12px; color:var(--muted); font-weight:700; letter-spacing:.1px; }
     .pill{
       display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
+      padding:8px 12px;
       border-radius:999px;
       background: rgba(31,122,76,.10);
       color: var(--it-green);
       border:1px solid rgba(31,122,76,.18);
       font-size:12px;
-      font-weight:800;
+      font-weight:900;
       white-space:nowrap;
     }
 
     .container{ max-width:1040px; margin:16px auto 96px; padding:0 16px; } /* bottom bar space */
     .grid{ display:grid; gap:14px; }
-    @media(min-width:920px){ .grid-2{ grid-template-columns:1.2fr .8fr; } }
+    @media(min-width:920px){ .grid-2{ grid-template-columns:1.25fr .75fr; } }
 
     .card{
       background:var(--card);
@@ -81,7 +83,7 @@
       box-shadow: var(--shadow);
     }
 
-    .title{ margin:0; font-size:22px; font-weight:900; letter-spacing:-.2px; }
+    .title{ margin:0; font-size:26px; font-weight:900; letter-spacing:-.2px; }
     .muted{ color:var(--muted); font-size:14px; line-height:1.5; }
     .hr{ height:1px; background:var(--border); margin:12px 0; }
 
@@ -95,7 +97,7 @@
       border:1px solid transparent;
       cursor:pointer;
       font-size:14px;
-      font-weight:800;
+      font-weight:900;
       color:#fff;
       background: var(--brand);
       box-shadow: 0 10px 20px rgba(31,122,76,.18);
@@ -125,13 +127,15 @@
       box-shadow:0 0 0 4px rgba(31,122,76,.10);
     }
 
+    /* Quick picks list item */
     .list{ display:flex; flex-direction:column; gap:10px; }
     .item{
       display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
       padding:12px;
       border:1px solid var(--border);
-      border-radius:16px;
-      background: linear-gradient(180deg, #fff, rgba(251,250,247,.55));
+      border-radius:18px;
+      background: var(--card-2);
+      box-shadow: var(--shadow-soft);
     }
     .item h3{ margin:0; font-size:15px; font-weight:900; }
     .item p{ margin:5px 0 0; font-size:13px; color:var(--muted); line-height:1.45; }
@@ -139,6 +143,201 @@
     .star{ cursor:pointer; user-select:none; font-size:20px; line-height:1; }
     .star.on{ color:#f5a623; }
 
+    /* Subcard */
+    .subcard{
+      background: linear-gradient(180deg, var(--it-cream), #fff);
+      border:1px solid var(--border-strong);
+      border-radius:18px;
+      padding:12px;
+      box-shadow: var(--shadow-soft);
+    }
+    .subcardHead{
+      display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+      margin-bottom:8px;
+    }
+    .subcardTitle{ font-weight:900; }
+    .pill.danger{
+      background: rgba(201,58,47,.10);
+      border-color: rgba(201,58,47,.20);
+      color: var(--it-red);
+    }
+
+    /* Modules */
+    .modules{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      margin-top:14px;
+    }
+    .module{
+      background: var(--card-2);
+      border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow-soft);
+      border-radius: 18px;
+      padding: 14px;
+      min-height: 170px;
+    }
+    .module__head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding-bottom:10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+    .module__title{ font-weight: 900; }
+
+    .module__actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+
+    .btnGhost{
+      height:40px;
+      padding:0 14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.7);
+      cursor:pointer;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .btnPrimary{
+      height:44px;
+      padding:0 14px;
+      border-radius:14px;
+      border:none;
+      background: var(--brand);
+      color:#fff;
+      font-weight:900;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    /* Photos */
+    .photoGrid{
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap:10px;
+    }
+    .photoCard{
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow:hidden;
+      position:relative;
+    }
+    .photoCard img{
+      width:100%;
+      height:120px;
+      object-fit:cover;
+      display:block;
+    }
+    .photoCard .x{
+      position:absolute; top:8px; right:8px;
+      width:32px; height:32px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.92);
+      cursor:pointer;
+    }
+    .photoCard .meta{
+      padding:8px 10px;
+      font-size:12px;
+      color: var(--muted);
+    }
+    .emptyHint{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px dashed var(--border-strong);
+      color: var(--muted);
+      background: rgba(255,255,255,.6);
+    }
+
+    /* Checklist */
+    .checkForm{
+      display:flex;
+      gap:10px;
+    }
+    .checkForm input{
+      flex:1;
+      height:44px;
+      border-radius: 14px;
+      border: 1px solid var(--border-strong);
+      padding: 0 12px;
+      background: #fff;
+    }
+    .checkList{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .checkItem{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+    .checkItem label{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      cursor:pointer;
+      font-weight:800;
+    }
+    .checkItem .del{
+      width:34px; height:34px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background:#fff;
+      cursor:pointer;
+    }
+
+    /* Bottom tabs */
+    .tabbar{
+      position:fixed; left:0; right:0; bottom:0; z-index:30;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      border-top:1px solid var(--border);
+      padding:10px 10px 12px;
+    }
+    .tabs{
+      max-width:1040px; margin:0 auto;
+      display:grid; grid-template-columns:repeat(4,1fr); gap:8px;
+    }
+    .tab{
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+      padding:10px 8px;
+      border-radius:16px;
+      border:1px solid transparent;
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:900;
+      font-size:12px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tab .ico{ font-size:18px; }
+    .tab.active{
+      color:var(--it-green);
+      background: rgba(31,122,76,.10);
+      border-color: rgba(31,122,76,.18);
+    }
+
+    /* Responsive */
+    @media (max-width: 860px){
+      .modules{ grid-template-columns: 1fr; }
+      .title{ font-size:24px; }
+    }
+
+    /* Itinerary (keep your original styles) */
     .chipbar{ display:flex; gap:8px; flex-wrap:wrap; }
     .chip{
       padding:7px 10px;
@@ -146,7 +345,7 @@
       border:1px solid var(--border);
       background:#fff;
       font-size:13px;
-      font-weight:800;
+      font-weight:900;
       cursor:pointer;
       user-select:none;
     }
@@ -206,171 +405,9 @@
     .noteTitle{ font-size:16px; font-weight:900; margin:0; }
     .noteHint{ font-size:12px; color:var(--muted); }
 
-    .tabbar{
-      position:fixed; left:0; right:0; bottom:0; z-index:30;
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(10px);
-      border-top:1px solid var(--border);
-      padding:10px 10px 12px;
-    }
-    .tabs{
-      max-width:1040px; margin:0 auto;
-      display:grid; grid-template-columns:repeat(4,1fr); gap:8px;
-    }
-    .tab{
-      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
-      padding:10px 8px;
-      border-radius:16px;
-      border:1px solid transparent;
-      color:var(--muted);
-      text-decoration:none;
-      font-weight:900;
-      font-size:12px;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .tab .ico{ font-size:18px; }
-    .tab.active{
-      color:var(--it-green);
-      background: rgba(31,122,76,.10);
-      border-color: rgba(31,122,76,.18);
-    }
-
     @media(min-width:920px){
       .bar{ width:180px; }
     }
-    .modules{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:14px;
-  margin-top:14px;
-}
-
-.module{
-  background: var(--card, #fff);
-  border: 1px solid var(--border, rgba(17,24,39,.12));
-  box-shadow: var(--shadow-soft, 0 10px 24px rgba(17,24,39,.08));
-  border-radius: 18px;
-  padding: 14px;
-}
-
-.module__head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding-bottom:10px;
-  border-bottom: 1px solid var(--border, rgba(17,24,39,.12));
-}
-
-.module__title{
-  font-weight: 800;
-}
-
-.module__actions{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-
-.btnGhost{
-  padding:10px 14px;
-  border-radius:14px;
-  border:1px solid var(--border, rgba(17,24,39,.12));
-  background:transparent;
-  cursor:pointer;
-}
-.btnPrimary{
-  padding:10px 14px;
-  border-radius:14px;
-  border:none;
-  background: var(--brand, linear-gradient(135deg,#1f7a4c,#2a9d6b));
-  color:#fff;
-  font-weight:800;
-  cursor:pointer;
-}
-
-/* Photos */
-.photoGrid{
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap:10px;
-  padding-top:12px;
-}
-.photoCard{
-  background: var(--card-2, #fcfdff);
-  border: 1px solid var(--border-strong, rgba(17,24,39,.18));
-  border-radius: 16px;
-  overflow:hidden;
-  position:relative;
-}
-.photoCard img{
-  width:100%;
-  height:120px;
-  object-fit:cover;
-  display:block;
-}
-.photoCard .x{
-  position:absolute; top:8px; right:8px;
-  width:32px; height:32px;
-  border-radius: 12px;
-  border: 1px solid var(--border, rgba(17,24,39,.12));
-  background: rgba(255,255,255,.92);
-  cursor:pointer;
-}
-.photoCard .meta{
-  padding:8px 10px;
-  font-size:12px;
-  color: var(--muted, #6b7280);
-}
-
-/* Checklist */
-.checkForm{
-  display:flex;
-  gap:10px;
-  padding-top:12px;
-}
-.checkForm input{
-  flex:1;
-  height:44px;
-  border-radius: 14px;
-  border: 1px solid var(--border-strong, rgba(17,24,39,.18));
-  padding: 0 12px;
-  background: var(--card-2, #fcfdff);
-}
-.checkList{
-  padding-top:12px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-.checkItem{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:10px 12px;
-  border-radius: 14px;
-  border: 1px solid var(--border, rgba(17,24,39,.12));
-  background: var(--card-2, #fcfdff);
-}
-.checkItem label{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  cursor:pointer;
-}
-.checkItem .del{
-  width:34px; height:34px;
-  border-radius: 12px;
-  border: 1px solid var(--border, rgba(17,24,39,.12));
-  background:#fff;
-  cursor:pointer;
-}
-
-/* Responsive */
-@media (max-width: 860px){
-  .modules{ grid-template-columns: 1fr; }
-}
   </style>
 </head>
 
@@ -378,7 +415,7 @@
 <header>
   <div class="topbar">
     <div class="brand">
-      <div>QNA & Peter 🍕 <span style="color:var(--it-green)">Italy</span> <span style="color:var(--it-red)">
+      <div>QNA & Peter 🍕 <span style="color:var(--it-green)">Italy</span></div>
       <div class="sub">Rome · Florence · Venice</div>
     </div>
     <div class="pill">✈️ Flight Mode</div>
@@ -425,6 +462,13 @@ function escapeHTML(s){
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#39;");
 }
+function calcDays(startISO, endISO){
+  // end is the departure day; days = diff in days (end - start)
+  const s = new Date(startISO + "T00:00:00");
+  const e = new Date(endISO + "T00:00:00");
+  const ms = e - s;
+  return Math.max(1, Math.round(ms / 86400000));
+}
 
 /* ---------------------------
   Data
@@ -432,7 +476,9 @@ function escapeHTML(s){
 const trip = {
   id:"italy-2026",
   name:"Italy Trip",
-  city:"Florence * Venice * Rome",
+  city:"Florence · Venice · Rome",
+  start:"2026-04-04",
+  end:"2026-04-12",
   date:"4/4 – 4/12",
   flights:{
     outbound:"CI75 4/4 23:45 (TPE T1) → 4/5 07:55 (FCO T3)",
@@ -585,7 +631,7 @@ const itinerary = [
 ];
 
 /* ---------------------------
-  Storage
+  Storage (existing)
 --------------------------- */
 const KEY_FAV = "qna_trip_favs_v1";
 const KEY_DONE = "qna_trip_done_v1";
@@ -626,13 +672,186 @@ function saveDayNote(day){
   if(!el) return;
   dayNotes[String(day)] = el.value;
   saveJSON(KEY_NOTE_DAY, dayNotes);
-  render(); // optional: refresh
 }
 function saveGlobalNote(){
   const el = document.getElementById("globalNote");
   if(!el) return;
   globalNote = el.value;
   saveJSON(KEY_NOTE_GLOBAL, globalNote);
+}
+
+/* ---------------------------
+  NEW: Home Checklist (localStorage)
+--------------------------- */
+const CHECK_KEY = "qna_trip_home_checklist_v1";
+let checks = loadJSON(CHECK_KEY, []);
+
+function saveChecks(){
+  saveJSON(CHECK_KEY, checks);
+}
+function renderChecks(){
+  const box = document.getElementById("checkList");
+  const empty = document.getElementById("checkEmptyHint");
+  if(!box) return;
+
+  box.innerHTML = checks.map(it=>`
+    <div class="checkItem">
+      <label>
+        <input type="checkbox" ${it.done ? "checked":""} data-check-toggle="${it.id}">
+        <span style="${it.done ? "text-decoration:line-through;opacity:.6":""}">
+          ${escapeHTML(it.text)}
+        </span>
+      </label>
+      <button class="del" title="刪除" data-check-del="${it.id}">🗑️</button>
+    </div>
+  `).join("");
+
+  if(empty) empty.style.display = checks.length ? "none" : "block";
+}
+
+function bindChecklist(){
+  const form = document.getElementById("checkForm");
+  const input = document.getElementById("checkInput");
+  const clearBtn = document.getElementById("clearCheckAll");
+
+  form?.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const text = (input?.value || "").trim();
+    if(!text) return;
+    checks.push({ id: crypto.randomUUID(), text, done:false, createdAt: Date.now() });
+    saveChecks();
+    renderChecks();
+    input.value = "";
+  });
+
+  clearBtn?.addEventListener("click", ()=>{
+    checks = [];
+    saveChecks();
+    renderChecks();
+  });
+
+  document.addEventListener("click", (e)=>{
+    const delId = e.target?.getAttribute?.("data-check-del");
+    if(!delId) return;
+    checks = checks.filter(x=>x.id !== delId);
+    saveChecks();
+    renderChecks();
+  });
+
+  document.addEventListener("change", (e)=>{
+    const id = e.target?.getAttribute?.("data-check-toggle");
+    if(!id) return;
+    checks = checks.map(x=> x.id===id ? ({...x, done: !!e.target.checked}) : x);
+    saveChecks();
+    renderChecks();
+  });
+}
+
+/* ---------------------------
+  NEW: Home Photos (IndexedDB)
+--------------------------- */
+const DB_NAME = "qna_trip_photos_db";
+const STORE = "photos";
+
+function idbOpen(){
+  return new Promise((resolve, reject)=>{
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = ()=>{
+      const db = req.result;
+      if(!db.objectStoreNames.contains(STORE)){
+        db.createObjectStore(STORE, { keyPath: "id" });
+      }
+    };
+    req.onsuccess = ()=> resolve(req.result);
+    req.onerror = ()=> reject(req.error);
+  });
+}
+async function idbPut(record){
+  const db = await idbOpen();
+  return new Promise((resolve, reject)=>{
+    const tx = db.transaction(STORE, "readwrite");
+    tx.objectStore(STORE).put(record);
+    tx.oncomplete = ()=> resolve(true);
+    tx.onerror = ()=> reject(tx.error);
+  });
+}
+async function idbGetAll(){
+  const db = await idbOpen();
+  return new Promise((resolve, reject)=>{
+    const tx = db.transaction(STORE, "readonly");
+    const req = tx.objectStore(STORE).getAll();
+    req.onsuccess = ()=> resolve(req.result || []);
+    req.onerror = ()=> reject(req.error);
+  });
+}
+async function idbDelete(id){
+  const db = await idbOpen();
+  return new Promise((resolve, reject)=>{
+    const tx = db.transaction(STORE, "readwrite");
+    tx.objectStore(STORE).delete(id);
+    tx.oncomplete = ()=> resolve(true);
+    tx.onerror = ()=> reject(tx.error);
+  });
+}
+async function idbClear(){
+  const db = await idbOpen();
+  return new Promise((resolve, reject)=>{
+    const tx = db.transaction(STORE, "readwrite");
+    tx.objectStore(STORE).clear();
+    tx.oncomplete = ()=> resolve(true);
+    tx.onerror = ()=> reject(tx.error);
+  });
+}
+
+async function renderPhotosHome(){
+  const grid = document.getElementById("photoGridHome");
+  const empty = document.getElementById("photoEmptyHint");
+  if(!grid) return;
+
+  const items = (await idbGetAll()).sort((a,b)=> (b.createdAt||0) - (a.createdAt||0));
+  grid.innerHTML = "";
+
+  for(const it of items){
+    const url = URL.createObjectURL(it.blob);
+    const el = document.createElement("div");
+    el.className = "photoCard";
+    el.innerHTML = `
+      <button class="x" title="刪除" data-photo-del="${it.id}">✕</button>
+      <img alt="photo" src="${url}">
+      <div class="meta">${new Date(it.createdAt).toLocaleString()}</div>
+    `;
+    el.querySelector("img").addEventListener("load", ()=> URL.revokeObjectURL(url));
+    grid.appendChild(el);
+  }
+
+  if(empty) empty.style.display = items.length ? "none" : "block";
+}
+
+function bindPhotos(){
+  const input = document.getElementById("photoInputHome");
+  const clearBtn = document.getElementById("clearPhotosHome");
+
+  input?.addEventListener("change", async (e)=>{
+    const files = Array.from(e.target.files || []);
+    for(const f of files){
+      if(!f.type.startsWith("image/")) continue;
+      await idbPut({ id: crypto.randomUUID(), createdAt: Date.now(), name: f.name, blob: f });
+    }
+    e.target.value = "";
+    renderPhotosHome();
+  });
+
+  clearBtn?.addEventListener("click", async ()=>{
+    await idbClear();
+    renderPhotosHome();
+  });
+
+  document.addEventListener("click", async (e)=>{
+    const id = e.target?.getAttribute?.("data-photo-del");
+    if(!id) return;
+    await idbDelete(id);
+    renderPhotosHome();
+  });
 }
 
 /* ---------------------------
@@ -651,71 +870,73 @@ window.addEventListener("hashchange", render);
 --------------------------- */
 function renderHome(){
   const favArr = [...favs].map(id=>places.find(p=>p.id===id)).filter(Boolean);
+  const days = calcDays(trip.start, trip.end);
 
   app.innerHTML = `
     <div class="grid grid-2">
 
+      <!-- Left: Trip -->
       <div class="card">
-        <div class="row" style="justify-content:space-between;">
+        <div class="row" style="justify-content:space-between; align-items:flex-start;">
           <div>
             <div class="muted">Next Trip</div>
-            <h1 class="title">${trip.name}</h1>
-            <div class="muted">${trip.city} · ${trip.days} days · ${trip.date}</div>
+            <h1 class="title">${escapeHTML(trip.name)}</h1>
+            <div class="muted">${escapeHTML(trip.city)} · ${days} days · ${escapeHTML(trip.date)}</div>
           </div>
-          <div class="pill">🇮🇹 ${trip.date}</div>
+          <div class="pill">🇮🇹 ${escapeHTML(trip.date)}</div>
         </div>
 
         <div class="hr"></div>
 
-        <div class="card" style="box-shadow:none;border:1px solid var(--border);background:linear-gradient(180deg,var(--it-cream),#fff);">
-          <div class="row" style="justify-content:space-between;align-items:flex-start;">
+        <div class="subcard">
+          <div class="subcardHead">
             <div>
-              <div style="font-weight:900;margin-bottom:6px;">✈️ 航班資訊</div>
-              <div class="muted" style="margin-bottom:6px;">去程：<strong>${trip.flights.outbound}</strong></div>
-              <div class="muted">回程：<strong>${trip.flights.inbound}</strong></div>
+              <div class="subcardTitle">✈️ 航班資訊</div>
+              <div class="muted" style="margin-top:6px;">去程：<strong>${escapeHTML(trip.flights.outbound)}</strong></div>
+              <div class="muted" style="margin-top:6px;">回程：<strong>${escapeHTML(trip.flights.inbound)}</strong></div>
             </div>
-            <div class="pill" style="background:rgba(201,58,47,.10);border-color:rgba(201,58,47,.20);color:var(--it-red);">CI75 / CI76</div>
+            <div class="pill danger">CI75 / CI76</div>
           </div>
         </div>
 
-        <div style="height:12px"></div>
+        <div class="modules">
+          <!-- Photos -->
+          <section class="module">
+            <div class="module__head">
+              <div class="module__title">📷 Photos</div>
+              <div class="module__actions">
+                <label class="btnGhost" for="photoInputHome">上傳</label>
+                <input type="file" id="photoInputHome" accept="image/*" multiple hidden />
+                <button class="btnGhost" id="clearPhotosHome" type="button">清空</button>
+              </div>
+            </div>
+            <div class="photoGrid" id="photoGridHome"></div>
+            <div class="emptyHint" id="photoEmptyHint">尚未上傳照片</div>
+          </section>
 
-        <div class="row">
-<div class="modules">
-  <!-- Module 1: Photos -->
-  <section class="module">
-    <div class="module__head">
-      <div class="module__title">📷 Photos</div>
-      <div class="module__actions">
-        <label class="btnGhost" for="photoInputHome">上傳</label>
-        <input type="file" id="photoInputHome" accept="image/*" multiple hidden />
-        <button class="btnGhost" id="clearPhotosHome" type="button">清空</button>
+          <!-- Checklist -->
+          <section class="module">
+            <div class="module__head">
+              <div class="module__title">✅ My Checklist</div>
+              <div class="module__actions">
+                <button class="btnGhost" id="clearCheckAll" type="button">清空</button>
+              </div>
+            </div>
+
+            <form class="checkForm" id="checkForm">
+              <input id="checkInput" type="text" placeholder="輸入待辦事項，例如：買地鐵票 / 下載離線地圖" />
+              <button class="btnPrimary" type="submit">加入</button>
+            </form>
+
+            <div class="checkList" id="checkList"></div>
+            <div class="emptyHint" id="checkEmptyHint">還沒有待辦清單</div>
+          </section>
+        </div>
       </div>
-    </div>
-    <div class="photoGrid" id="photoGridHome"></div>
-  </section>
 
-  <!-- Module 2: Checklist -->
-  <section class="module">
-    <div class="module__head">
-      <div class="module__title">✅ My Checklist</div>
-      <div class="module__actions">
-        <button class="btnGhost" id="addCheckItem" type="button">＋新增</button>
-        <button class="btnGhost" id="clearCheckAll" type="button">清空</button>
-      </div>
-    </div>
-
-    <form class="checkForm" id="checkForm">
-      <input id="checkInput" type="text" placeholder="輸入待辦事項，例如：買地鐵票 / 下載離線地圖" />
-      <button class="btnPrimary" type="submit">加入</button>
-    </form>
-
-    <div class="checkList" id="checkList"></div>
-  </section>
-</div>
-
+      <!-- Right: Quick Picks -->
       <div class="card">
-        <div class="row" style="justify-content:space-between;">
+        <div class="row" style="justify-content:space-between; align-items:flex-start;">
           <div>
             <div class="muted">Quick Picks</div>
             <h2 class="title" style="font-size:18px;margin-top:6px;">⭐ 我的收藏</h2>
@@ -746,16 +967,23 @@ function renderHome(){
 
     </div>
   `;
+
+  // bind & render widgets after DOM ready
+  bindChecklist();
+  bindPhotos();
+  renderChecks();
+  renderPhotosHome();
 }
 
 function renderItinerary(){
+  const days = calcDays(trip.start, trip.end);
   app.innerHTML = `
     <div class="card">
       <div class="row" style="justify-content:space-between;align-items:flex-start;">
         <div>
           <div class="muted">Itinerary</div>
           <h1 class="title">行程 + Checklist</h1>
-          <div class="muted">${trip.city} · ${trip.days} days · ${trip.date}</div>
+          <div class="muted">${escapeHTML(trip.city)} · ${days} days · ${escapeHTML(trip.date)}</div>
         </div>
         <div class="right">
           <button class="btn secondary" onclick="location.hash='#notes'">📝 去寫筆記</button>
@@ -779,7 +1007,7 @@ function renderDay(d){
     <div class="dayCard" id="day-${d.day}">
       <div class="dayHead">
         <div>
-          <div class="dayTitle">Day ${d.day} (${d.date}) · ${escapeHTML(d.city)}</div>
+          <div class="dayTitle">Day ${d.day} (${escapeHTML(d.date)}) · ${escapeHTML(d.city)}</div>
           <div class="dayMeta">${d.move ? "🚄 " + escapeHTML(d.move) : ""}</div>
         </div>
         <div class="progressWrap">
@@ -936,13 +1164,11 @@ function applyFilter(){
     return;
   }
 
-  // 依城市分組
   const byArea = groupBy(filtered, p=>p.area || "Other");
   const areas = Object.keys(byArea).sort();
 
   list.innerHTML = areas.map(area=>{
     const itemsArea = byArea[area];
-
     return `
       <div style="margin:8px 0 18px;">
         <div class="pill" style="background:rgba(31,122,76,.08);">${escapeHTML(area)} · ${itemsArea.length} items</div>
@@ -1000,8 +1226,15 @@ function renderNotes(){
 }
 
 /* ---------------------------
-  Main render (single)
+  Main render
 --------------------------- */
+function setActive(routeName){
+  document.querySelectorAll("#tabs .tab").forEach(a=>{
+    a.classList.toggle("active", a.dataset.route === routeName);
+  });
+}
+function route(){ return (location.hash || "#home").replace("#",""); }
+
 function render(){
   const r = route();
   setActive(r);
@@ -1015,7 +1248,6 @@ function render(){
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  // default state
   if(!location.hash) location.hash = "#home";
   render();
 });
