@@ -7,12 +7,10 @@
 
   <style>
     :root{
-      /* Italy vibe */
       --it-green:#1f7a4c;
       --it-red:#c93a2f;
       --it-cream:#fbfaf7;
 
-      /* background layers */
       --page:#f3f5fb;
       --page-2:#eef2f8;
 
@@ -71,7 +69,7 @@
       white-space:nowrap;
     }
 
-    .container{ max-width:1040px; margin:16px auto 96px; padding:0 16px; } /* bottom bar space */
+    .container{ max-width:1040px; margin:16px auto 96px; padding:0 16px; }
     .grid{ display:grid; gap:14px; }
     @media(min-width:920px){ .grid-2{ grid-template-columns:1.25fr .75fr; } }
 
@@ -92,7 +90,8 @@
 
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      padding:10px 12px;
+      height:44px;
+      padding:0 14px;
       border-radius:14px;
       border:1px solid transparent;
       cursor:pointer;
@@ -103,6 +102,9 @@
       box-shadow: 0 10px 20px rgba(31,122,76,.18);
       transition: transform .08s ease;
       user-select:none;
+      line-height:1;
+      -webkit-appearance:none;
+      appearance:none;
     }
     .btn:active{ transform: translateY(1px); }
     .btn.secondary{
@@ -161,6 +163,10 @@
       border-color: rgba(201,58,47,.20);
       color: var(--it-red);
     }
+    .subcard textarea{
+      min-height:84px;
+      background: rgba(255,255,255,.75);
+    }
 
     /* Modules */
     .modules{
@@ -192,7 +198,21 @@
       display:flex;
       gap:10px;
       align-items:center;
+      flex-shrink:0;
     }
+
+    /* ✅ iOS button fix (上傳不跑版) */
+    .btnGhost, .btnPrimary{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      line-height:1;
+      white-space:nowrap;
+      -webkit-appearance:none;
+      appearance:none;
+      font-family: inherit;
+    }
+    label.btnGhost{ cursor:pointer; user-select:none; }
 
     .btnGhost{
       height:40px;
@@ -202,7 +222,6 @@
       background: rgba(255,255,255,.7);
       cursor:pointer;
       font-weight:900;
-      white-space:nowrap;
     }
     .btnPrimary{
       height:44px;
@@ -213,7 +232,6 @@
       color:#fff;
       font-weight:900;
       cursor:pointer;
-      white-space:nowrap;
     }
 
     /* Photos */
@@ -463,7 +481,6 @@ function escapeHTML(s){
     .replace(/'/g,"&#39;");
 }
 function calcDays(startISO, endISO){
-  // end is the departure day; days = diff in days (end - start)
   const s = new Date(startISO + "T00:00:00");
   const e = new Date(endISO + "T00:00:00");
   const ms = e - s;
@@ -563,7 +580,7 @@ const PLACE_DB = {
       ],
       dessert: [
         { id:"it-ven-nico", name:"Gelateria Nico", tags:["冰淇淋","河岸"] },
-        { id:"it-ven-natura", name:"Gelato di Natura", tags:["手工"] },
+        { id:"it-ven-natura", name:"Gelato di Natura", tags:["冰淇淋","手工"] },
       ],
     },
   },
@@ -638,6 +655,10 @@ const KEY_DONE = "qna_trip_done_v1";
 const KEY_NOTE_GLOBAL = "qna_trip_note_global_v1";
 const KEY_NOTE_DAY = "qna_trip_note_day_v1";
 
+/* NEW: lodging & transport notes on Home */
+const KEY_LODGING = "qna_trip_home_lodging_v1";
+const KEY_TRANSPORT = "qna_trip_home_transport_v1";
+
 function loadJSON(key, fallback){
   try{
     const raw = localStorage.getItem(key);
@@ -654,6 +675,10 @@ let favs = new Set(loadJSON(KEY_FAV, []));
 let doneMap = loadJSON(KEY_DONE, {});
 let dayNotes = loadJSON(KEY_NOTE_DAY, {});
 let globalNote = loadJSON(KEY_NOTE_GLOBAL, "");
+
+/* NEW */
+let lodgingNote = loadJSON(KEY_LODGING, "（範例）Rome：Hotel XXX / Florence：Hotel XXX / Venice：Hotel XXX\n可改成：地址、入住退房、訂房編號、聯絡方式…");
+let transportNote = loadJSON(KEY_TRANSPORT, "（範例）市區交通：地鐵/公車/步行\n城際：Frecciarossa / Italo\n機場：Leonardo Express\n可補：票券、App、注意事項…");
 
 function toggleFav(id){
   if(favs.has(id)) favs.delete(id); else favs.add(id);
@@ -679,16 +704,27 @@ function saveGlobalNote(){
   globalNote = el.value;
   saveJSON(KEY_NOTE_GLOBAL, globalNote);
 }
+function saveLodging(){
+  const el = document.getElementById("lodgingNote");
+  if(!el) return;
+  lodgingNote = el.value;
+  saveJSON(KEY_LODGING, lodgingNote);
+}
+function saveTransport(){
+  const el = document.getElementById("transportNote");
+  if(!el) return;
+  transportNote = el.value;
+  saveJSON(KEY_TRANSPORT, transportNote);
+}
 
 /* ---------------------------
-  NEW: Home Checklist (localStorage)
+  Checklist (localStorage)
 --------------------------- */
 const CHECK_KEY = "qna_trip_home_checklist_v1";
 let checks = loadJSON(CHECK_KEY, []);
 
-function saveChecks(){
-  saveJSON(CHECK_KEY, checks);
-}
+function saveChecks(){ saveJSON(CHECK_KEY, checks); }
+
 function renderChecks(){
   const box = document.getElementById("checkList");
   const empty = document.getElementById("checkEmptyHint");
@@ -748,7 +784,7 @@ function bindChecklist(){
 }
 
 /* ---------------------------
-  NEW: Home Photos (IndexedDB)
+  Photos (IndexedDB)
 --------------------------- */
 const DB_NAME = "qna_trip_photos_db";
 const STORE = "photos";
@@ -803,7 +839,7 @@ async function idbClear(){
   });
 }
 
-async function renderPhotosHome(){
+async function renderPhotos(){
   const grid = document.getElementById("photoGridHome");
   const empty = document.getElementById("photoEmptyHint");
   if(!grid) return;
@@ -838,19 +874,19 @@ function bindPhotos(){
       await idbPut({ id: crypto.randomUUID(), createdAt: Date.now(), name: f.name, blob: f });
     }
     e.target.value = "";
-    renderPhotosHome();
+    renderPhotos();
   });
 
   clearBtn?.addEventListener("click", async ()=>{
     await idbClear();
-    renderPhotosHome();
+    renderPhotos();
   });
 
   document.addEventListener("click", async (e)=>{
     const id = e.target?.getAttribute?.("data-photo-del");
     if(!id) return;
     await idbDelete(id);
-    renderPhotosHome();
+    renderPhotos();
   });
 }
 
@@ -875,7 +911,7 @@ function renderHome(){
   app.innerHTML = `
     <div class="grid grid-2">
 
-      <!-- Left: Trip -->
+      <!-- Left: Trip Summary -->
       <div class="card">
         <div class="row" style="justify-content:space-between; align-items:flex-start;">
           <div>
@@ -888,6 +924,7 @@ function renderHome(){
 
         <div class="hr"></div>
 
+        <!-- ✅ 2) Home order: Flights → Lodging → Transport -->
         <div class="subcard">
           <div class="subcardHead">
             <div>
@@ -899,38 +936,26 @@ function renderHome(){
           </div>
         </div>
 
-        <div class="modules">
-          <!-- Photos -->
-          <section class="module">
-            <div class="module__head">
-              <div class="module__title">📷 Photos</div>
-              <div class="module__actions">
-                <label class="btnGhost" for="photoInputHome">上傳</label>
-                <input type="file" id="photoInputHome" accept="image/*" multiple hidden />
-                <button class="btnGhost" id="clearPhotosHome" type="button">清空</button>
-              </div>
-            </div>
-            <div class="photoGrid" id="photoGridHome"></div>
-            <div class="emptyHint" id="photoEmptyHint">尚未上傳照片</div>
-          </section>
+        <div style="height:12px"></div>
 
-          <!-- Checklist -->
-          <section class="module">
-            <div class="module__head">
-              <div class="module__title">✅ My Checklist</div>
-              <div class="module__actions">
-                <button class="btnGhost" id="clearCheckAll" type="button">清空</button>
-              </div>
-            </div>
+        <div class="subcard">
+          <div class="subcardHead">
+            <div class="subcardTitle">🏨 住宿資訊</div>
+            <div class="pill" style="background:rgba(31,122,76,.08);">可編輯</div>
+          </div>
+          <textarea id="lodgingNote" placeholder="填住宿：飯店名/地址/入住退房/訂房編號/聯絡方式...">${escapeHTML(lodgingNote)}</textarea>
+          <div class="muted" style="margin-top:6px;font-size:12px;">（自動保存）</div>
+        </div>
 
-            <form class="checkForm" id="checkForm">
-              <input id="checkInput" type="text" placeholder="輸入待辦事項，例如：買地鐵票 / 下載離線地圖" />
-              <button class="btnPrimary" type="submit">加入</button>
-            </form>
+        <div style="height:12px"></div>
 
-            <div class="checkList" id="checkList"></div>
-            <div class="emptyHint" id="checkEmptyHint">還沒有待辦清單</div>
-          </section>
+        <div class="subcard">
+          <div class="subcardHead">
+            <div class="subcardTitle">🚆 交通資訊</div>
+            <div class="pill" style="background:rgba(31,122,76,.08);">可編輯</div>
+          </div>
+          <textarea id="transportNote" placeholder="填交通：市區/城際/機場接駁/票券/注意事項...">${escapeHTML(transportNote)}</textarea>
+          <div class="muted" style="margin-top:6px;font-size:12px;">（自動保存）</div>
         </div>
       </div>
 
@@ -968,11 +993,11 @@ function renderHome(){
     </div>
   `;
 
-  // bind & render widgets after DOM ready
-  bindChecklist();
-  bindPhotos();
-  renderChecks();
-  renderPhotosHome();
+  // Auto-save lodging / transport
+  const l = document.getElementById("lodgingNote");
+  const t = document.getElementById("transportNote");
+  l?.addEventListener("input", saveLodging);
+  t?.addEventListener("input", saveTransport);
 }
 
 function renderItinerary(){
@@ -982,11 +1007,11 @@ function renderItinerary(){
       <div class="row" style="justify-content:space-between;align-items:flex-start;">
         <div>
           <div class="muted">Itinerary</div>
-          <h1 class="title">行程 + Checklist</h1>
+          <h1 class="title">行程</h1>
           <div class="muted">${escapeHTML(trip.city)} · ${days} days · ${escapeHTML(trip.date)}</div>
         </div>
         <div class="right">
-          <button class="btn secondary" onclick="location.hash='#notes'">📝 去寫筆記</button>
+          <button class="btn secondary" onclick="location.hash='#notes'">📝 去筆記（照片/清單）</button>
         </div>
       </div>
 
@@ -1208,6 +1233,41 @@ function renderNotes(){
 
       <div class="hr"></div>
 
+      <!-- ✅ 3) Photos + Checklist moved here -->
+      <div class="modules">
+        <section class="module">
+          <div class="module__head">
+            <div class="module__title">📷 Photos</div>
+            <div class="module__actions">
+              <label class="btnGhost" for="photoInputHome">上傳</label>
+              <input type="file" id="photoInputHome" accept="image/*" multiple hidden />
+              <button class="btnGhost" id="clearPhotosHome" type="button">清空</button>
+            </div>
+          </div>
+          <div class="photoGrid" id="photoGridHome"></div>
+          <div class="emptyHint" id="photoEmptyHint">尚未上傳照片</div>
+        </section>
+
+        <section class="module">
+          <div class="module__head">
+            <div class="module__title">✅ My Checklist</div>
+            <div class="module__actions">
+              <button class="btnGhost" id="clearCheckAll" type="button">清空</button>
+            </div>
+          </div>
+
+          <form class="checkForm" id="checkForm">
+            <input id="checkInput" type="text" placeholder="輸入待辦事項，例如：買地鐵票 / 下載離線地圖" />
+            <button class="btnPrimary" type="submit">加入</button>
+          </form>
+
+          <div class="checkList" id="checkList"></div>
+          <div class="emptyHint" id="checkEmptyHint">還沒有待辦清單</div>
+        </section>
+      </div>
+
+      <div style="height:14px;"></div>
+
       <div class="card" style="box-shadow:none;border:1px solid var(--border);">
         <div class="noteHeader">
           <div>
@@ -1223,18 +1283,17 @@ function renderNotes(){
       </div>
     </div>
   `;
+
+  // bind & render widgets after DOM ready
+  bindChecklist();
+  bindPhotos();
+  renderChecks();
+  renderPhotos();
 }
 
 /* ---------------------------
   Main render
 --------------------------- */
-function setActive(routeName){
-  document.querySelectorAll("#tabs .tab").forEach(a=>{
-    a.classList.toggle("active", a.dataset.route === routeName);
-  });
-}
-function route(){ return (location.hash || "#home").replace("#",""); }
-
 function render(){
   const r = route();
   setActive(r);
