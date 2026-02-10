@@ -7,28 +7,37 @@
 
   <style>
     :root{
+      /* Italy vibe */
       --it-green:#1f7a4c;
       --it-red:#c93a2f;
       --it-cream:#fbfaf7;
 
-      --page:#f3f5fb;
+      /* Base layers */
+      --page:#f3f6ff;
       --page-2:#eef2f8;
 
       --card:#ffffff;
-      --card-2:#fcfdff;
+      --card-2:#fbfdff;
 
-      --text:#101418;
-      --muted:#6b7280;
+      --text:#0f172a;
+      --muted:#64748b;
 
-      --border:rgba(17,24,39,.12);
-      --border-strong:rgba(17,24,39,.18);
+      --border:rgba(15,23,42,.10);
+      --border-strong:rgba(15,23,42,.16);
 
-      --shadow:0 16px 40px rgba(17,24,39,.10);
-      --shadow-soft:0 10px 24px rgba(17,24,39,.08);
+      --shadow:0 16px 40px rgba(15,23,42,.10);
+      --shadow-soft:0 10px 24px rgba(15,23,42,.08);
 
       --radius:20px;
-      --brand:linear-gradient(135deg,var(--it-green),#2a9d6b);
+      --brand:linear-gradient(135deg, #1f7a4c, #2aa56f);
+      --brand-soft:linear-gradient(135deg, rgba(31,122,76,.14), rgba(42,165,111,.08));
       --danger:var(--it-red);
+
+      /* colorful blocks */
+      --tint-flight: linear-gradient(135deg, rgba(31,122,76,.14), rgba(255,255,255,0));
+      --tint-lodging: linear-gradient(135deg, rgba(59,130,246,.14), rgba(255,255,255,0));
+      --tint-transport: linear-gradient(135deg, rgba(249,115,22,.14), rgba(255,255,255,0));
+      --tint-notes: linear-gradient(135deg, rgba(99,102,241,.12), rgba(255,255,255,0));
     }
 
     *{ box-sizing:border-box }
@@ -36,7 +45,8 @@
       margin:0;
       font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans TC",
                    "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
-      background: radial-gradient(1200px 800px at 20% -10%, #ffffff 0%, var(--page) 55%, var(--page-2) 100%);
+      background:
+        radial-gradient(900px 600px at 10% -10%, #ffffff 0%, var(--page) 55%, var(--page-2) 100%);
       color:var(--text);
     }
 
@@ -57,6 +67,7 @@
       line-height:1.1;
     }
     .brand .sub{ font-size:12px; color:var(--muted); font-weight:700; letter-spacing:.1px; }
+
     .pill{
       display:inline-flex; align-items:center; gap:8px;
       padding:8px 12px;
@@ -68,8 +79,13 @@
       font-weight:900;
       white-space:nowrap;
     }
+    .pill.danger{
+      background: rgba(201,58,47,.10);
+      border-color: rgba(201,58,47,.20);
+      color: var(--it-red);
+    }
 
-    .container{ max-width:1040px; margin:16px auto 96px; padding:0 16px; }
+    .container{ max-width:1040px; margin:16px auto 96px; padding:0 16px; } /* bottom bar space */
     .grid{ display:grid; gap:14px; }
     @media(min-width:920px){ .grid-2{ grid-template-columns:1.25fr .75fr; } }
 
@@ -88,9 +104,10 @@
     .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
     .right{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
 
+    /* Main buttons */
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      height:44px;
+      height:42px;
       padding:0 14px;
       border-radius:14px;
       border:1px solid transparent;
@@ -123,7 +140,7 @@
       outline:none;
       width:100%;
     }
-    textarea{ min-height:120px; resize:vertical; }
+    textarea{ min-height:110px; resize:vertical; }
     input:focus, select:focus, textarea:focus{
       border-color: rgba(31,122,76,.45);
       box-shadow:0 0 0 4px rgba(31,122,76,.10);
@@ -136,39 +153,49 @@
       padding:12px;
       border:1px solid var(--border);
       border-radius:18px;
-      background: var(--card-2);
+      background: linear-gradient(180deg, #fff, var(--card-2));
       box-shadow: var(--shadow-soft);
     }
     .item h3{ margin:0; font-size:15px; font-weight:900; }
     .item p{ margin:5px 0 0; font-size:13px; color:var(--muted); line-height:1.45; }
-
     .star{ cursor:pointer; user-select:none; font-size:20px; line-height:1; }
     .star.on{ color:#f5a623; }
 
-    /* Subcard */
+    /* Subcard (colored) */
     .subcard{
-      background: linear-gradient(180deg, var(--it-cream), #fff);
       border:1px solid var(--border-strong);
       border-radius:18px;
       padding:12px;
       box-shadow: var(--shadow-soft);
+      background: #fff;
+      overflow:hidden;
+      position:relative;
     }
+    .subcard:before{
+      content:"";
+      position:absolute; inset:0;
+      background: var(--brand-soft);
+      opacity:.8;
+      pointer-events:none;
+    }
+    .subcard > *{ position:relative; }
     .subcardHead{
       display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
       margin-bottom:8px;
     }
     .subcardTitle{ font-weight:900; }
-    .pill.danger{
-      background: rgba(201,58,47,.10);
-      border-color: rgba(201,58,47,.20);
-      color: var(--it-red);
-    }
+
+    .subcard.tint-flight:before{ background: var(--tint-flight); }
+    .subcard.tint-lodging:before{ background: var(--tint-lodging); }
+    .subcard.tint-transport:before{ background: var(--tint-transport); }
+    .subcard.tint-notes:before{ background: var(--tint-notes); }
+
     .subcard textarea{
-      min-height:84px;
-      background: rgba(255,255,255,.75);
+      min-height:86px;
+      background: rgba(255,255,255,.82);
     }
 
-    /* Modules */
+    /* Modules (Photos/Checklist) */
     .modules{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -176,7 +203,7 @@
       margin-top:14px;
     }
     .module{
-      background: var(--card-2);
+      background: linear-gradient(180deg, rgba(255,255,255,.92), var(--card-2));
       border: 1px solid var(--border-strong);
       box-shadow: var(--shadow-soft);
       border-radius: 18px;
@@ -196,42 +223,40 @@
 
     .module__actions{
       display:flex;
-      gap:10px;
+      gap:8px;
       align-items:center;
       flex-shrink:0;
     }
 
-    /* ✅ iOS button fix (上傳不跑版) */
-    .btnGhost, .btnPrimary{
+    /* Minimal small action buttons (iOS-safe) */
+    .btnMini, .btnMiniPrimary{
       display:inline-flex;
       align-items:center;
       justify-content:center;
+      height:34px;
+      padding:0 10px;
+      border-radius:12px;
+      font-weight:900;
+      font-size:13px;
       line-height:1;
       white-space:nowrap;
       -webkit-appearance:none;
       appearance:none;
       font-family: inherit;
-    }
-    label.btnGhost{ cursor:pointer; user-select:none; }
-
-    .btnGhost{
-      height:40px;
-      padding:0 14px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.7);
       cursor:pointer;
-      font-weight:900;
+      user-select:none;
     }
-    .btnPrimary{
-      height:44px;
-      padding:0 14px;
-      border-radius:14px;
-      border:none;
+    label.btnMini{ cursor:pointer; }
+    .btnMini{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.78);
+      color: var(--text);
+    }
+    .btnMiniPrimary{
+      border:1px solid transparent;
       background: var(--brand);
       color:#fff;
-      font-weight:900;
-      cursor:pointer;
+      box-shadow: 0 10px 20px rgba(31,122,76,.14);
     }
 
     /* Photos */
@@ -272,17 +297,18 @@
       border-radius:14px;
       border:1px dashed var(--border-strong);
       color: var(--muted);
-      background: rgba(255,255,255,.6);
+      background: rgba(255,255,255,.65);
     }
 
     /* Checklist */
     .checkForm{
       display:flex;
       gap:10px;
+      align-items:center;
     }
     .checkForm input{
       flex:1;
-      height:44px;
+      height:40px;
       border-radius: 14px;
       border: 1px solid var(--border-strong);
       padding: 0 12px;
@@ -351,11 +377,17 @@
 
     /* Responsive */
     @media (max-width: 860px){
-      .modules{ grid-template-columns: 1fr; }
       .title{ font-size:24px; }
+      /* Notes Photos/Checklist: stack vertically on mobile */
+      .modules{ grid-template-columns: 1fr; }
+      .module__actions{ gap:6px; }
+      .btnMini, .btnMiniPrimary{ height:32px; padding:0 9px; font-size:12px; border-radius:11px; }
+      .checkForm{ flex-wrap:wrap; }
+      .checkForm input{ flex:1 1 100%; }
+      .checkForm button{ width:100%; height:36px; border-radius:12px; }
     }
 
-    /* Itinerary (keep your original styles) */
+    /* Itinerary */
     .chipbar{ display:flex; gap:8px; flex-wrap:wrap; }
     .chip{
       padding:7px 10px;
@@ -374,7 +406,7 @@
       border-radius:18px;
       padding:14px;
       background: #fff;
-      box-shadow: 0 10px 25px rgba(17,24,39,.06);
+      box-shadow: 0 10px 25px rgba(15,23,42,.06);
       margin:12px 0;
     }
     .dayHead{
@@ -386,7 +418,7 @@
     .progressWrap{ display:flex; align-items:center; gap:10px; }
     .bar{
       width:140px; height:10px; border-radius:999px;
-      background: rgba(17,24,39,.08);
+      background: rgba(15,23,42,.08);
       overflow:hidden;
     }
     .bar > div{ height:100%; width:0%; background: var(--brand); border-radius:999px; }
@@ -396,7 +428,7 @@
       grid-template-columns:70px 1fr auto;
       gap:10px;
       padding:10px 0;
-      border-top:1px dashed rgba(17,24,39,.12);
+      border-top:1px dashed rgba(15,23,42,.12);
       align-items:flex-start;
     }
     .slot:first-of-type{ border-top:none; }
@@ -426,6 +458,9 @@
     @media(min-width:920px){
       .bar{ width:180px; }
     }
+
+    /* tiny footer note */
+    .tiny{ font-size:12px; color:var(--muted); }
   </style>
 </head>
 
@@ -457,6 +492,10 @@
 --------------------------- */
 const app = document.getElementById("app");
 
+function uuid(){
+  return (crypto?.randomUUID?.())
+    || ("id-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2));
+}
 function groupBy(arr, keyFn){
   return arr.reduce((acc, x)=>{
     const k = keyFn(x);
@@ -514,12 +553,13 @@ const PLACE_DB = {
         { id:"it-rome-spanish", name:"西班牙台階 Spanish Steps", tags:["逛街","拍照"] },
         { id:"it-rome-navona", name:"納沃納廣場 Piazza Navona", tags:["廣場","散步"] },
         { id:"it-rome-vatican", name:"聖彼得廣場 St. Peter’s Square", tags:["宗教","地標"] },
+
         { id:"it-rome-aventine-keyhole", name:"阿凡提諾鑰匙孔 Buco della Serratura", tags:["祕密景點","拍照","冷門但超讚"] },
         { id:"it-rome-giardino-aranci", name:"橘子花園 Giardino degli Aranci", tags:["夕陽","景觀","散步"] },
         { id:"it-rome-galleria-sciarra", name:"希亞拉拱廊 Galleria Sciarra", tags:["冷門","建築","免費"] },
         { id:"it-rome-quartiere-coppede", name:"科佩代區 Quartiere Coppedè", tags:["祕密景點","建築控","超好拍"] },
         { id:"it-rome-palazzo-spada", name:"斯帕達宮 Palazzo Spada（視覺錯覺長廊）", tags:["冷門","建築","超有趣"] },
-        { id:it-rome-doria-pamphilj", name:"多利亞潘菲利美術館 Galleria Doria Pamphilj", tags:["冷門","室內","收藏超強"] },
+        { id:"it-rome-doria-pamphilj", name:"多利亞潘菲利美術館 Galleria Doria Pamphilj", tags:["冷門","室內","收藏超強"] }, /* ✅ fixed */
         { id:"it-rome-basilica-s-paolo", name:"城外聖保祿大殿 Basilica of Saint Paul Outside the Walls", tags:["冷門","宗教","震撼"] },
         { id:"it-rome-villa-farnesina", name:"法爾內西納別墅 Villa Farnesina", tags:["冷門","壁畫","文藝"] },
         { id:"it-rome-arapacis", name:"奧古斯都和平祭壇 Ara Pacis", tags:["建築","室內","很美"] },
@@ -563,7 +603,7 @@ const PLACE_DB = {
         { id:"it-flo-michelangelo", name:"米開朗基羅廣場 Piazzale Michelangelo", tags:["夕陽","展望台"] },
         { id:"it-flo-mercato", name:"中央市場 Mercato Centrale", tags:["平價美食","市集"] },
         { id:"it-flo-sanminiato", name:"聖米尼亞托教堂 San Miniato al Monte", tags:["祕密景點","夕陽","景觀"] },
-        { id:"it-flo-rose-garden", name:"玫瑰花園 Giardino delle Rose", tags:["免費","散步","冷門"] }, // 參考佛羅倫斯旅遊資訊 :contentReference[oaicite:7]{index=7}
+        { id:"it-flo-rose-garden", name:"玫瑰花園 Giardino delle Rose", tags:["免費","散步","冷門"] },
         { id:"it-flo-bardini", name:"巴爾迪尼花園 Giardino Bardini", tags:["祕密景點","展望","花園"] },
         { id:"it-flo-santacroce", name:"聖十字教堂 Basilica di Santa Croce", tags:["經典","建築","文化"] },
         { id:"it-flo-santamaria-novella", name:"新聖母大殿 Santa Maria Novella", tags:["教堂","市區","好逛"] },
@@ -600,7 +640,7 @@ const PLACE_DB = {
         { id:"it-ven-rialto", name:"里亞托橋 Rialto Bridge", tags:["拍照","運河"] },
         { id:"it-ven-burano", name:"布拉諾彩色島 Burano", tags:["彩色小島","拍照"] },
         { id:"it-ven-accademia", name:"學院橋 Accademia Bridge", tags:["夕陽","橋"] },
-        { id:"it-ven-bovolo", name:"螺旋樓梯 Scala Contarini del Bovolo", tags:["祕密景點","建築","俯瞰"] }, // 官方/館方資訊 :contentReference[oaicite:8]{index=8}
+        { id:"it-ven-bovolo", name:"螺旋樓梯 Scala Contarini del Bovolo", tags:["祕密景點","建築","俯瞰"] },
         { id:"it-ven-ghetto", name:"猶太區 Jewish Ghetto（Cannaregio）", tags:["冷門","在地","散步"] },
         { id:"it-ven-libreria-acqua", name:"水書店 Libreria Acqua Alta", tags:["祕密景點","書店","好拍"] },
         { id:"it-ven-zattere", name:"Zattere 海濱長廊散步", tags:["散步","夕陽","在地"] },
@@ -689,16 +729,18 @@ const itinerary = [
 ];
 
 /* ---------------------------
-  Storage (existing)
+  Storage
 --------------------------- */
 const KEY_FAV = "qna_trip_favs_v1";
 const KEY_DONE = "qna_trip_done_v1";
 const KEY_NOTE_GLOBAL = "qna_trip_note_global_v1";
 const KEY_NOTE_DAY = "qna_trip_note_day_v1";
-
-/* NEW: lodging & transport notes on Home */
 const KEY_LODGING = "qna_trip_home_lodging_v1";
 const KEY_TRANSPORT = "qna_trip_home_transport_v1";
+
+const CHECK_KEY = "qna_trip_notes_checklist_v1"; /* moved to Notes */
+const DB_NAME = "qna_trip_photos_db";
+const STORE = "photos";
 
 function loadJSON(key, fallback){
   try{
@@ -712,15 +754,18 @@ function loadJSON(key, fallback){
 }
 function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 
+/* state */
 let favs = new Set(loadJSON(KEY_FAV, []));
 let doneMap = loadJSON(KEY_DONE, {});
 let dayNotes = loadJSON(KEY_NOTE_DAY, {});
 let globalNote = loadJSON(KEY_NOTE_GLOBAL, "");
+let lodgingNote = loadJSON(KEY_LODGING, "");
+let transportNote = loadJSON(KEY_TRANSPORT, "");
+let checks = loadJSON(CHECK_KEY, []);
 
-/* NEW */
-let lodgingNote = loadJSON(KEY_LODGING, "請自行輸入");
-let transportNote = loadJSON(KEY_TRANSPORT, "請自行輸入");
-
+/* ---------------------------
+  Favorites + Itinerary done
+--------------------------- */
 function toggleFav(id){
   if(favs.has(id)) favs.delete(id); else favs.add(id);
   saveJSON(KEY_FAV, [...favs]);
@@ -759,11 +804,8 @@ function saveTransport(){
 }
 
 /* ---------------------------
-  Checklist (localStorage)
+  Checklist (Notes)
 --------------------------- */
-const CHECK_KEY = "qna_trip_home_checklist_v1";
-let checks = loadJSON(CHECK_KEY, []);
-
 function saveChecks(){ saveJSON(CHECK_KEY, checks); }
 
 function renderChecks(){
@@ -786,50 +828,9 @@ function renderChecks(){
   if(empty) empty.style.display = checks.length ? "none" : "block";
 }
 
-function bindChecklist(){
-  const form = document.getElementById("checkForm");
-  const input = document.getElementById("checkInput");
-  const clearBtn = document.getElementById("clearCheckAll");
-
-  form?.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    const text = (input?.value || "").trim();
-    if(!text) return;
-    checks.push({ id: crypto.randomUUID(), text, done:false, createdAt: Date.now() });
-    saveChecks();
-    renderChecks();
-    input.value = "";
-  });
-
-  clearBtn?.addEventListener("click", ()=>{
-    checks = [];
-    saveChecks();
-    renderChecks();
-  });
-
-  document.addEventListener("click", (e)=>{
-    const delId = e.target?.getAttribute?.("data-check-del");
-    if(!delId) return;
-    checks = checks.filter(x=>x.id !== delId);
-    saveChecks();
-    renderChecks();
-  });
-
-  document.addEventListener("change", (e)=>{
-    const id = e.target?.getAttribute?.("data-check-toggle");
-    if(!id) return;
-    checks = checks.map(x=> x.id===id ? ({...x, done: !!e.target.checked}) : x);
-    saveChecks();
-    renderChecks();
-  });
-}
-
 /* ---------------------------
   Photos (IndexedDB)
 --------------------------- */
-const DB_NAME = "qna_trip_photos_db";
-const STORE = "photos";
-
 function idbOpen(){
   return new Promise((resolve, reject)=>{
     const req = indexedDB.open(DB_NAME, 1);
@@ -881,7 +882,7 @@ async function idbClear(){
 }
 
 async function renderPhotos(){
-  const grid = document.getElementById("photoGridHome");
+  const grid = document.getElementById("photoGrid");
   const empty = document.getElementById("photoEmptyHint");
   if(!grid) return;
 
@@ -902,33 +903,6 @@ async function renderPhotos(){
   }
 
   if(empty) empty.style.display = items.length ? "none" : "block";
-}
-
-function bindPhotos(){
-  const input = document.getElementById("photoInputHome");
-  const clearBtn = document.getElementById("clearPhotosHome");
-
-  input?.addEventListener("change", async (e)=>{
-    const files = Array.from(e.target.files || []);
-    for(const f of files){
-      if(!f.type.startsWith("image/")) continue;
-      await idbPut({ id: crypto.randomUUID(), createdAt: Date.now(), name: f.name, blob: f });
-    }
-    e.target.value = "";
-    renderPhotos();
-  });
-
-  clearBtn?.addEventListener("click", async ()=>{
-    await idbClear();
-    renderPhotos();
-  });
-
-  document.addEventListener("click", async (e)=>{
-    const id = e.target?.getAttribute?.("data-photo-del");
-    if(!id) return;
-    await idbDelete(id);
-    renderPhotos();
-  });
 }
 
 /* ---------------------------
@@ -965,39 +939,42 @@ function renderHome(){
 
         <div class="hr"></div>
 
-        <!-- ✅ 2) Home order: Flights → Lodging → Transport -->
-        <div class="subcard">
+        <!-- Home order: Flights → Lodging → Transport -->
+        <div class="subcard tint-flight">
           <div class="subcardHead">
             <div>
               <div class="subcardTitle">✈️ 航班資訊</div>
               <div class="muted" style="margin-top:6px;">去程：<strong>${escapeHTML(trip.flights.outbound)}</strong></div>
               <div class="muted" style="margin-top:6px;">回程：<strong>${escapeHTML(trip.flights.inbound)}</strong></div>
             </div>
-            <div class="pill danger">CI75 / CI76</div>
+            <div class="pill danger">CI</div>
           </div>
         </div>
 
         <div style="height:12px"></div>
 
-        <div class="subcard">
+        <div class="subcard tint-lodging">
           <div class="subcardHead">
             <div class="subcardTitle">🏨 住宿資訊</div>
-            <div class="pill" style="background:rgba(31,122,76,.08);">可編輯</div>
+            <div class="pill" style="background:rgba(59,130,246,.10);border-color:rgba(59,130,246,.18);color:#1d4ed8;">可編輯</div>
           </div>
-          <textarea id="lodgingNote" placeholder="填住宿：飯店名/地址/入住退房/訂房編號/聯絡方式...">${escapeHTML(lodgingNote)}</textarea>
-          <div class="muted" style="margin-top:6px;font-size:12px;">（自動保存）</div>
+          <textarea id="lodgingNote" placeholder="飯店名/地址/入住退房/訂房編號/聯絡方式...">${escapeHTML(lodgingNote)}</textarea>
+          <div class="tiny" style="margin-top:6px;">（自動保存）</div>
         </div>
 
         <div style="height:12px"></div>
 
-        <div class="subcard">
+        <div class="subcard tint-transport">
           <div class="subcardHead">
             <div class="subcardTitle">🚆 交通資訊</div>
-            <div class="pill" style="background:rgba(31,122,76,.08);">可編輯</div>
+            <div class="pill" style="background:rgba(249,115,22,.10);border-color:rgba(249,115,22,.18);color:#c2410c;">可編輯</div>
           </div>
-          <textarea id="transportNote" placeholder="填交通：市區/城際/機場接駁/票券/注意事項...">${escapeHTML(transportNote)}</textarea>
-          <div class="muted" style="margin-top:6px;font-size:12px;">（自動保存）</div>
+          <textarea id="transportNote" placeholder="市區/城際/機場接駁/票券/注意事項...">${escapeHTML(transportNote)}</textarea>
+          <div class="tiny" style="margin-top:6px;">（自動保存）</div>
         </div>
+
+        <div style="height:10px"></div>
+        <div class="tiny">提示：照片＆待辦清單在「筆記」分頁。</div>
       </div>
 
       <!-- Right: Quick Picks -->
@@ -1022,7 +999,7 @@ function renderHome(){
                     <p>${escapeHTML(p.area)} · ${labelType(p.type)}${p.tags?.length ? ` · #${p.tags.map(escapeHTML).join(" #")}` : ""}</p>
                   </div>
                   <div class="right">
-                    <span class="star on" onclick="toggleFav('${p.id}')" title="取消收藏">★</span>
+                    <span class="star on" data-fav-toggle="${p.id}" title="取消收藏">★</span>
                   </div>
                 </div>
               `).join("")
@@ -1034,7 +1011,7 @@ function renderHome(){
     </div>
   `;
 
-  // Auto-save lodging / transport
+  // auto-save lodging / transport (bind per-view, safe)
   const l = document.getElementById("lodgingNote");
   const t = document.getElementById("transportNote");
   l?.addEventListener("input", saveLodging);
@@ -1095,7 +1072,7 @@ function renderDay(d){
               <div class="en">${escapeHTML(it.en)}</div>
             </div>
             <label class="check" title="勾選已完成">
-              <input type="checkbox" ${isDone ? "checked" : ""} onchange="toggleDone(${d.day}, ${idx})">
+              <input type="checkbox" ${isDone ? "checked" : ""} data-day="${d.day}" data-idx="${idx}">
               ${isDone ? "已完成" : "未完成"}
             </label>
           </div>
@@ -1110,7 +1087,7 @@ function renderDay(d){
             <div class="noteTitle">📝 Day ${d.day} Notes</div>
             <div class="noteHint">踩雷/必吃/交通提醒/買票資訊…（自動保存）</div>
           </div>
-          <button class="btn secondary" onclick="saveDayNote(${d.day})">💾 儲存</button>
+          <button class="btn secondary" data-save-daynote="${d.day}">💾 儲存</button>
         </div>
         <div style="height:10px"></div>
         <textarea id="dayNote-${d.day}" placeholder="寫下今天的筆記…">${escapeHTML(noteVal)}</textarea>
@@ -1194,15 +1171,8 @@ function renderTypeChips(active){
     {k:"dessert", t:"🍰甜點"},
   ];
   return chips.map(c=>`
-    <span class="chip ${active===c.k ? "active":""}" onclick="setType('${c.k}')">${c.t}</span>
+    <span class="chip ${active===c.k ? "active":""}" data-type="${c.k}">${c.t}</span>
   `).join("");
-}
-
-function setType(t){
-  window.__type = t;
-  const chipbar = document.getElementById("chipbar");
-  if(chipbar) chipbar.innerHTML = renderTypeChips(t);
-  applyFilter();
 }
 
 function applyFilter(){
@@ -1249,7 +1219,7 @@ function applyFilter(){
               </div>
               <div class="right">
                 <span class="star ${favs.has(p.id) ? "on" : ""}"
-                  onclick="toggleFav('${p.id}')"
+                  data-fav-toggle="${p.id}"
                   title="${favs.has(p.id) ? "取消收藏" : "加入收藏"}">${favs.has(p.id) ? "★" : "☆"}</span>
               </div>
             </div>
@@ -1269,23 +1239,34 @@ function renderNotes(){
           <h1 class="title">旅程筆記</h1>
           <div class="muted">寫下交通/花費/踩雷/必吃/購物清單…（自動保存到你的瀏覽器）</div>
         </div>
-        <button class="btn secondary" onclick="saveGlobalNote()">💾 儲存</button>
+        <button class="btn secondary" data-save-global>💾 儲存</button>
       </div>
 
       <div class="hr"></div>
 
-      <!-- ✅ 3) Photos + Checklist moved here -->
+      <div class="subcard tint-notes" style="margin-bottom:14px;">
+        <div class="subcardHead">
+          <div>
+            <div class="subcardTitle">🧾 小筆記</div>
+            <div class="muted" style="margin-top:4px;">退稅、ESIM、票券、注意事項、行李清單…</div>
+          </div>
+        </div>
+        <textarea id="globalNote" placeholder="寫下你的旅程總筆記…">${escapeHTML(globalNote)}</textarea>
+        <div class="tiny" style="margin-top:8px;">Tip：每日筆記在「行程」每一天底下也可以寫。</div>
+      </div>
+
+      <!-- Photos + Checklist -->
       <div class="modules">
         <section class="module">
           <div class="module__head">
             <div class="module__title">📷 Photos</div>
             <div class="module__actions">
-              <label class="btnGhost" for="photoInputHome">上傳</label>
-              <input type="file" id="photoInputHome" accept="image/*" multiple hidden />
-              <button class="btnGhost" id="clearPhotosHome" type="button">清空</button>
+              <label class="btnMini" for="photoInput">上傳</label>
+              <input type="file" id="photoInput" accept="image/*" multiple hidden />
+              <button class="btnMini" id="clearPhotos" type="button">清空</button>
             </div>
           </div>
-          <div class="photoGrid" id="photoGridHome"></div>
+          <div class="photoGrid" id="photoGrid"></div>
           <div class="emptyHint" id="photoEmptyHint">尚未上傳照片</div>
         </section>
 
@@ -1293,43 +1274,146 @@ function renderNotes(){
           <div class="module__head">
             <div class="module__title">✅ My Checklist</div>
             <div class="module__actions">
-              <button class="btnGhost" id="clearCheckAll" type="button">清空</button>
+              <button class="btnMini" id="clearCheckAll" type="button">清空</button>
             </div>
           </div>
 
           <form class="checkForm" id="checkForm">
-            <input id="checkInput" type="text" placeholder="輸入待辦事項，例如：買地鐵票 / 下載離線地圖" />
-            <button class="btnPrimary" type="submit">加入</button>
+            <input id="checkInput" type="text" placeholder="輸入待辦，例如：買地鐵票 / 下載離線地圖" />
+            <button class="btnMiniPrimary" type="submit">加入</button>
           </form>
 
           <div class="checkList" id="checkList"></div>
           <div class="emptyHint" id="checkEmptyHint">還沒有待辦清單</div>
         </section>
       </div>
-
-      <div style="height:14px;"></div>
-
-      <div class="card" style="box-shadow:none;border:1px solid var(--border);">
-        <div class="noteHeader">
-          <div>
-            <div class="noteTitle">🧾 小筆記</div>
-            <div class="noteHint">例如：退稅、ESIM、票券、注意事項、行李清單…</div>
-          </div>
-        </div>
-        <div style="height:10px"></div>
-        <textarea id="globalNote" placeholder="寫下你的旅程總筆記…">${escapeHTML(globalNote)}</textarea>
-        <div class="muted" style="margin-top:8px;font-size:12px;">
-          Tip：每日筆記在「行程」每一天底下也可以寫。
-        </div>
-      </div>
     </div>
   `;
 
-  // bind & render widgets after DOM ready
-  bindChecklist();
-  bindPhotos();
+  // render after DOM exists
   renderChecks();
   renderPhotos();
+}
+
+/* ---------------------------
+  Global event delegation (bind once, no duplicate listeners)
+--------------------------- */
+let __bound = false;
+function bindOnce(){
+  if(__bound) return;
+  __bound = true;
+
+  // clicks
+  document.addEventListener("click", async (e)=>{
+    const t = e.target;
+
+    // favorite toggle (Home/Explore)
+    const favId = t?.getAttribute?.("data-fav-toggle");
+    if(favId){ toggleFav(favId); return; }
+
+    // type chips (Explore)
+    const typeKey = t?.getAttribute?.("data-type");
+    if(typeKey){
+      window.__type = typeKey;
+      const chipbar = document.getElementById("chipbar");
+      if(chipbar) chipbar.innerHTML = renderTypeChips(typeKey);
+      applyFilter();
+      return;
+    }
+
+    // save day note (Itinerary)
+    const dn = t?.getAttribute?.("data-save-daynote");
+    if(dn){
+      saveDayNote(Number(dn));
+      return;
+    }
+
+    // save global note (Notes)
+    if(t?.hasAttribute?.("data-save-global")){
+      saveGlobalNote();
+      return;
+    }
+
+    // checklist delete (Notes)
+    const delId = t?.getAttribute?.("data-check-del");
+    if(delId){
+      checks = checks.filter(x=>x.id !== delId);
+      saveChecks();
+      renderChecks();
+      return;
+    }
+
+    // checklist clear
+    if(t?.id === "clearCheckAll"){
+      checks = [];
+      saveChecks();
+      renderChecks();
+      return;
+    }
+
+    // photos clear
+    if(t?.id === "clearPhotos"){
+      await idbClear();
+      renderPhotos();
+      return;
+    }
+
+    // photo delete
+    const photoDel = t?.getAttribute?.("data-photo-del");
+    if(photoDel){
+      await idbDelete(photoDel);
+      renderPhotos();
+      return;
+    }
+  });
+
+  // changes
+  document.addEventListener("change", async (e)=>{
+    const t = e.target;
+
+    // itinerary checkbox
+    const day = t?.getAttribute?.("data-day");
+    const idx = t?.getAttribute?.("data-idx");
+    if(day !== null && idx !== null){
+      toggleDone(Number(day), Number(idx));
+      return;
+    }
+
+    // checklist toggle
+    const checkToggle = t?.getAttribute?.("data-check-toggle");
+    if(checkToggle){
+      checks = checks.map(x=> x.id===checkToggle ? ({...x, done: !!t.checked}) : x);
+      saveChecks();
+      renderChecks();
+      return;
+    }
+
+    // photos upload
+    if(t?.id === "photoInput"){
+      const files = Array.from(t.files || []);
+      for(const f of files){
+        if(!f.type.startsWith("image/")) continue;
+        await idbPut({ id: uuid(), createdAt: Date.now(), name: f.name, blob: f });
+      }
+      t.value = "";
+      renderPhotos();
+      return;
+    }
+  });
+
+  // submit checklist
+  document.addEventListener("submit", (e)=>{
+    const form = e.target;
+    if(form?.id !== "checkForm") return;
+    e.preventDefault();
+    const input = document.getElementById("checkInput");
+    const text = (input?.value || "").trim();
+    if(!text) return;
+    checks.push({ id: uuid(), text, done:false, createdAt: Date.now() });
+    saveChecks();
+    renderChecks();
+    input.value = "";
+  });
 }
 
 /* ---------------------------
@@ -1339,15 +1423,16 @@ function render(){
   const r = route();
   setActive(r);
 
-  if(r === "home") return renderHome();
-  if(r === "itinerary") return renderItinerary();
-  if(r === "explore") return renderExplore();
-  if(r === "notes") return renderNotes();
+  if(r === "home") { renderHome(); return; }
+  if(r === "itinerary") { renderItinerary(); return; }
+  if(r === "explore") { renderExplore(); return; }
+  if(r === "notes") { renderNotes(); return; }
 
   location.hash = "#home";
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  bindOnce();
   if(!location.hash) location.hash = "#home";
   render();
 });
