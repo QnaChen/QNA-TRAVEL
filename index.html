@@ -23,19 +23,17 @@
       --radius:18px;
 
       --brand:linear-gradient(135deg,var(--it-green),#2a9d6b);
-      --danger:var(--it-red);
     }
 
     *{ box-sizing:border-box }
-body{
-  margin:0;
-  font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans TC",
-               "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
-  background:var(--bg);
-  color:var(--text)
-}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans TC",
+                   "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+      background:var(--bg);
+      color:var(--text)
+    }
 
-    /* Top App Bar */
     header{
       position:sticky; top:0; z-index:20;
       background: rgba(255,255,255,.78);
@@ -65,7 +63,7 @@ body{
       white-space:nowrap;
     }
 
-    .container{ max-width:1040px; margin:16px auto 90px; padding:0 16px; } /* bottom bar space */
+    .container{ max-width:1040px; margin:16px auto 96px; padding:0 16px; } /* bottom bar space */
     .grid{ display:grid; gap:14px; }
     @media(min-width:920px){ .grid-2{ grid-template-columns:1.2fr .8fr; } }
 
@@ -116,9 +114,11 @@ body{
       width:100%;
     }
     textarea{ min-height:120px; resize:vertical; }
-    input:focus, select:focus, textarea:focus{ border-color: rgba(31,122,76,.45); box-shadow:0 0 0 4px rgba(31,122,76,.10); }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(31,122,76,.45);
+      box-shadow:0 0 0 4px rgba(31,122,76,.10);
+    }
 
-    /* Lists */
     .list{ display:flex; flex-direction:column; gap:10px; }
     .item{
       display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
@@ -133,7 +133,6 @@ body{
     .star{ cursor:pointer; user-select:none; font-size:20px; line-height:1; }
     .star.on{ color:#f5a623; }
 
-    /* Chips */
     .chipbar{ display:flex; gap:8px; flex-wrap:wrap; }
     .chip{
       padding:7px 10px;
@@ -147,7 +146,6 @@ body{
     }
     .chip.active{ background: rgba(31,122,76,.10); border-color: rgba(31,122,76,.22); color: var(--it-green); }
 
-    /* Itinerary day card */
     .dayCard{
       border:1px solid var(--border);
       border-radius:18px;
@@ -196,17 +194,12 @@ body{
       white-space:nowrap;
     }
     .check input{ width:16px; height:16px; }
-    .done{
-      opacity:.65;
-      filter: grayscale(.1);
-    }
+    .done{ opacity:.65; filter: grayscale(.1); }
 
-    /* Notes */
     .noteHeader{ display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap; }
     .noteTitle{ font-size:16px; font-weight:900; margin:0; }
     .noteHint{ font-size:12px; color:var(--muted); }
 
-    /* Bottom Tab Bar (mobile-first) */
     .tabbar{
       position:fixed; left:0; right:0; bottom:0; z-index:30;
       background: rgba(255,255,255,.92);
@@ -227,6 +220,7 @@ body{
       text-decoration:none;
       font-weight:900;
       font-size:12px;
+      -webkit-tap-highlight-color: transparent;
     }
     .tab .ico{ font-size:18px; }
     .tab.active{
@@ -235,7 +229,6 @@ body{
       border-color: rgba(31,122,76,.18);
     }
 
-    /* Desktop nav hide? keep top only */
     @media(min-width:920px){
       .bar{ width:180px; }
     }
@@ -255,7 +248,6 @@ body{
 
 <div class="container" id="app"></div>
 
-<!-- Bottom Tabs -->
 <div class="tabbar">
   <div class="tabs" id="tabs">
     <a class="tab" href="#home" data-route="home"><div class="ico">🏠</div>Home</a>
@@ -286,6 +278,14 @@ function typeEmoji(t){
   const map = { spot:"📍", food:"🍽️", cafe:"☕", dessert:"🍰" };
   return map[t] || "•";
 }
+function escapeHTML(s){
+  return String(s ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
 
 /* ---------------------------
   Data
@@ -302,7 +302,6 @@ const trip = {
   }
 };
 
-// 國家 → 城市 → 類型（spot / food / cafe / dessert）
 const PLACE_DB = {
   Italy: {
     Rome: {
@@ -448,39 +447,58 @@ const itinerary = [
 ];
 
 /* ---------------------------
-  Storage: favorites / checklist / notes
+  Storage
 --------------------------- */
 const KEY_FAV = "qna_trip_favs_v1";
-const KEY_DONE = "qna_trip_done_v1";   // checklist
+const KEY_DONE = "qna_trip_done_v1";
 const KEY_NOTE_GLOBAL = "qna_trip_note_global_v1";
-const KEY_NOTE_DAY = "qna_trip_note_day_v1"; // object { "1": "...", "2": "..." }
+const KEY_NOTE_DAY = "qna_trip_note_day_v1";
 
 function loadJSON(key, fallback){
-  try{ return JSON.parse(localStorage.getItem(key) || "") ?? fallback; }
-  catch{ return fallback; }
+  try{
+    const raw = localStorage.getItem(key);
+    if(raw === null) return fallback;
+    const val = JSON.parse(raw);
+    return (val ?? fallback);
+  }catch{
+    return fallback;
+  }
 }
 function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 
 let favs = new Set(loadJSON(KEY_FAV, []));
-let doneMap = loadJSON(KEY_DONE, {}); // { "1-0": true, "1-1": false ... }
-let dayNotes = loadJSON(KEY_NOTE_DAY, {}); // { "1": "...", ... }
+let doneMap = loadJSON(KEY_DONE, {});
+let dayNotes = loadJSON(KEY_NOTE_DAY, {});
+let globalNote = loadJSON(KEY_NOTE_GLOBAL, "");
 
 function toggleFav(id){
   if(favs.has(id)) favs.delete(id); else favs.add(id);
   saveJSON(KEY_FAV, [...favs]);
-  render(); // refresh quick picks etc
+  render();
 }
-
 function itemKey(day, idx){ return `${day}-${idx}`; }
 function toggleDone(day, idx){
   const k = itemKey(day, idx);
   doneMap[k] = !doneMap[k];
   saveJSON(KEY_DONE, doneMap);
-  render(); // refresh progress + styles
+  render();
+}
+function saveDayNote(day){
+  const el = document.getElementById(`dayNote-${day}`);
+  if(!el) return;
+  dayNotes[String(day)] = el.value;
+  saveJSON(KEY_NOTE_DAY, dayNotes);
+  render(); // optional: refresh
+}
+function saveGlobalNote(){
+  const el = document.getElementById("globalNote");
+  if(!el) return;
+  globalNote = el.value;
+  saveJSON(KEY_NOTE_GLOBAL, globalNote);
 }
 
 /* ---------------------------
-  Router + Tabs active
+  Router + Tabs
 --------------------------- */
 function route(){ return (location.hash || "#home").replace("#",""); }
 function setActive(routeName){
@@ -511,7 +529,6 @@ function renderHome(){
 
         <div class="hr"></div>
 
-        <!-- Flight Card -->
         <div class="card" style="box-shadow:none;border:1px solid var(--border);background:linear-gradient(180deg,var(--it-cream),#fff);">
           <div class="row" style="justify-content:space-between;align-items:flex-start;">
             <div>
@@ -530,10 +547,6 @@ function renderHome(){
           <button class="btn secondary" onclick="location.hash='#explore'">✨ Explore 推薦</button>
           <button class="btn secondary" onclick="location.hash='#notes'">📝 旅程筆記</button>
         </div>
-
-        <div class="muted" style="margin-top:10px;font-size:12px;">
-          
-        </div>
       </div>
 
       <div class="card">
@@ -544,6 +557,7 @@ function renderHome(){
           </div>
           <div class="pill">Top ${Math.min(favArr.length, 6)}</div>
         </div>
+
         <div class="hr"></div>
 
         <div class="list">
@@ -552,8 +566,8 @@ function renderHome(){
               ? favArr.slice(0,6).map(p=>`
                 <div class="item">
                   <div>
-                    <h3>${typeEmoji(p.type)} ${p.name}</h3>
-                    <p>${p.area} · ${labelType(p.type)}${p.tags?.length ? ` · #${p.tags.join(" #")}` : ""}</p>
+                    <h3>${typeEmoji(p.type)} ${escapeHTML(p.name)}</h3>
+                    <p>${escapeHTML(p.area)} · ${labelType(p.type)}${p.tags?.length ? ` · #${p.tags.map(escapeHTML).join(" #")}` : ""}</p>
                   </div>
                   <div class="right">
                     <span class="star on" onclick="toggleFav('${p.id}')" title="取消收藏">★</span>
@@ -594,21 +608,19 @@ function renderDay(d){
   const total = d.items.length;
   const done = d.items.reduce((acc, _, idx)=> acc + (doneMap[itemKey(d.day, idx)] ? 1 : 0), 0);
   const pct = total ? Math.round((done/total)*100) : 0;
-
   const noteVal = (dayNotes[String(d.day)] || "");
-  const noteId = `dayNote-${d.day}`;
 
   return `
     <div class="dayCard" id="day-${d.day}">
       <div class="dayHead">
         <div>
-          <div class="dayTitle">Day ${d.day} (${d.date}) · ${d.city}</div>
-          <div class="dayMeta">${d.move ? "🚄 " + d.move : ""}</div>
+          <div class="dayTitle">Day ${d.day} (${d.date}) · ${escapeHTML(d.city)}</div>
+          <div class="dayMeta">${d.move ? "🚄 " + escapeHTML(d.move) : ""}</div>
         </div>
         <div class="progressWrap">
           <div class="muted" style="font-weight:900;">${done}/${total}</div>
           <div class="bar"><div style="width:${pct}%"></div></div>
-          <div class="pill" style="background:rgba(31,122,76,.10);border-color:rgba(31,122,76,.18);color:var(--it-green);">${pct}%</div>
+          <div class="pill">${pct}%</div>
         </div>
       </div>
 
@@ -618,10 +630,10 @@ function renderDay(d){
         const isDone = !!doneMap[itemKey(d.day, idx)];
         return `
           <div class="slot ${isDone ? "done" : ""}">
-            <div class="timeTag">${it.period}</div>
+            <div class="timeTag">${escapeHTML(it.period)}</div>
             <div class="slotMain">
-              <div><strong>${it.zh}</strong></div>
-              <div class="en">${it.en}</div>
+              <div><strong>${escapeHTML(it.zh)}</strong></div>
+              <div class="en">${escapeHTML(it.en)}</div>
             </div>
             <label class="check" title="勾選已完成">
               <input type="checkbox" ${isDone ? "checked" : ""} onchange="toggleDone(${d.day}, ${idx})">
@@ -637,12 +649,12 @@ function renderDay(d){
         <div class="noteHeader">
           <div>
             <div class="noteTitle">📝 Day ${d.day} Notes</div>
-            <div class="noteHint">例如：踩雷/必吃/交通提醒/買票資訊…（自動保存）</div>
+            <div class="noteHint">踩雷/必吃/交通提醒/買票資訊…（自動保存）</div>
           </div>
           <button class="btn secondary" onclick="saveDayNote(${d.day})">💾 儲存</button>
         </div>
         <div style="height:10px"></div>
-        <textarea id="${noteId}" placeholder="寫下今天的筆記…">${escapeHTML(noteVal)}</textarea>
+        <textarea id="dayNote-${d.day}" placeholder="寫下今天的筆記…">${escapeHTML(noteVal)}</textarea>
       </div>
     </div>
   `;
@@ -650,8 +662,10 @@ function renderDay(d){
 
 function renderExplore(){
   const type = window.__type || "all";
+
   const countries = [...new Set(places.map(p=>p.country))].sort();
   const currentCountry = window.__country || (countries[0] || "Italy");
+
   const cities = [...new Set(places.filter(p=>p.country===currentCountry).map(p=>p.area))].sort();
   const currentCity = window.__city || "all";
 
@@ -671,12 +685,18 @@ function renderExplore(){
         <input id="q" placeholder="搜尋：名稱 / 標籤..." style="flex:1;min-width:220px;" />
 
         <select id="countrySel" style="max-width:200px;">
-          ${countries.map(c=>`<option value="${c}" ${c===currentCountry?"selected":""}>${c==="Italy"?"🇮🇹 Italy":"🌍 "+c}</option>`).join("")}
+          ${countries.map(c=>`
+            <option value="${escapeHTML(c)}" ${c===currentCountry?"selected":""}>
+              ${c==="Italy"?"🇮🇹 Italy":"🌍 "+c}
+            </option>
+          `).join("")}
         </select>
 
         <select id="citySel" style="max-width:200px;">
           <option value="all" ${currentCity==="all"?"selected":""}>全部城市</option>
-          ${cities.map(a=>`<option value="${a}" ${a===currentCity?"selected":""}>${a}</option>`).join("")}
+          ${cities.map(a=>`
+            <option value="${escapeHTML(a)}" ${a===currentCity?"selected":""}>${escapeHTML(a)}</option>
+          `).join("")}
         </select>
       </div>
 
@@ -695,7 +715,7 @@ function renderExplore(){
   document.getElementById("countrySel").addEventListener("change",(e)=>{
     window.__country = e.target.value;
     window.__city = "all";
-    renderExplore(); // refresh city options
+    renderExplore();
   });
 
   document.getElementById("citySel").addEventListener("change",(e)=>{
@@ -712,4 +732,128 @@ function renderTypeChips(active){
     {k:"spot", t:"📍景點"},
     {k:"food", t:"🍽️餐廳"},
     {k:"cafe", t:"☕咖啡"},
-    {k:"dessert", t:"🍰甜點
+    {k:"dessert", t:"🍰甜點"},
+  ];
+  return chips.map(c=>`
+    <span class="chip ${active===c.k ? "active":""}" onclick="setType('${c.k}')">${c.t}</span>
+  `).join("");
+}
+
+function setType(t){
+  window.__type = t;
+  const chipbar = document.getElementById("chipbar");
+  if(chipbar) chipbar.innerHTML = renderTypeChips(t);
+  applyFilter();
+}
+
+function applyFilter(){
+  const list = document.getElementById("placeList");
+  if(!list) return;
+
+  const q = (document.getElementById("q")?.value || "").toLowerCase().trim();
+  const type = window.__type || "all";
+  const country = window.__country || "Italy";
+  const city = window.__city || "all";
+
+  const filtered = places.filter(p=>{
+    if(country && p.country !== country) return false;
+    if(city !== "all" && p.area !== city) return false;
+    if(type !== "all" && p.type !== type) return false;
+
+    const hay = (p.name+" "+(p.tags||[]).join(" ")).toLowerCase();
+    if(q && !hay.includes(q)) return false;
+
+    return true;
+  });
+
+  if(!filtered.length){
+    list.innerHTML = `<div class="muted">沒有符合的結果，換個關鍵字或篩選條件試試。</div>`;
+    return;
+  }
+
+  // 依城市分組
+  const byArea = groupBy(filtered, p=>p.area || "Other");
+  const areas = Object.keys(byArea).sort();
+
+  list.innerHTML = areas.map(area=>{
+    const itemsArea = byArea[area];
+
+    return `
+      <div style="margin:8px 0 18px;">
+        <div class="pill" style="background:rgba(31,122,76,.08);">${escapeHTML(area)} · ${itemsArea.length} items</div>
+        <div style="height:10px"></div>
+
+        <div class="list">
+          ${itemsArea.map(p=>`
+            <div class="item">
+              <div>
+                <h3>${typeEmoji(p.type)} ${escapeHTML(p.name)}</h3>
+                <p>${labelType(p.type)}${p.tags?.length ? ` · #${p.tags.map(escapeHTML).join(" #")}` : ""}</p>
+              </div>
+              <div class="right">
+                <span class="star ${favs.has(p.id) ? "on" : ""}"
+                  onclick="toggleFav('${p.id}')"
+                  title="${favs.has(p.id) ? "取消收藏" : "加入收藏"}">${favs.has(p.id) ? "★" : "☆"}</span>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderNotes(){
+  app.innerHTML = `
+    <div class="card">
+      <div class="row" style="justify-content:space-between;align-items:flex-end;">
+        <div>
+          <div class="muted">Notes</div>
+          <h1 class="title">旅程筆記</h1>
+          <div class="muted">寫下交通/花費/踩雷/必吃/購物清單…（自動保存到你的瀏覽器）</div>
+        </div>
+        <button class="btn secondary" onclick="saveGlobalNote()">💾 儲存</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);">
+        <div class="noteHeader">
+          <div>
+            <div class="noteTitle">🧾 全域筆記</div>
+            <div class="noteHint">例如：退稅、SIM卡、票券、注意事項、行李清單…</div>
+          </div>
+        </div>
+        <div style="height:10px"></div>
+        <textarea id="globalNote" placeholder="寫下你的旅程總筆記…">${escapeHTML(globalNote)}</textarea>
+        <div class="muted" style="margin-top:8px;font-size:12px;">
+          Tip：每日筆記在「行程」每一天底下也可以寫。
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ---------------------------
+  Main render (single)
+--------------------------- */
+function render(){
+  const r = route();
+  setActive(r);
+
+  if(r === "home") return renderHome();
+  if(r === "itinerary") return renderItinerary();
+  if(r === "explore") return renderExplore();
+  if(r === "notes") return renderNotes();
+
+  location.hash = "#home";
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  // default state
+  if(!location.hash) location.hash = "#home";
+  render();
+});
+</script>
+</body>
+</html>
