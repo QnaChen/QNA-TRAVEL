@@ -6,24 +6,30 @@
   <title>QNA & Peter · Italy Trip</title>
 
   <style>
-    :root{
       /* Italy vibe */
-      --it-green:#1f7a4c;
-      --it-red:#c93a2f;
-      --it-cream:#fbfaf7;
+  --it-green:#1f7a4c;
+  --it-red:#c93a2f;
+  --it-cream:#fbfaf7;
 
-      /* Base */
-      --bg:#f6f7fb;
-      --card:#ffffff;
-      --text:#121212;
-      --muted:#6b7280;
-      --border:rgba(17,24,39,.10);
+  /* NEW: background layers */
+  --page:#f3f5fb;          /* 整體底色更偏灰藍一點，襯托卡片 */
+  --page-2:#eef2f8;        /* 可用在區塊背景 */
+  --card:#ffffff;          /* 卡片白 */
+  --card-2:#fcfdff;        /* 次卡片，微微不同白 */
+  --text:#101418;
+  --muted:#6b7280;
 
-      --shadow:0 10px 30px rgba(17,24,39,.08);
-      --radius:18px;
+  /* NEW: stronger border & shadow */
+  --border:rgba(17,24,39,.12);
+  --border-strong:rgba(17,24,39,.18);
+  --shadow:0 16px 40px rgba(17,24,39,.10);
+  --shadow-soft:0 10px 24px rgba(17,24,39,.08);
 
-      --brand:linear-gradient(135deg,var(--it-green),#2a9d6b);
-    }
+  --radius:20px;
+
+  --brand:linear-gradient(135deg,var(--it-green),#2a9d6b);
+  --danger:var(--it-red);
+}
 
     *{ box-sizing:border-box }
     body{
