@@ -3,165 +3,273 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>QNA Travel</title>
+  <title>QNA & Peter · Italy Trip</title>
+
   <style>
     :root{
-      --bg:#f7f7f7; --card:#fff; --text:#111; --muted:#666; --border:#ddd;
-      --brand:#111; --brandText:#fff;
+      /* Italy vibe */
+      --it-green:#1f7a4c;
+      --it-red:#c93a2f;
+      --it-cream:#fbfaf7;
+
+      /* Base */
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#121212;
+      --muted:#6b7280;
+      --border:rgba(17,24,39,.10);
+
+      --shadow:0 10px 30px rgba(17,24,39,.08);
+      --radius:18px;
+
+      --brand:linear-gradient(135deg,var(--it-green),#2a9d6b);
+      --danger:var(--it-red);
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--text)}
-    header{position:sticky;top:0;z-index:9;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
-    .topbar{max-width:980px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .brand{font-weight:800;letter-spacing:.2px}
-    nav{display:flex;gap:10px;flex-wrap:wrap}
-    nav a{color:var(--text);text-decoration:none;font-size:14px;padding:6px 10px;border-radius:999px}
-    nav a:hover{background:#f1f1f1}
-    nav a.active{background:#111;color:#fff}
-    .container{max-width:980px;margin:18px auto;padding:0 16px}
-    .grid{display:grid;gap:12px}
-    @media(min-width:860px){ .grid-2{grid-template-columns:1.2fr .8fr} }
-    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
-    .title{font-size:22px;font-weight:800;margin:0 0 8px}
-    .muted{color:var(--muted);font-size:14px}
-    .hr{height:1px;background:var(--border);margin:12px 0}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:var(--brandText);border:none;border-radius:10px;padding:9px 12px;font-size:14px;cursor:pointer}
-    .btn.secondary{background:#fff;color:#111;border:1px solid var(--border)}
-    input{border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:14px;background:#fff;outline:none}
-    input:focus{border-color:#aaa}
-    .list{display:flex;flex-direction:column}
-    .item{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #eee}
-    .item:first-child{border-top:none}
-    .item h3{margin:0;font-size:16px}
-    .item p{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.4}
-    .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .star{cursor:pointer;user-select:none;font-size:20px;line-height:1}
-    .star.on{color:#f5a623}
-    .small{font-size:12px;color:var(--muted)}
-    .footerNote{margin-top:10px;color:var(--muted);font-size:12px}
 
-    .dayCard{border:1px solid var(--border);border-radius:14px;padding:14px;margin:12px 0;background:#fff}
-    .dayHead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-end}
-    .dayTitle{margin:0;font-size:16px;font-weight:800}
-    .dayMeta{color:var(--muted);font-size:13px}
-    .slot{display:grid;grid-template-columns:70px 1fr;gap:10px;padding:8px 0;border-top:1px solid #eee}
-    .slot:first-of-type{border-top:none}
+    *{ box-sizing:border-box }
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans TC",sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(31,122,76,.12), transparent 60%),
+                  radial-gradient(900px 500px at 110% 0%, rgba(201,58,47,.10), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
 
-    .sectionTitle{font-weight:900;font-size:18px;margin:6px 0 10px}
-    .subTitle{font-weight:800;font-size:16px;margin:0}
-    .chipbar{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{border:1px solid var(--border);background:#fff;border-radius:999px;padding:6px 10px;font-size:13px;cursor:pointer}
-    .chip.active{border-color:#111;background:#111;color:#fff}
+    /* Top App Bar */
+    header{
+      position:sticky; top:0; z-index:20;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .topbar{
+      max-width:1040px; margin:0 auto;
+      padding:12px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{
+      display:flex; flex-direction:column; gap:2px;
+      font-weight:900; letter-spacing:.2px;
+      line-height:1.1;
+    }
+    .brand .sub{ font-size:12px; color:var(--muted); font-weight:700; letter-spacing:.1px; }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(31,122,76,.10);
+      color: var(--it-green);
+      border:1px solid rgba(31,122,76,.18);
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
 
-    /* Flight card */
-    .flightCard{
+    .container{ max-width:1040px; margin:16px auto 90px; padding:0 16px; } /* bottom bar space */
+    .grid{ display:grid; gap:14px; }
+    @media(min-width:920px){ .grid-2{ grid-template-columns:1.2fr .8fr; } }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow: var(--shadow);
+    }
+
+    .title{ margin:0; font-size:22px; font-weight:900; letter-spacing:-.2px; }
+    .muted{ color:var(--muted); font-size:14px; line-height:1.5; }
+    .hr{ height:1px; background:var(--border); margin:12px 0; }
+
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .right{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid transparent;
+      cursor:pointer;
+      font-size:14px;
+      font-weight:800;
+      color:#fff;
+      background: var(--brand);
+      box-shadow: 0 10px 20px rgba(31,122,76,.18);
+      transition: transform .08s ease;
+      user-select:none;
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn.secondary{
+      color:var(--text);
       background:#fff;
       border:1px solid var(--border);
+      box-shadow:none;
+    }
+
+    input, select, textarea{
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:10px 12px;
+      font-size:14px;
+      background:#fff;
+      outline:none;
+      width:100%;
+    }
+    textarea{ min-height:120px; resize:vertical; }
+    input:focus, select:focus, textarea:focus{ border-color: rgba(31,122,76,.45); box-shadow:0 0 0 4px rgba(31,122,76,.10); }
+
+    /* Lists */
+    .list{ display:flex; flex-direction:column; gap:10px; }
+    .item{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+      padding:12px;
+      border:1px solid var(--border);
       border-radius:16px;
-      padding:14px 16px;
-      display:flex;
-      gap:14px;
+      background: linear-gradient(180deg, #fff, rgba(251,250,247,.55));
+    }
+    .item h3{ margin:0; font-size:15px; font-weight:900; }
+    .item p{ margin:5px 0 0; font-size:13px; color:var(--muted); line-height:1.45; }
+
+    .star{ cursor:pointer; user-select:none; font-size:20px; line-height:1; }
+    .star.on{ color:#f5a623; }
+
+    /* Chips */
+    .chipbar{ display:flex; gap:8px; flex-wrap:wrap; }
+    .chip{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#fff;
+      font-size:13px;
+      font-weight:800;
+      cursor:pointer;
+      user-select:none;
+    }
+    .chip.active{ background: rgba(31,122,76,.10); border-color: rgba(31,122,76,.22); color: var(--it-green); }
+
+    /* Itinerary day card */
+    .dayCard{
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:14px;
+      background: #fff;
+      box-shadow: 0 10px 25px rgba(17,24,39,.06);
+      margin:12px 0;
+    }
+    .dayHead{
+      display:flex; justify-content:space-between; gap:12px; align-items:flex-start; flex-wrap:wrap;
+    }
+    .dayTitle{ margin:0; font-size:16px; font-weight:900; }
+    .dayMeta{ color:var(--muted); font-size:13px; margin-top:4px; }
+
+    .progressWrap{ display:flex; align-items:center; gap:10px; }
+    .bar{
+      width:140px; height:10px; border-radius:999px;
+      background: rgba(17,24,39,.08);
+      overflow:hidden;
+    }
+    .bar > div{ height:100%; width:0%; background: var(--brand); border-radius:999px; }
+
+    .slot{
+      display:grid;
+      grid-template-columns:70px 1fr auto;
+      gap:10px;
+      padding:10px 0;
+      border-top:1px dashed rgba(17,24,39,.12);
       align-items:flex-start;
     }
-    .flightIcon{
-      width:40px;height:40px;border-radius:12px;
-      display:flex;align-items:center;justify-content:center;
-      background:#111;color:#fff;font-size:20px;flex:0 0 auto;
+    .slot:first-of-type{ border-top:none; }
+    .timeTag{ color:var(--muted); font-size:12px; font-weight:900; letter-spacing:.2px; padding-top:2px; }
+    .slotMain{ font-size:14px; line-height:1.45; }
+    .slotMain .en{ color:var(--muted); font-size:12px; margin-top:3px; }
+
+    .check{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#fff;
+      cursor:pointer;
+      user-select:none;
+      font-weight:900;
+      font-size:13px;
+      white-space:nowrap;
     }
-    .flightTitle{font-weight:900;margin:0 0 6px}
-    .flightLine{margin:0;color:#222;font-size:14px;line-height:1.55}
-    .flightLine span{color:var(--muted)}
-    @media (max-width: 640px){
+    .check input{ width:16px; height:16px; }
+    .done{
+      opacity:.65;
+      filter: grayscale(.1);
+    }
 
-  .container{ padding: 0 12px; margin: 12px auto; }
+    /* Notes */
+    .noteHeader{ display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap; }
+    .noteTitle{ font-size:16px; font-weight:900; margin:0; }
+    .noteHint{ font-size:12px; color:var(--muted); }
 
-  .topbar{
-    padding: 10px 12px;
-    gap: 10px;
-  }
+    /* Bottom Tab Bar (mobile-first) */
+    .tabbar{
+      position:fixed; left:0; right:0; bottom:0; z-index:30;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      border-top:1px solid var(--border);
+      padding:10px 10px 12px;
+    }
+    .tabs{
+      max-width:1040px; margin:0 auto;
+      display:grid; grid-template-columns:repeat(4,1fr); gap:8px;
+    }
+    .tab{
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+      padding:10px 8px;
+      border-radius:16px;
+      border:1px solid transparent;
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:900;
+      font-size:12px;
+    }
+    .tab .ico{ font-size:18px; }
+    .tab.active{
+      color:var(--it-green);
+      background: rgba(31,122,76,.10);
+      border-color: rgba(31,122,76,.18);
+    }
 
-  .brand{ font-size: 15px; }
-
-  /* 導覽列：橫向可滑動，不擠爆 */
-  nav{
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    gap: 6px;
-    padding-bottom: 2px;
-  }
-  nav::-webkit-scrollbar{ display:none; }
-
-  nav a{
-    white-space: nowrap;
-    font-size: 13px;
-    padding: 6px 10px;
-  }
-
-  .card{
-    border-radius: 14px;
-    padding: 14px;
-  }
-
-  .title{ font-size: 20px; }
-
-  /* grid 在手機改成單欄 */
-  .grid-2{ grid-template-columns: 1fr !important; }
-
-  /* list item 間距更緊湊 */
-  .item{ gap: 10px; padding: 10px 0; }
-  .item h3{ font-size: 15px; }
-  .item p{ font-size: 12px; }
-
-  /* Itinerary：slot 在手機改上下排 */
-  .slot{
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
-  .slot .small{
-    font-size: 12px;
-  }
-
-  /* Explore：區塊標題更清楚 */
-  .sectionTitle{ font-size: 16px; }
-  .subTitle{ font-size: 15px; }
-
-  /* chipbar 也做橫向滑動 */
-  .chipbar{
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    gap: 6px;
-    padding-bottom: 2px;
-  }
-  .chipbar::-webkit-scrollbar{ display:none; }
-
-  .chip{ white-space: nowrap; font-size: 13px; }
-}
-另外兩個小提醒（很重要）
+    /* Desktop nav hide? keep top only */
+    @media(min-width:920px){
+      .bar{ width:180px; }
+    }
   </style>
 </head>
 
 <body>
 <header>
   <div class="topbar">
-    <div class="brand">QNA & Peter ✈️ ITALY🍕</div>
-    <nav id="nav">
-      <a href="#home" data-route="home">Home</a>
-      <a href="#itinerary" data-route="itinerary">Itinerary</a>
-      <a href="#explore" data-route="explore">Explore</a>
-      <a href="#trips" data-route="trips">Trips</a>
-    </nav>
+    <div class="brand">
+      <div>QNA & Peter ✈️ <span style="color:var(--it-green)">Italy</span> <span style="color:var(--it-red)">🍕</span></div>
+      <div class="sub">Rome · Florence · Venice</div>
+    </div>
+    <div class="pill">🇮🇹 Trip Mode</div>
   </div>
 </header>
 
 <div class="container" id="app"></div>
 
+<!-- Bottom Tabs -->
+<div class="tabbar">
+  <div class="tabs" id="tabs">
+    <a class="tab" href="#home" data-route="home"><div class="ico">🏠</div>Home</a>
+    <a class="tab" href="#itinerary" data-route="itinerary"><div class="ico">✅</div>行程</a>
+    <a class="tab" href="#explore" data-route="explore"><div class="ico">✨</div>探索</a>
+    <a class="tab" href="#notes" data-route="notes"><div class="ico">📝</div>筆記</a>
+  </div>
+</div>
+
 <script>
-/** --------------------------
- * Utilities
- * -------------------------- */
+/* ---------------------------
+  Helpers
+--------------------------- */
 const app = document.getElementById("app");
 
 function groupBy(arr, keyFn){
@@ -171,27 +279,28 @@ function groupBy(arr, keyFn){
     return acc;
   }, {});
 }
-
 function labelType(t){
   const map = { spot:"景點", food:"餐廳", cafe:"咖啡", dessert:"甜點" };
   return map[t] || t;
 }
-
 function typeEmoji(t){
   const map = { spot:"📍", food:"🍽️", cafe:"☕", dessert:"🍰" };
   return map[t] || "•";
 }
 
-/** --------------------------
- * Data
- * -------------------------- */
-const trips = [
-  { id:"italy-2026", name:"Italy Trip", city:"Florence🎇  Venice🍾  Rome🍕", days:7, date:"4/4 – 4/12" }
-];
-
-const flightInfo = {
-  outbound: { emoji:"🛫", text:"CI75 4/4 23:45 (TPE T1) → 4/5 07:55 (FCO T3)" },
-  inbound:  { emoji:"🛬", text:"CI76 4/12 11:00 (FCO T3) → 4/13 05:40 (TPE T1)" }
+/* ---------------------------
+  Data
+--------------------------- */
+const trip = {
+  id:"italy-2026",
+  name:"Italy Trip",
+  city:"Rome → Florence → Venice → Rome",
+  days:7,
+  date:"4/5–4/11",
+  flights:{
+    outbound:"CI75 4/4 23:45 (TPE T1) → 4/5 07:55 (FCO T3)",
+    inbound:"CI76 4/12 11:00 (FCO T3) → 4/13 05:40 (TPE T1)"
+  }
 };
 
 // 國家 → 城市 → 類型（spot / food / cafe / dessert）
@@ -205,11 +314,11 @@ const PLACE_DB = {
         { id:"it-rome-trevi", name:"特雷維噴泉 Trevi Fountain", tags:["必去","拍照"] },
         { id:"it-rome-spanish", name:"西班牙台階 Spanish Steps", tags:["逛街","拍照"] },
         { id:"it-rome-navona", name:"納沃納廣場 Piazza Navona", tags:["廣場","散步"] },
-        { id:"it-rome-vatican", name:"梵蒂岡聖彼得廣場 St. Peter’s Square", tags:["宗教","地標"] },
+        { id:"it-rome-vatican", name:"聖彼得廣場 St. Peter’s Square", tags:["宗教","地標"] },
       ],
       food: [
         { id:"it-rome-armando", name:"Armando al Pantheon", tags:["傳統料理","高評價"] },
-        { id:"it-rome-daenzo", name:"Da Enzo al 29", tags:["在地人氣","排隊店"] },
+        { id:"it-rome-daenzo", name:"Da Enzo al 29", tags:["在地人氣","排隊"] },
         { id:"it-rome-roscioli", name:"Roscioli Salumeria con Cucina", tags:["義大利麵","熟食"] },
         { id:"it-rome-aimarmi", name:"Pizzeria Ai Marmi", tags:["披薩","平價"] },
       ],
@@ -234,15 +343,15 @@ const PLACE_DB = {
         { id:"it-flo-mercato", name:"中央市場 Mercato Centrale", tags:["美食","市集"] },
       ],
       food: [
-        { id:"it-flo-zaza", name:"Trattoria Zà Zà", tags:["托斯卡尼料理","人氣"] },
+        { id:"it-flo-zaza", name:"Trattoria Zà Zà", tags:["托斯卡尼","人氣"] },
         { id:"it-flo-bucamario", name:"Buca Mario", tags:["丁骨牛排","老店"] },
-        { id:"it-flo-4leoni", name:"Trattoria 4 Leoni", tags:["松露義大利麵"] },
+        { id:"it-flo-4leoni", name:"Trattoria 4 Leoni", tags:["松露","義大利麵"] },
         { id:"it-flo-santospirito", name:"Osteria Santo Spirito", tags:["在地餐館"] },
       ],
       cafe: [
         { id:"it-flo-gilli", name:"Caffè Gilli", tags:["百年咖啡館"] },
         { id:"it-flo-ditta", name:"Ditta Artigianale", tags:["精品咖啡"] },
-        { id:"it-flo-faro", name:"Faro – Caffè Specialty", tags:["手沖咖啡"] },
+        { id:"it-flo-faro", name:"Faro – Caffè Specialty", tags:["手沖"] },
       ],
       dessert: [
         { id:"it-flo-carraia", name:"La Carraia Gelato", tags:["冰淇淋","高評價"] },
@@ -261,18 +370,18 @@ const PLACE_DB = {
       ],
       food: [
         { id:"it-ven-carampane", name:"Antiche Carampane", tags:["海鮮","高評價"] },
-        { id:"it-ven-daivo", name:"Da Ivo", tags:["傳統料理"] },
+        { id:"it-ven-daivo", name:"Da Ivo", tags:["傳統"] },
         { id:"it-ven-madonna", name:"Trattoria Alla Madonna", tags:["老字號"] },
-        { id:"it-ven-testiere", name:"Osteria alle Testiere", tags:["小而精緻","需訂位"] },
+        { id:"it-ven-testiere", name:"Osteria alle Testiere", tags:["需訂位","小而精緻"] },
       ],
       cafe: [
-        { id:"it-ven-florian", name:"Caffè Florian", tags:["百年咖啡館","聖馬可廣場"] },
-        { id:"it-ven-cannaregio", name:"Torrefazione Cannaregio", tags:["在地","咖啡"] },
+        { id:"it-ven-florian", name:"Caffè Florian", tags:["百年","聖馬可"] },
+        { id:"it-ven-cannaregio", name:"Torrefazione Cannaregio", tags:["在地"] },
         { id:"it-ven-sullaluna", name:"Sullaluna", tags:["書店咖啡"] },
       ],
       dessert: [
         { id:"it-ven-nico", name:"Gelateria Nico", tags:["冰淇淋","河岸"] },
-        { id:"it-ven-natura", name:"Gelato di Natura", tags:["手工冰淇淋"] },
+        { id:"it-ven-natura", name:"Gelato di Natura", tags:["手工"] },
       ],
     },
   },
@@ -320,7 +429,7 @@ const itinerary = [
   ]},
   { day:5, date:"4/9", city:"Rome", move:"Venice → Rome", items:[
     { period:"上午", zh:"威尼斯搭高鐵回羅馬", en:"Train from Venice to Rome" },
-    { period:"下午", zh:"梵蒂岡城國散步", en:"Vatican City walk" },
+    { period:"下午", zh:"梵蒂岡城散步", en:"Vatican City walk" },
     { period:"下午", zh:"聖彼得廣場", en:"St. Peter’s Square" },
     { period:"傍晚", zh:"聖彼得大教堂（外觀）", en:"St. Peter’s Basilica (exterior)" },
     { period:"晚上", zh:"聖天使堡（外觀散步）", en:"Castel Sant’Angelo (exterior)" },
@@ -339,182 +448,262 @@ const itinerary = [
   ]},
 ];
 
-/** --------------------------
- * Favorites
- * -------------------------- */
-const FAV_KEY = "qna_travel_favs";
-function getFavs(){ try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]")); } catch { return new Set(); } }
-function saveFavs(set){ localStorage.setItem(FAV_KEY, JSON.stringify([...set])); }
-let favs = getFavs();
+/* ---------------------------
+  Storage: favorites / checklist / notes
+--------------------------- */
+const KEY_FAV = "qna_trip_favs_v1";
+const KEY_DONE = "qna_trip_done_v1";   // checklist
+const KEY_NOTE_GLOBAL = "qna_trip_note_global_v1";
+const KEY_NOTE_DAY = "qna_trip_note_day_v1"; // object { "1": "...", "2": "..." }
+
+function loadJSON(key, fallback){
+  try{ return JSON.parse(localStorage.getItem(key) || "") ?? fallback; }
+  catch{ return fallback; }
+}
+function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+let favs = new Set(loadJSON(KEY_FAV, []));
+let doneMap = loadJSON(KEY_DONE, {}); // { "1-0": true, "1-1": false ... }
+let dayNotes = loadJSON(KEY_NOTE_DAY, {}); // { "1": "...", ... }
 
 function toggleFav(id){
   if(favs.has(id)) favs.delete(id); else favs.add(id);
-  saveFavs(favs);
-  render();
+  saveJSON(KEY_FAV, [...favs]);
+  render(); // refresh quick picks etc
 }
 
-/** --------------------------
- * Router
- * -------------------------- */
+function itemKey(day, idx){ return `${day}-${idx}`; }
+function toggleDone(day, idx){
+  const k = itemKey(day, idx);
+  doneMap[k] = !doneMap[k];
+  saveJSON(KEY_DONE, doneMap);
+  render(); // refresh progress + styles
+}
+
+/* ---------------------------
+  Router + Tabs active
+--------------------------- */
 function route(){ return (location.hash || "#home").replace("#",""); }
-function setActive(r){
-  document.querySelectorAll("#nav a").forEach(a=>{
-    a.classList.toggle("active", a.dataset.route === r);
+function setActive(routeName){
+  document.querySelectorAll("#tabs .tab").forEach(a=>{
+    a.classList.toggle("active", a.dataset.route === routeName);
   });
 }
 window.addEventListener("hashchange", render);
 
-/** --------------------------
- * Components
- * -------------------------- */
-function renderFlightCard(){
-  return `
-    <div class="flightCard" style="margin-bottom:12px;">
-      <div class="flightIcon">✈️</div>
-      <div>
-        <div class="flightTitle">航班資訊 Flight Info</div>
-        <p class="flightLine">${flightInfo.outbound.emoji} <strong>去程</strong>：${flightInfo.outbound.text}</p>
-        <p class="flightLine">${flightInfo.inbound.emoji} <strong>回程</strong>：${flightInfo.inbound.text}</p>
-      </div>
-    </div>
-  `;
-}
-
-/** --------------------------
- * Views
- * -------------------------- */
+/* ---------------------------
+  Views
+--------------------------- */
 function renderHome(){
-  const t = trips[0];
-  app.innerHTML = `
-    ${renderFlightCard()}
-
-    <div class="grid grid-2">
-      <div class="card">
-        <div class="muted">Next Trip</div>
-        <h1 class="title">${t.name}</h1>
-        <div class="muted">${t.city} · ${t.days} days · ${t.date}</div>
-        <div class="hr"></div>
-        <div class="row">
-          <button class="btn" onclick="location.hash='#itinerary'">📅 看行程 Itinerary</button>
-          <button class="btn secondary" onclick="location.hash='#explore'">✨ 探索推薦 Explore</button>
-        </div>
-        <div class="footerNote">Tip：收藏 ⭐ 會存在你的瀏覽器（localStorage）。</div>
-      </div>
-
-      <div class="card">
-        <div class="muted">Quick Picks</div>
-        <h2 class="title" style="font-size:18px;margin-top:6px;">我的收藏</h2>
-        <div class="list">${renderFavList()}</div>
-      </div>
-    </div>
-  `;
-}
-
-function renderFavList(){
   const favArr = [...favs].map(id=>places.find(p=>p.id===id)).filter(Boolean);
-  if(!favArr.length) return `<div class="muted">還沒有收藏，去 Explore 點 ⭐ 收藏吧。</div>`;
-  return favArr.slice(0,8).map(p=>`
-    <div class="item">
-      <div>
-        <h3>${typeEmoji(p.type)} ${p.name}</h3>
-        <p>${p.country} · ${p.area} · ${labelType(p.type)} ${p.tags?.length? "· #"+p.tags.join(" #"):""}</p>
-      </div>
-      <div class="right">
-        <span class="star on" onclick="toggleFav('${p.id}')" title="取消收藏">★</span>
-      </div>
-    </div>
-  `).join("");
-}
 
-function renderTrips(){
-  const t = trips[0];
   app.innerHTML = `
-    ${renderFlightCard()}
-    <div class="card">
-      <h1 class="title">Trips</h1>
-      <div class="list">
-        <div class="item">
+    <div class="grid grid-2">
+
+      <div class="card">
+        <div class="row" style="justify-content:space-between;">
           <div>
-            <h3>${t.name}</h3>
-            <p>${t.city} · ${t.days} days · ${t.date}</p>
+            <div class="muted">Next Trip</div>
+            <h1 class="title">${trip.name}</h1>
+            <div class="muted">${trip.city} · ${trip.days} days · ${trip.date}</div>
           </div>
-          <div class="right">
-            <button class="btn secondary" onclick="location.hash='#itinerary'">Open itinerary</button>
+          <div class="pill">🇮🇹 ${trip.date}</div>
+        </div>
+
+        <div class="hr"></div>
+
+        <!-- Flight Card -->
+        <div class="card" style="box-shadow:none;border:1px solid var(--border);background:linear-gradient(180deg,var(--it-cream),#fff);">
+          <div class="row" style="justify-content:space-between;align-items:flex-start;">
+            <div>
+              <div style="font-weight:900;margin-bottom:6px;">✈️ 航班資訊</div>
+              <div class="muted" style="margin-bottom:6px;">去程：<strong>${trip.flights.outbound}</strong></div>
+              <div class="muted">回程：<strong>${trip.flights.inbound}</strong></div>
+            </div>
+            <div class="pill" style="background:rgba(201,58,47,.10);border-color:rgba(201,58,47,.20);color:var(--it-red);">CI75 / CI76</div>
           </div>
         </div>
+
+        <div style="height:12px"></div>
+
+        <div class="row">
+          <button class="btn" onclick="location.hash='#itinerary'">✅ 看行程 + Checklist</button>
+          <button class="btn secondary" onclick="location.hash='#explore'">✨ Explore 推薦</button>
+          <button class="btn secondary" onclick="location.hash='#notes'">📝 旅程筆記</button>
+        </div>
+
+        <div class="muted" style="margin-top:10px;font-size:12px;">
+          小提醒：勾選、收藏、筆記都會存在你的瀏覽器，不會因為刷新而消失。
+        </div>
       </div>
+
+      <div class="card">
+        <div class="row" style="justify-content:space-between;">
+          <div>
+            <div class="muted">Quick Picks</div>
+            <h2 class="title" style="font-size:18px;margin-top:6px;">⭐ 我的收藏</h2>
+          </div>
+          <div class="pill">Top ${Math.min(favArr.length, 6)}</div>
+        </div>
+        <div class="hr"></div>
+
+        <div class="list">
+          ${
+            favArr.length
+              ? favArr.slice(0,6).map(p=>`
+                <div class="item">
+                  <div>
+                    <h3>${typeEmoji(p.type)} ${p.name}</h3>
+                    <p>${p.area} · ${labelType(p.type)}${p.tags?.length ? ` · #${p.tags.join(" #")}` : ""}</p>
+                  </div>
+                  <div class="right">
+                    <span class="star on" onclick="toggleFav('${p.id}')" title="取消收藏">★</span>
+                  </div>
+                </div>
+              `).join("")
+              : `<div class="muted">目前沒有收藏～去 Explore 點星星 ⭐ 收藏吧。</div>`
+          }
+        </div>
+      </div>
+
     </div>
   `;
 }
 
 function renderItinerary(){
-  const t = trips[0];
   app.innerHTML = `
-    ${renderFlightCard()}
-
     <div class="card">
-      <div class="muted">Itinerary</div>
-      <h1 class="title">${t.name}</h1>
-      <div class="muted">${t.city} · ${t.days} days · ${t.date}</div>
+      <div class="row" style="justify-content:space-between;align-items:flex-start;">
+        <div>
+          <div class="muted">Itinerary</div>
+          <h1 class="title">行程 + Checklist</h1>
+          <div class="muted">${trip.city} · ${trip.days} days · ${trip.date}</div>
+        </div>
+        <div class="right">
+          <button class="btn secondary" onclick="location.hash='#notes'">📝 去寫筆記</button>
+        </div>
+      </div>
 
       <div class="hr"></div>
 
-      ${itinerary.map(d=>`
-        <div class="dayCard" id="day-${d.day}">
-          <div class="dayHead">
-            <div>
-              <div class="dayTitle">Day ${d.day} (${d.date}) · ${d.city}</div>
-              <div class="dayMeta">${d.move ? d.move : ""}</div>
-            </div>
-          </div>
+      ${itinerary.map(d=>renderDay(d)).join("")}
+    </div>
+  `;
+}
 
-          <div style="margin-top:8px;">
-            ${d.items.map(i=>`
-              <div class="slot">
-                <div class="small">${i.period}</div>
-                <div>${i.zh}｜${i.en}</div>
-              </div>
-            `).join("")}
-          </div>
+function renderDay(d){
+  const total = d.items.length;
+  const done = d.items.reduce((acc, _, idx)=> acc + (doneMap[itemKey(d.day, idx)] ? 1 : 0), 0);
+  const pct = total ? Math.round((done/total)*100) : 0;
+
+  const noteVal = (dayNotes[String(d.day)] || "");
+  const noteId = `dayNote-${d.day}`;
+
+  return `
+    <div class="dayCard" id="day-${d.day}">
+      <div class="dayHead">
+        <div>
+          <div class="dayTitle">Day ${d.day} (${d.date}) · ${d.city}</div>
+          <div class="dayMeta">${d.move ? "🚄 " + d.move : ""}</div>
         </div>
-      `).join("")}
+        <div class="progressWrap">
+          <div class="muted" style="font-weight:900;">${done}/${total}</div>
+          <div class="bar"><div style="width:${pct}%"></div></div>
+          <div class="pill" style="background:rgba(31,122,76,.10);border-color:rgba(31,122,76,.18);color:var(--it-green);">${pct}%</div>
+        </div>
+      </div>
 
-      <div class="footerNote">想把餐廳/咖啡「插入每日行程」我也可以幫你做。</div>
+      <div class="hr"></div>
+
+      ${d.items.map((it, idx)=>{
+        const isDone = !!doneMap[itemKey(d.day, idx)];
+        return `
+          <div class="slot ${isDone ? "done" : ""}">
+            <div class="timeTag">${it.period}</div>
+            <div class="slotMain">
+              <div><strong>${it.zh}</strong></div>
+              <div class="en">${it.en}</div>
+            </div>
+            <label class="check" title="勾選已完成">
+              <input type="checkbox" ${isDone ? "checked" : ""} onchange="toggleDone(${d.day}, ${idx})">
+              ${isDone ? "已完成" : "未完成"}
+            </label>
+          </div>
+        `;
+      }).join("")}
+
+      <div style="height:10px"></div>
+
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);">
+        <div class="noteHeader">
+          <div>
+            <div class="noteTitle">📝 Day ${d.day} Notes</div>
+            <div class="noteHint">例如：踩雷/必吃/交通提醒/買票資訊…（自動保存）</div>
+          </div>
+          <button class="btn secondary" onclick="saveDayNote(${d.day})">💾 儲存</button>
+        </div>
+        <div style="height:10px"></div>
+        <textarea id="${noteId}" placeholder="寫下今天的筆記…">${escapeHTML(noteVal)}</textarea>
+      </div>
     </div>
   `;
 }
 
 function renderExplore(){
   const type = window.__type || "all";
-  app.innerHTML = `
-    ${renderFlightCard()}
+  const countries = [...new Set(places.map(p=>p.country))].sort();
+  const currentCountry = window.__country || (countries[0] || "Italy");
+  const cities = [...new Set(places.filter(p=>p.country===currentCountry).map(p=>p.area))].sort();
+  const currentCity = window.__city || "all";
 
+  app.innerHTML = `
     <div class="card">
       <div class="row" style="justify-content:space-between;align-items:flex-end;">
         <div>
           <div class="muted">Explore</div>
-          <h1 class="title">推薦清單（依國家/城市分區）</h1>
-          <div class="muted">📍景點 🍽️餐廳 ☕咖啡 🍰甜點｜可搜尋、可收藏 ⭐</div>
-        </div>
-        <div class="right">
-          <input id="q" placeholder="搜尋：名稱 / 國家 / 城市 / 標籤..." />
+          <h1 class="title">推薦清單</h1>
+          <div class="muted">📍景點 🍽️餐廳 ☕咖啡 🍰甜點｜搜尋 + 收藏 ⭐</div>
         </div>
       </div>
 
       <div class="hr"></div>
 
-      <div class="chipbar" id="chipbar">
-        ${renderTypeChips(type)}
+      <div class="row">
+        <input id="q" placeholder="搜尋：名稱 / 標籤..." style="flex:1;min-width:220px;" />
+
+        <select id="countrySel" style="max-width:200px;">
+          ${countries.map(c=>`<option value="${c}" ${c===currentCountry?"selected":""}>${c==="Italy"?"🇮🇹 Italy":"🌍 "+c}</option>`).join("")}
+        </select>
+
+        <select id="citySel" style="max-width:200px;">
+          <option value="all" ${currentCity==="all"?"selected":""}>全部城市</option>
+          ${cities.map(a=>`<option value="${a}" ${a===currentCity?"selected":""}>${a}</option>`).join("")}
+        </select>
       </div>
+
+      <div style="height:10px"></div>
+
+      <div class="chipbar" id="chipbar">${renderTypeChips(type)}</div>
 
       <div class="hr"></div>
 
       <div id="placeList"></div>
-      <div class="footerNote">Tip：點右側 ⭐ 收藏；回 Home 會看到收藏清單。</div>
     </div>
   `;
 
   document.getElementById("q").addEventListener("input", applyFilter);
+
+  document.getElementById("countrySel").addEventListener("change",(e)=>{
+    window.__country = e.target.value;
+    window.__city = "all";
+    renderExplore(); // refresh city options
+  });
+
+  document.getElementById("citySel").addEventListener("change",(e)=>{
+    window.__city = e.target.value;
+    applyFilter();
+  });
+
   applyFilter();
 }
 
@@ -524,109 +713,4 @@ function renderTypeChips(active){
     {k:"spot", t:"📍景點"},
     {k:"food", t:"🍽️餐廳"},
     {k:"cafe", t:"☕咖啡"},
-    {k:"dessert", t:"🍰甜點"},
-  ];
-  return chips.map(c=>`
-    <span class="chip ${active===c.k ? "active":""}" onclick="setType('${c.k}')">${c.t}</span>
-  `).join("");
-}
-
-function setType(t){
-  window.__type = t;
-  document.getElementById("chipbar").innerHTML = renderTypeChips(t);
-  applyFilter();
-}
-
-function applyFilter(){
-  const q = (document.getElementById("q")?.value || "").toLowerCase().trim();
-  const type = window.__type || "all";
-
-  const filtered = places.filter(p=>{
-    const okType = (type==="all") ? true : p.type === type;
-    const hay = (p.name+" "+p.country+" "+p.area+" "+(p.tags||[]).join(" ")).toLowerCase();
-    const okQ = q ? hay.includes(q) : true;
-    return okType && okQ;
-  });
-
-  const list = document.getElementById("placeList");
-  if(!filtered.length){
-    list.innerHTML = `<div class="muted">沒有符合的結果，換個關鍵字或類型試試。</div>`;
-    return;
-  }
-
-  const byCountry = groupBy(filtered, p=>p.country || "Other");
-  const countries = Object.keys(byCountry).sort();
-
-  list.innerHTML = countries.map(country=>{
-    const itemsCountry = byCountry[country];
-    const byArea = groupBy(itemsCountry, p=>p.area || "Other");
-    const areas = Object.keys(byArea).sort();
-
-    return `
-      <div style="margin:8px 0 22px;">
-        <div class="sectionTitle">${country === "Italy" ? "🇮🇹" : "🌍"} ${country}</div>
-
-        ${areas.map(area=>{
-          const itemsArea = byArea[area];
-
-          return `
-            <div class="card" style="margin:10px 0;">
-              <div class="row" style="justify-content:space-between;">
-                <div class="subTitle">${area}</div>
-                <div class="muted">${itemsArea.length} items</div>
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="list">
-                ${itemsArea.map(p=>`
-                  <div class="item">
-                    <div>
-                      <h3>${typeEmoji(p.type)} ${p.name}</h3>
-                      <p>${labelType(p.type)}${p.tags?.length ? ` · #${p.tags.join(" #")}` : ""}</p>
-                    </div>
-                    <div class="right">
-                      <span class="star ${favs.has(p.id) ? "on":""}"
-                        onclick="toggleFav('${p.id}')"
-                        title="${favs.has(p.id) ? "取消收藏" : "加入收藏"}">${favs.has(p.id) ? "★" : "☆"}</span>
-                    </div>
-                  </div>
-                `).join("")}
-              </div>
-            </div>
-          `;
-        }).join("")}
-      </div>
-    `;
-  }).join("");
-}
-
-/** --------------------------
- * Main render
- * -------------------------- */
-function route(){
-  const r = (location.hash || "").replace("#","");
-  return r || "home"; // ✅ 沒有 hash 也直接回 home
-}
-
-function render(){
-  const r = route();
-  setActive(r);
-
-  if(r === "home") return renderHome();
-  if(r === "itinerary") return renderItinerary();
-  if(r === "explore") return renderExplore();
-  if(r === "trips") return renderTrips();
-
-  // ✅ 遇到未知 hash：直接渲染 home，不要只改 hash 讓畫面空白
-  location.hash = "#home";
-  return renderHome();
-}
-
-window.addEventListener("hashchange", render);
-window.addEventListener("DOMContentLoaded", render); // ✅ 保證載入完就渲染
-render(); // ✅ 保底
-render();
-</script>
-</body>
-</html>
+    {k:"dessert", t:"🍰甜點
