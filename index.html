@@ -718,8 +718,8 @@ let dayNotes = loadJSON(KEY_NOTE_DAY, {});
 let globalNote = loadJSON(KEY_NOTE_GLOBAL, "");
 
 /* NEW */
-let lodgingNote = loadJSON(KEY_LODGING, "（範例）Rome：Hotel XXX / Florence：Hotel XXX / Venice：Hotel XXX\n可改成：地址、入住退房、訂房編號、聯絡方式…");
-let transportNote = loadJSON(KEY_TRANSPORT, "（範例）市區交通：地鐵/公車/步行\n城際：Frecciarossa / Italo\n機場：Leonardo Express\n可補：票券、App、注意事項…");
+let lodgingNote = loadJSON(KEY_LODGING, "請自行輸入");
+let transportNote = loadJSON(KEY_TRANSPORT, "請自行輸入");
 
 function toggleFav(id){
   if(favs.has(id)) favs.delete(id); else favs.add(id);
