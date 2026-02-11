@@ -466,58 +466,6 @@
     }
     .periodTitle{ font-weight:900; }
     .periodActions{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-    .select{
-      height:34px;
-      padding:0 10px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:#fff;
-      font-weight:900;
-      font-size:13px;
-      max-width:240px;
-    }
-
-    .slotRow{
-      display:grid;
-      grid-template-columns: 1fr auto;
-      gap:10px;
-      padding:10px 0;
-      border-top:1px dashed rgba(15,23,42,.12);
-      align-items:flex-start;
-    }
-    .slotRow:first-of-type{ border-top:none; }
-
-    .slotMain{ font-size:14px; line-height:1.45; }
-    .slotMain .en{ color:var(--muted); font-size:12px; margin-top:3px; }
-
-    .slotTools{
-      display:flex; gap:6px; align-items:center; flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .iconBtn{
-      width:34px; height:34px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:#fff;
-      cursor:pointer;
-      font-weight:900;
-      display:inline-flex; align-items:center; justify-content:center;
-      user-select:none;
-    }
-    .check{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background:#fff;
-      cursor:pointer;
-      user-select:none;
-      font-weight:900;
-      font-size:13px;
-      white-space:nowrap;
-    }
-    .check input{ width:16px; height:16px; }
-    .done{ opacity:.65; filter: grayscale(.1); }
 
     .noteHeader{ display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap; }
     .noteTitle{ font-size:16px; font-weight:900; margin:0; }
@@ -525,109 +473,189 @@
 
     @media(min-width:920px){
       .bar{ width:180px; }
-      /* iOS Reminders-like swipe item */
-.swipeItem{
-  position:relative;
-  border:1px solid var(--border);
-  background:#fff;
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow: 0 10px 24px rgba(15,23,42,.05);
-  margin:10px 0;
-}
+    }
 
-/* 背景層：右滑完成 / 左滑更多 */
-.swipeBg{
-  position:absolute; inset:0;
-  display:flex; align-items:center; justify-content:space-between;
-  pointer-events:none;
-  padding:0 14px;
-  font-weight:900;
-}
-.swipeBg .doneBg{
-  color:#fff;
-  opacity:0;
-  transform: translateX(-8px);
-  transition: .12s ease;
-}
-.swipeBg .moreBg{
-  display:flex; gap:8px;
-  opacity:0;
-  transform: translateX(8px);
-  transition: .12s ease;
-  pointer-events:none;
-}
-.swipeBg .moreBtn{
-  pointer-events:auto;
-  border:1px solid rgba(255,255,255,.3);
-  background: rgba(255,255,255,.18);
-  color:#fff;
-  height:34px;
-  padding:0 10px;
-  border-radius:12px;
-  font-weight:900;
-  font-size:13px;
-}
+    /* ============ iOS Reminders-like swipe item ============ */
+    .swipeItem{
+      position:relative;
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow: 0 10px 24px rgba(15,23,42,.05);
+      margin:10px 0;
+    }
+    .swipeBg{
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:space-between;
+      pointer-events:none;
+      padding:0 14px;
+      font-weight:900;
+    }
+    .swipeBg .doneBg{
+      color:#fff;
+      opacity:0;
+      transform: translateX(-8px);
+      transition: .12s ease;
+    }
+    .swipeBg .moreBg{
+      display:flex; gap:8px;
+      opacity:0;
+      transform: translateX(8px);
+      transition: .12s ease;
+      pointer-events:none;
+    }
+    .swipeBg .moreBtn{
+      pointer-events:auto;
+      border:1px solid rgba(255,255,255,.3);
+      background: rgba(255,255,255,.18);
+      color:#fff;
+      height:34px;
+      padding:0 10px;
+      border-radius:12px;
+      font-weight:900;
+      font-size:13px;
+    }
+    .swipeItem[data-reveal="done"]{ background: linear-gradient(90deg, rgba(31,122,76,.95), rgba(31,122,76,.78)); }
+    .swipeItem[data-reveal="more"]{ background: linear-gradient(270deg, rgba(201,58,47,.92), rgba(201,58,47,.75)); }
+    .swipeItem[data-reveal="done"] .doneBg{ opacity:1; transform:none; }
+    .swipeItem[data-reveal="more"] .moreBg{ opacity:1; transform:none; }
 
-/* 依滑動方向顯示背景色 */
-.swipeItem[data-reveal="done"]{ background: linear-gradient(90deg, rgba(31,122,76,.95), rgba(31,122,76,.78)); }
-.swipeItem[data-reveal="more"]{ background: linear-gradient(270deg, rgba(201,58,47,.92), rgba(201,58,47,.75)); }
-.swipeItem[data-reveal="done"] .doneBg{ opacity:1; transform:none; }
-.swipeItem[data-reveal="more"] .moreBg{ opacity:1; transform:none; }
+    .swipeFg{
+      position:relative;
+      background:#fff;
+      padding:12px 12px;
+      transform: translateX(0);
+      transition: transform .18s ease;
+      touch-action: pan-y;
+    }
+    .swipeItem.isDragging .swipeFg{ transition:none; }
 
-/* 前景層：真的內容（手指拖動這層） */
-.swipeFg{
-  position:relative;
-  background:#fff;
-  padding:12px 12px;
-  transform: translateX(0);
-  transition: transform .18s ease;
-  touch-action: pan-y; /* 允許上下滑，不要被水平全吃掉 */
-}
-.swipeItem.isDragging .swipeFg{ transition:none; }
+    .swipeRow{
+      display:grid;
+      grid-template-columns: 26px 1fr;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .iosCheck{
+      width:22px; height:22px;
+      border-radius:999px;
+      border:2px solid rgba(15,23,42,.22);
+      margin-top:2px;
+      display:flex; align-items:center; justify-content:center;
+      flex:0 0 auto;
+      cursor:pointer;
+      user-select:none;
+    }
+    .iosCheck .tick{
+      font-size:14px;
+      line-height:1;
+      transform: scale(.85);
+      opacity:0;
+    }
+    .swipeItem[data-done="1"] .iosCheck{
+      border-color: rgba(31,122,76,.9);
+      background: rgba(31,122,76,.92);
+    }
+    .swipeItem[data-done="1"] .iosCheck .tick{
+      opacity:1;
+      color:#fff;
+    }
+    .swipeMain{
+      font-size:14px;
+      line-height:1.4;
+    }
+    .swipeMain .en{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:4px;
+    }
+    .swipeItem[data-done="1"] .swipeMain{
+      opacity:.55;
+      text-decoration: line-through;
+    }
 
-/* item 內容排版：左圈圈 + 文字 */
-.swipeRow{
-  display:grid;
-  grid-template-columns: 26px 1fr;
-  gap:10px;
-  align-items:flex-start;
-}
-.iosCheck{
-  width:22px; height:22px;
-  border-radius:999px;
-  border:2px solid rgba(15,23,42,.22);
-  margin-top:2px;
-  display:flex; align-items:center; justify-content:center;
-  flex:0 0 auto;
-}
-.iosCheck .tick{
-  font-size:14px;
-  line-height:1;
-  transform: scale(.85);
-  opacity:0;
-}
-.swipeItem[data-done="1"] .iosCheck{
-  border-color: rgba(31,122,76,.9);
-  background: rgba(31,122,76,.92);
-}
-.swipeItem[data-done="1"] .iosCheck .tick{
-  opacity:1;
-  color:#fff;
-}
-.swipeMain{
-  font-size:14px;
-  line-height:1.4;
-}
-.swipeMain .en{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:4px;
-}
-.swipeItem[data-done="1"] .swipeMain{
-  opacity:.55;
-  text-decoration: line-through;
-}
+    /* ============ iOS Bottom Sheet (add featured) ============ */
+    .sheetOverlay{
+      position:fixed; inset:0; z-index:80;
+      background: rgba(15,23,42,.40);
+      opacity:0; pointer-events:none;
+      transition: opacity .18s ease;
+    }
+    .sheetOverlay.open{ opacity:1; pointer-events:auto; }
+
+    .sheet{
+      position:fixed; left:0; right:0; bottom:-100%;
+      z-index:90;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(14px);
+      border-top-left-radius: 22px;
+      border-top-right-radius: 22px;
+      box-shadow: 0 -18px 50px rgba(15,23,42,.18);
+      transition: bottom .22s ease;
+      padding: 10px 12px 16px;
+    }
+    .sheet.open{ bottom:0; }
+
+    .sheetHandle{
+      width:44px; height:5px;
+      border-radius:999px;
+      background: rgba(15,23,42,.14);
+      margin: 8px auto 10px;
+    }
+    .sheetHead{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      padding: 0 4px 8px;
+    }
+    .sheetTitle{
+      font-weight:900; font-size:15px;
+    }
+    .sheetSub{
+      color: var(--muted); font-size:12px; margin-top:3px;
+    }
+    .sheetClose{
+      width:34px; height:34px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background:#fff;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .sheetBody{
+      padding: 0 4px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      max-height: 70vh;
+      overflow:auto;
+    }
+    .sheetSearch{
+      height:40px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      padding:0 12px;
+      font-weight:800;
+      background:#fff;
+    }
+    .sheetList{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding-bottom: 8px;
+    }
+    .sheetItem{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      padding: 12px;
+      border-radius: 16px;
+      border:1px solid var(--border);
+      background: #fff;
+      box-shadow: var(--shadow-soft);
+      cursor:pointer;
+      user-select:none;
+    }
+    .sheetItem:active{ transform: translateY(1px); }
+    .sheetItem .name{ font-weight:900; }
+    .sheetItem .meta{ font-size:12px; color: var(--muted); margin-top:4px; }
   </style>
 </head>
 
@@ -643,6 +671,24 @@
 </header>
 
 <div class="container" id="app"></div>
+
+<!-- Bottom Sheet (global, reused) -->
+<div class="sheetOverlay" id="sheetOverlay"></div>
+<div class="sheet" id="sheet">
+  <div class="sheetHandle"></div>
+  <div class="sheetHead">
+    <div>
+      <div class="sheetTitle" id="sheetTitle">＋ 從精選加入</div>
+      <div class="sheetSub" id="sheetSub">點一下就加入到對應時段</div>
+    </div>
+    <button class="sheetClose" id="sheetClose" type="button">✕</button>
+  </div>
+  <div class="sheetBody">
+    <input class="sheetSearch" id="sheetSearch" placeholder="搜尋精選：名稱 / 標籤 / 城市…" />
+    <div class="sheetList" id="sheetList"></div>
+    <div class="emptyHint" id="sheetEmpty" style="display:none;">你還沒有精選～去 Explore 加 ✨ 精選後再回來加進行程。</div>
+  </div>
+</div>
 
 <div class="tabbar">
   <div class="tabs" id="tabs">
@@ -691,9 +737,6 @@ function calcDays(startISO, endISO){
   const e = new Date(endISO + "T00:00:00");
   const ms = e - s;
   return Math.max(1, Math.round(ms / 86400000));
-}
-function safeJSONParse(raw, fallback){
-  try{ return JSON.parse(raw); }catch{ return fallback; }
 }
 
 /* ---------------------------
@@ -906,10 +949,10 @@ const itinerary = [
   Storage
 --------------------------- */
 const KEY_FAV = "qna_trip_favs_v1";
-const KEY_FEATURED = "qna_trip_featured_v1";        // ⭐精選
-const KEY_PLAN = "qna_trip_plan_v1";                // ✅ Day+時段 自由排程
-const KEY_DONE2 = "qna_trip_done_items_v2";         // ✅ 用 itemId 存，排序不亂
-const KEY_DAY_OPEN = "qna_trip_day_open_v1";        // ✅ day 展開狀態
+const KEY_FEATURED = "qna_trip_featured_v1";
+const KEY_PLAN = "qna_trip_plan_v1";
+const KEY_DONE2 = "qna_trip_done_items_v2";
+const KEY_DAY_OPEN = "qna_trip_day_open_v1";
 
 const KEY_NOTE_GLOBAL = "qna_trip_note_global_v1";
 const KEY_NOTE_DAY = "qna_trip_note_day_v1";
@@ -934,21 +977,19 @@ function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 
 /* state */
 let favs = new Set(loadJSON(KEY_FAV, []));
-let featured = new Set(loadJSON(KEY_FEATURED, []));            // placeId set
+let featured = new Set(loadJSON(KEY_FEATURED, []));
 let dayNotes = loadJSON(KEY_NOTE_DAY, {});
 let globalNote = loadJSON(KEY_NOTE_GLOBAL, "");
 let lodgingNote = loadJSON(KEY_LODGING, "");
 let transportNote = loadJSON(KEY_TRANSPORT, "");
 let checks = loadJSON(CHECK_KEY, []);
-let doneItems = loadJSON(KEY_DONE2, {});                       // { itemId: true/false }
-let openDays = new Set(loadJSON(KEY_DAY_OPEN, []));            // day numbers
+let doneItems = loadJSON(KEY_DONE2, {});
+let openDays = new Set(loadJSON(KEY_DAY_OPEN, []));
 
-/* PLAN: day -> { meta, slots: {period: [items...] } } */
 let plan = loadJSON(KEY_PLAN, null);
 
 /* ---------------------------
   Plan init (from default itinerary)
-  Each item has stable id: d{day}-p{periodIndex}-i{idx}
 --------------------------- */
 const PERIOD_ORDER = ["上午","中午","下午","傍晚","晚上"];
 function ensurePlan(){
@@ -959,7 +1000,7 @@ function ensurePlan(){
     const slots = {};
     for(const p of PERIOD_ORDER) slots[p] = [];
     d.items.forEach((it, idx)=>{
-      const pid = `d${d.day}-i${idx}`; // stable for migration
+      const pid = `d${d.day}-i${idx}`;
       const item = {
         id: pid,
         kind: "text",
@@ -983,12 +1024,10 @@ function ensurePlan(){
   plan = obj;
   saveJSON(KEY_PLAN, plan);
 
-  // migrate old doneMap (if user had v1 keys day-idx) -> v2 itemId
   const old = loadJSON("qna_trip_done_v1", null);
   if(old && typeof old === "object"){
     const migrated = {...doneItems};
     for(const [k,v] of Object.entries(old)){
-      // old key format: "day-idx"
       const m = String(k).match(/^(\d+)-(\d+)$/);
       if(!m) continue;
       const day = Number(m[1]);
@@ -1008,7 +1047,6 @@ ensurePlan();
 function toggleFav(id){
   if(favs.has(id)) favs.delete(id); else favs.add(id);
   saveJSON(KEY_FAV, [...favs]);
-  // 若取消收藏，同步取消精選（避免精選孤兒）
   if(!favs.has(id) && featured.has(id)){
     featured.delete(id);
     saveJSON(KEY_FEATURED, [...featured]);
@@ -1016,7 +1054,6 @@ function toggleFav(id){
   render();
 }
 function toggleFeatured(id){
-  // 精選只能從收藏來
   if(!favs.has(id)){
     favs.add(id);
     saveJSON(KEY_FAV, [...favs]);
@@ -1027,7 +1064,7 @@ function toggleFeatured(id){
 }
 
 /* ---------------------------
-  Plan operations (add / remove / reorder / done)
+  Plan operations (done / add / remove / reorder)
 --------------------------- */
 function getDayPlan(day){ return plan?.[String(day)]; }
 
@@ -1036,7 +1073,7 @@ function setDayOpen(day, open){
   if(open) s.add(day); else s.delete(day);
   openDays = s;
   saveJSON(KEY_DAY_OPEN, [...openDays]);
-  render(); // keep simple
+  render();
 }
 
 function toggleDoneByItemId(itemId){
@@ -1055,8 +1092,8 @@ function addFeaturedToSlot(day, period, placeId){
     id: uuid(),
     kind: "place",
     placeId: p.id,
-    zh: p.name, // keep as displayed name
-    en: "",     // not required
+    zh: p.name,
+    en: "",
     city: d.city,
     period
   };
@@ -1070,7 +1107,6 @@ function removeSlotItem(day, period, itemId){
   const d = getDayPlan(day);
   if(!d) return;
   d.slots[period] = (d.slots[period] || []).filter(x=>x.id !== itemId);
-  // 也清掉 done 狀態
   if(doneItems[itemId]){ delete doneItems[itemId]; saveJSON(KEY_DONE2, doneItems); }
   saveJSON(KEY_PLAN, plan);
   render();
@@ -1231,6 +1267,80 @@ function setActive(routeName){
 window.addEventListener("hashchange", render);
 
 /* ---------------------------
+  Bottom Sheet Picker (Featured)
+--------------------------- */
+const sheet = document.getElementById("sheet");
+const sheetOverlay = document.getElementById("sheetOverlay");
+const sheetClose = document.getElementById("sheetClose");
+const sheetTitle = document.getElementById("sheetTitle");
+const sheetSub = document.getElementById("sheetSub");
+const sheetSearch = document.getElementById("sheetSearch");
+const sheetList = document.getElementById("sheetList");
+const sheetEmpty = document.getElementById("sheetEmpty");
+
+let pickerTarget = null; // {day, period, city}
+
+function openSheet(target){
+  pickerTarget = target;
+  sheetTitle.textContent = `＋ 從精選加入（Day ${target.day} · ${target.period}）`;
+  sheetSub.textContent = `${target.city}｜點一下就加入（可加多個）`;
+  sheetSearch.value = "";
+  renderSheetList();
+  sheetOverlay.classList.add("open");
+  sheet.classList.add("open");
+}
+function closeSheet(){
+  sheetOverlay.classList.remove("open");
+  sheet.classList.remove("open");
+  pickerTarget = null;
+}
+sheetOverlay.addEventListener("click", closeSheet);
+sheetClose.addEventListener("click", closeSheet);
+
+function featuredOptionsForCity(city){
+  const arr = [...featured].map(id=>placeById.get(id)).filter(Boolean);
+  const filtered = arr.filter(p=>p.area === city);
+  return filtered.length ? filtered : arr;
+}
+function renderSheetList(){
+  const q = (sheetSearch.value || "").trim().toLowerCase();
+  const t = pickerTarget;
+  const options = t ? featuredOptionsForCity(t.city) : [];
+
+  if(!options.length){
+    sheetList.innerHTML = "";
+    sheetEmpty.style.display = "block";
+    return;
+  }
+  sheetEmpty.style.display = "none";
+
+  const filtered = options.filter(p=>{
+    if(!q) return true;
+    const hay = (p.name + " " + (p.tags||[]).join(" ") + " " + p.area + " " + p.type).toLowerCase();
+    return hay.includes(q);
+  });
+
+  if(!filtered.length){
+    sheetList.innerHTML = `<div class="muted">沒有符合的精選（換個關鍵字試試）</div>`;
+    return;
+  }
+
+  sheetList.innerHTML = filtered.map(p=>{
+    const tags = (p.tags||[]).slice(0,4).map(t=>"#"+t).join(" ");
+    return `
+      <div class="sheetItem" data-sheet-pick="${escapeHTML(p.id)}">
+        <div>
+          <div class="name">${typeEmoji(p.type)} ${escapeHTML(p.name)}</div>
+          <div class="meta">${escapeHTML(p.area)} · ${labelType(p.type)}${tags ? " · " + escapeHTML(tags) : ""}</div>
+        </div>
+        <div class="badge gold">加入</div>
+      </div>
+    `;
+  }).join("");
+}
+sheetSearch.addEventListener("input", renderSheetList);
+
+/* ---------------------------
   Views
 --------------------------- */
 function renderHome(){
@@ -1240,8 +1350,6 @@ function renderHome(){
 
   app.innerHTML = `
     <div class="grid grid-2">
-
-      <!-- Left -->
       <div class="card">
         <div class="row" style="justify-content:space-between; align-items:flex-start;">
           <div>
@@ -1291,7 +1399,6 @@ function renderHome(){
         <div class="tiny">提示：照片＆待辦清單在「筆記」分頁。</div>
       </div>
 
-      <!-- Right -->
       <div class="card">
         <div class="row" style="justify-content:space-between; align-items:flex-start;">
           <div>
@@ -1352,18 +1459,15 @@ function renderHome(){
           }
         </div>
       </div>
-
     </div>
   `;
 
-  // auto-save lodging / transport
   document.getElementById("lodgingNote")?.addEventListener("input", saveLodging);
   document.getElementById("transportNote")?.addEventListener("input", saveTransport);
 }
 
 function renderItinerary(){
   const days = calcDays(trip.start, trip.end);
-
   const dayList = Object.values(plan).sort((a,b)=>a.day-b.day);
 
   app.innerHTML = `
@@ -1373,15 +1477,13 @@ function renderItinerary(){
           <div class="muted">Itinerary</div>
           <h1 class="title">行程</h1>
           <div class="muted">${escapeHTML(trip.city)} · ${days} days · ${escapeHTML(trip.date)}</div>
-          <div class="tiny" style="margin-top:6px;">提示：每一天預設收合，點 Day 可展開；同時段可排多個行程（3–5+ 都可以）。</div>
+          <div class="tiny" style="margin-top:6px;">iOS 玩法：右滑完成｜左滑出按鈕（上移/下移/移除）</div>
         </div>
         <div class="right">
           <button class="btn secondary" onclick="location.hash='#notes'">📝 去筆記（照片/清單）</button>
         </div>
       </div>
-
       <div class="hr"></div>
-
       ${dayList.map(d=>renderDay(d)).join("")}
     </div>
   `;
@@ -1441,40 +1543,30 @@ function renderDay(d){
   `;
 }
 
-function featuredOptionsForCity(city){
-  // 你也可以改成不限制城市：把 filter 拿掉即可
-  const arr = [...featured].map(id=>placeById.get(id)).filter(Boolean);
-  const filtered = arr.filter(p=>p.area === city);
-  return filtered.length ? filtered : arr; // 若同城沒有精選，就給全部精選
-}
-
 function renderPeriod(day, period, city){
   const d = getDayPlan(day);
   const arr = d?.slots?.[period] || [];
-  const options = featuredOptionsForCity(city);
 
   return `
     <div class="periodBlock">
       <div class="periodHead">
         <div class="periodTitle">${escapeHTML(period)}</div>
         <div class="periodActions">
-          <select class="select" data-add-select="${day}|${escapeHTML(period)}">
-            <option value="">＋ 從精選加入（可多選多次）</option>
-            ${options.map(p=>`
-              <option value="${escapeHTML(p.id)}">✨ ${escapeHTML(p.name)}</option>
-            `).join("")}
-          </select>
+          <button class="btnMiniPrimary" type="button" data-open-picker="${day}|${escapeHTML(period)}|${escapeHTML(city)}">＋ 加入精選</button>
           <span class="badge">共 ${arr.length}</span>
         </div>
       </div>
 
-      ${arr.length ? arr.map((it, idx)=>renderSlotRow(day, period, it, idx, arr.length)).join("")
-                  : `<div class="muted">尚未安排～可以從精選加入，或之後我也能幫你加「手動新增」按鈕。</div>`}
+      ${
+        arr.length
+          ? arr.map((it, idx)=>renderSwipeRow(day, period, it, idx, arr.length)).join("")
+          : `<div class="muted">尚未安排～點「＋ 加入精選」用 iOS 底部抽屜挑選。</div>`
+      }
     </div>
   `;
 }
 
-function renderSlotRow(day, period, it, idx, len){
+function renderSwipeRow(day, period, it, idx, len){
   const isDone = !!doneItems[it.id];
   const displayName = it.kind === "place"
     ? (placeById.get(it.placeId)?.name || it.zh || "（已刪除的地點）")
@@ -1489,25 +1581,39 @@ function renderSlotRow(day, period, it, idx, len){
     : (it.en ? it.en : "");
 
   return `
-    <div class="slotRow ${isDone ? "done" : ""}">
-      <div class="slotMain">
-        <div><strong>${escapeHTML(displayName)}</strong></div>
-        ${subtitle ? `<div class="en">${escapeHTML(subtitle)}</div>` : ``}
+    <div class="swipeItem"
+         data-swipe="item"
+         data-day="${day}"
+         data-period="${escapeHTML(period)}"
+         data-itemid="${it.id}"
+         data-idx="${idx}"
+         data-len="${len}"
+         data-done="${isDone ? 1 : 0}">
+      <div class="swipeBg">
+        <div class="doneBg">✅ 完成</div>
+        <div class="moreBg">
+          <button class="moreBtn" type="button" data-action="up">上移</button>
+          <button class="moreBtn" type="button" data-action="down">下移</button>
+          <button class="moreBtn" type="button" data-action="delete">移除</button>
+        </div>
       </div>
 
-      <div class="slotTools">
-        <button class="iconBtn" title="上移" data-move-up="${day}|${escapeHTML(period)}|${it.id}" ${idx===0 ? "disabled" : ""}>↑</button>
-        <button class="iconBtn" title="下移" data-move-down="${day}|${escapeHTML(period)}|${it.id}" ${idx===len-1 ? "disabled" : ""}>↓</button>
-        <label class="check" title="勾選已完成">
-          <input type="checkbox" ${isDone ? "checked" : ""} data-done-item="${it.id}">
-          ${isDone ? "已完成" : "未完成"}
-        </label>
-        <button class="iconBtn" title="移除" data-remove-item="${day}|${escapeHTML(period)}|${it.id}">✕</button>
+      <div class="swipeFg" data-swipe="fg">
+        <div class="swipeRow">
+          <div class="iosCheck" data-action="toggleDone" title="完成/取消完成"><span class="tick">✓</span></div>
+          <div class="swipeMain">
+            <div><strong>${escapeHTML(displayName)}</strong></div>
+            ${subtitle ? `<div class="en">${escapeHTML(subtitle)}</div>` : ``}
+          </div>
+        </div>
       </div>
     </div>
   `;
 }
 
+/* ---------------------------
+  Explore / Notes (原封不動)
+--------------------------- */
 function renderExplore(){
   const type = window.__type || "all";
   const countries = [...new Set(places.map(p=>p.country))].sort();
@@ -1711,7 +1817,7 @@ function bindOnce(){
   document.addEventListener("click", async (e)=>{
     const t = e.target;
 
-    // toggle day open/close
+    // day open/close
     const dayToggle = t?.closest?.("[data-day-toggle]")?.getAttribute?.("data-day-toggle");
     if(dayToggle){
       const day = Number(dayToggle);
@@ -1744,6 +1850,52 @@ function bindOnce(){
     // save global note
     if(t?.hasAttribute?.("data-save-global")){ saveGlobalNote(); return; }
 
+    // open picker (bottom sheet)
+    const op = t?.getAttribute?.("data-open-picker");
+    if(op){
+      const [dayStr, period, city] = op.split("|");
+      openSheet({ day: Number(dayStr), period, city });
+      return;
+    }
+
+    // sheet pick
+    const pick = t?.closest?.("[data-sheet-pick]")?.getAttribute?.("data-sheet-pick");
+    if(pick && pickerTarget){
+      addFeaturedToSlot(pickerTarget.day, pickerTarget.period, pick);
+      // 留在 sheet 讓你可連續加
+      return;
+    }
+
+    // swipe action buttons / tap circle
+    const act = t?.getAttribute?.("data-action");
+    if(act){
+      const item = t.closest?.('[data-swipe="item"]');
+      if(!item) return;
+
+      const day = Number(item.getAttribute("data-day"));
+      const period = item.getAttribute("data-period");
+      const itemId = item.getAttribute("data-itemid");
+      const idx = Number(item.getAttribute("data-idx"));
+      const len = Number(item.getAttribute("data-len"));
+
+      if(act === "toggleDone"){
+        toggleDoneByItemId(itemId);
+        return;
+      }
+      if(act === "delete"){
+        removeSlotItem(day, period, itemId);
+        return;
+      }
+      if(act === "up"){
+        if(idx > 0) moveSlotItem(day, period, itemId, -1);
+        return;
+      }
+      if(act === "down"){
+        if(idx < len-1) moveSlotItem(day, period, itemId, +1);
+        return;
+      }
+    }
+
     // checklist delete
     const delId = t?.getAttribute?.("data-check-del");
     if(delId){
@@ -1775,39 +1927,10 @@ function bindOnce(){
       renderPhotos();
       return;
     }
-
-    // reorder up/down
-    const up = t?.getAttribute?.("data-move-up");
-    if(up){
-      const [day, period, itemId] = up.split("|");
-      moveSlotItem(Number(day), period, itemId, -1);
-      return;
-    }
-    const down = t?.getAttribute?.("data-move-down");
-    if(down){
-      const [day, period, itemId] = down.split("|");
-      moveSlotItem(Number(day), period, itemId, +1);
-      return;
-    }
-
-    // remove item
-    const rm = t?.getAttribute?.("data-remove-item");
-    if(rm){
-      const [day, period, itemId] = rm.split("|");
-      removeSlotItem(Number(day), period, itemId);
-      return;
-    }
   });
 
   document.addEventListener("change", async (e)=>{
     const t = e.target;
-
-    // done checkbox (by item id)
-    const doneId = t?.getAttribute?.("data-done-item");
-    if(doneId){
-      toggleDoneByItemId(doneId);
-      return;
-    }
 
     // checklist toggle
     const checkToggle = t?.getAttribute?.("data-check-toggle");
@@ -1829,18 +1952,6 @@ function bindOnce(){
       renderPhotos();
       return;
     }
-
-    // add featured to slot
-    const addSel = t?.getAttribute?.("data-add-select");
-    if(addSel){
-      const [dayStr, period] = addSel.split("|");
-      const placeId = t.value;
-      if(placeId){
-        addFeaturedToSlot(Number(dayStr), period, placeId);
-        t.value = "";
-      }
-      return;
-    }
   });
 
   document.addEventListener("submit", (e)=>{
@@ -1854,6 +1965,94 @@ function bindOnce(){
     saveChecks();
     renderChecks();
     input.value = "";
+  });
+
+  // --- iOS swipe gesture (right: toggle done, left: reveal actions) ---
+  let swipe = null;
+  const clamp = (n, min, max)=> Math.max(min, Math.min(max, n));
+
+  document.addEventListener("pointerdown", (e)=>{
+    const fg = e.target.closest?.('[data-swipe="fg"]');
+    if(!fg) return;
+    const item = fg.closest?.('[data-swipe="item"]');
+    if(!item) return;
+
+    // 點在按鈕上就不拖
+    if(e.target?.closest?.("[data-action]")) return;
+
+    swipe = {
+      item,
+      fg,
+      startX: e.clientX,
+      startY: e.clientY,
+      dx: 0,
+      dragging: false,
+    };
+    item.classList.add("isDragging");
+    fg.setPointerCapture?.(e.pointerId);
+  });
+
+  document.addEventListener("pointermove", (e)=>{
+    if(!swipe) return;
+
+    const dx = e.clientX - swipe.startX;
+    const dy = e.clientY - swipe.startY;
+
+    if(!swipe.dragging){
+      if(Math.abs(dx) < 8) return;
+      if(Math.abs(dy) > Math.abs(dx)){
+        swipe.item.classList.remove("isDragging");
+        swipe = null;
+        return;
+      }
+      swipe.dragging = true;
+    }
+
+    swipe.dx = dx;
+    const x = clamp(dx, -150, 120);
+    swipe.fg.style.transform = `translateX(${x}px)`;
+
+    if(x > 18) swipe.item.setAttribute("data-reveal", "done");
+    else if(x < -18) swipe.item.setAttribute("data-reveal", "more");
+    else swipe.item.removeAttribute("data-reveal");
+  });
+
+  document.addEventListener("pointerup", ()=>{
+    if(!swipe) return;
+
+    const { item, fg, dx } = swipe;
+    item.classList.remove("isDragging");
+
+    const day = Number(item.getAttribute("data-day"));
+    const period = item.getAttribute("data-period");
+    const itemId = item.getAttribute("data-itemid");
+
+    if(dx > 64){
+      toggleDoneByItemId(itemId);
+      swipe = null;
+      return;
+    }
+
+    if(dx < -70){
+      item.setAttribute("data-reveal", "more");
+      fg.style.transform = "translateX(-120px)";
+      swipe = null;
+      return;
+    }
+
+    item.removeAttribute("data-reveal");
+    fg.style.transform = "translateX(0)";
+    swipe = null;
+  });
+
+  // 點其他地方：收回 left reveal
+  document.addEventListener("click", (e)=>{
+    const open = document.querySelector('.swipeItem[data-reveal="more"]');
+    if(!open) return;
+    if(e.target.closest?.('.swipeItem[data-reveal="more"]')) return;
+    const fg = open.querySelector('[data-swipe="fg"]');
+    open.removeAttribute("data-reveal");
+    if(fg) fg.style.transform = "translateX(0)";
   });
 }
 
