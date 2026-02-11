@@ -1331,7 +1331,7 @@ sheetSearch.addEventListener("input", renderSheetList);
   Views
 --------------------------- */
 function renderHome(){
- const featuredArr = [...featured].map(id=>placeById.get(id)).filter(Boolean);
+  const featuredArr = [...featured].map(id=>placeById.get(id)).filter(Boolean);
   const days = calcDays(trip.start, trip.end);
 
   app.innerHTML = `
@@ -1386,6 +1386,14 @@ function renderHome(){
       </div>
 
       <div class="card">
+        <div class="row" style="justify-content:space-between; align-items:flex-start;">
+          <div>
+            <div class="muted">Featured</div>
+            <h2 class="title" style="font-size:18px;margin-top:6px;">✨ 我的精選</h2>
+          </div>
+          <div class="pill">Top ${Math.min(featuredArr.length, 6)}</div>
+        </div>
+
         <div class="hr"></div>
 
         <div class="list">
@@ -1397,40 +1405,15 @@ function renderHome(){
                     <h3>${typeEmoji(p.type)} ${escapeHTML(p.name)}</h3>
                     <p>${escapeHTML(p.area)} · ${labelType(p.type)}${p.tags?.length ? ` · #${p.tags.map(escapeHTML).join(" #")}` : ""}</p>
                   </div>
-   <div class="right">
-  <button class="${featured.has(p.id) ? "btnMiniPrimary" : "btnMini"}"
-    type="button"
-    data-featured-toggle="${p.id}"
-    title="${featured.has(p.id) ? "取消精選" : "加到精選"}">✨</button>
-</div>
-
-        <div style="height:14px"></div>
-
-        <div class="row" style="justify-content:space-between; align-items:flex-start;">
-          <div>
-            <div class="muted">Saved</div>
-            <h2 class="title" style="font-size:18px;margin-top:6px;">⭐ 我的收藏</h2>
-          </div>
-          <div class="pill">Top ${Math.min(favArr.length, 6)}</div>
-        </div>
-
-        <div class="hr"></div>
-
-        <div class="list">
-          ${
-            favArr.length
-              ? favArr.slice(0,6).map(p=>`
-                <div class="item">
-                  <div>
-                    <h3>${typeEmoji(p.type)} ${escapeHTML(p.name)}</h3>
-                    <p>${escapeHTML(p.area)} · ${labelType(p.type)}${p.tags?.length ? ` · #${p.tags.map(escapeHTML).join(" #")}` : ""}</p>
-                  </div>
                   <div class="right">
-                    <span class="star on" data-fav-toggle="${p.id}" title="取消收藏">★</span>
+                    <button class="${featured.has(p.id) ? "btnMiniPrimary" : "btnMini"}"
+                      type="button"
+                      data-featured-toggle="${p.id}"
+                      title="${featured.has(p.id) ? "取消精選" : "加到精選"}">✨</button>
                   </div>
                 </div>
               `).join("")
-              : `<div class="muted">目前沒有收藏～去 Explore 點星星 ⭐ 收藏吧。</div>`
+              : `<div class="muted">你還沒有精選～去 Explore 點 ✨ 加精選吧。</div>`
           }
         </div>
       </div>
@@ -1440,6 +1423,7 @@ function renderHome(){
   document.getElementById("lodgingNote")?.addEventListener("input", saveLodging);
   document.getElementById("transportNote")?.addEventListener("input", saveTransport);
 }
+
 
 function renderItinerary(){
   const days = calcDays(trip.start, trip.end);
@@ -1454,13 +1438,12 @@ function renderItinerary(){
           <div class="muted">${escapeHTML(trip.city)} · ${days} days · ${escapeHTML(trip.date)}</div>
           <div class="tiny" style="margin-top:6px;">iOS 玩法：右滑完成｜左滑出按鈕（上移/下移/移除）</div>
         </div>
-        <div class="right">
-          <button class="btn secondary" onclick="location.hash='#notes'">📝 去筆記（照片/清單）</button>
-        </div>
-      </div>
-      <div class="hr"></div>
-      ${dayList.map(d=>renderDay(d)).join("")}
-    </div>
+<div class="right">
+  <button class="${featured.has(p.id) ? "btnMiniPrimary" : "btnMini"}"
+    type="button"
+    data-featured-toggle="${p.id}"
+    title="${featured.has(p.id) ? "取消精選" : "加到精選"}">✨</button>
+</div>
   `;
 }
 
