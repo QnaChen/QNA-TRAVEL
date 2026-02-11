@@ -948,7 +948,6 @@ const itinerary = [
 /* ---------------------------
   Storage
 --------------------------- */
-const KEY_FAV = "qna_trip_favs_v1";
 const KEY_FEATURED = "qna_trip_featured_v1";
 const KEY_PLAN = "qna_trip_plan_v1";
 const KEY_DONE2 = "qna_trip_done_items_v2";
@@ -976,7 +975,6 @@ function loadJSON(key, fallback){
 function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 
 /* state */
-let favs = new Set(loadJSON(KEY_FAV, []));
 let featured = new Set(loadJSON(KEY_FEATURED, []));
 let dayNotes = loadJSON(KEY_NOTE_DAY, {});
 let globalNote = loadJSON(KEY_NOTE_GLOBAL, "");
@@ -1044,21 +1042,10 @@ ensurePlan();
 /* ---------------------------
   Favorites / Featured
 --------------------------- */
-function toggleFav(id){
-  if(favs.has(id)) favs.delete(id); else favs.add(id);
-  saveJSON(KEY_FAV, [...favs]);
-  if(!favs.has(id) && featured.has(id)){
-    featured.delete(id);
-    saveJSON(KEY_FEATURED, [...featured]);
-  }
-  render();
-}
 function toggleFeatured(id){
-  if(!favs.has(id)){
-    favs.add(id);
-    saveJSON(KEY_FAV, [...favs]);
-  }
-  if(featured.has(id)) featured.delete(id); else featured.add(id);
+  if(featured.has(id)) featured.delete(id);
+  else featured.add(id);
+
   saveJSON(KEY_FEATURED, [...featured]);
   render();
 }
@@ -1344,8 +1331,7 @@ sheetSearch.addEventListener("input", renderSheetList);
   Views
 --------------------------- */
 function renderHome(){
-  const favArr = [...favs].map(id=>placeById.get(id)).filter(Boolean);
-  const featuredArr = [...featured].map(id=>placeById.get(id)).filter(Boolean);
+ const featuredArr = [...featured].map(id=>placeById.get(id)).filter(Boolean);
   const days = calcDays(trip.start, trip.end);
 
   app.innerHTML = `
@@ -1400,14 +1386,6 @@ function renderHome(){
       </div>
 
       <div class="card">
-        <div class="row" style="justify-content:space-between; align-items:flex-start;">
-          <div>
-            <div class="muted">Quick Picks</div>
-            <h2 class="title" style="font-size:18px;margin-top:6px;">✨ 精選</h2>
-          </div>
-          <div class="pill">Top ${Math.min(featuredArr.length, 6)}</div>
-        </div>
-
         <div class="hr"></div>
 
         <div class="list">
@@ -1419,15 +1397,12 @@ function renderHome(){
                     <h3>${typeEmoji(p.type)} ${escapeHTML(p.name)}</h3>
                     <p>${escapeHTML(p.area)} · ${labelType(p.type)}${p.tags?.length ? ` · #${p.tags.map(escapeHTML).join(" #")}` : ""}</p>
                   </div>
-                  <div class="right">
-                    <span class="badge gold">精選</span>
-                    <span class="star on" data-featured-toggle="${p.id}" title="取消精選">★</span>
-                  </div>
-                </div>
-              `).join("")
-              : `<div class="muted">尚未設定精選～去 Explore 把喜歡的點「加到精選」✨</div>`
-          }
-        </div>
+   <div class="right">
+  <button class="${featured.has(p.id) ? "btnMiniPrimary" : "btnMini"}"
+    type="button"
+    data-featured-toggle="${p.id}"
+    title="${featured.has(p.id) ? "取消精選" : "加到精選"}">✨</button>
+</div>
 
         <div style="height:14px"></div>
 
@@ -1627,7 +1602,7 @@ function renderExplore(){
         <div>
           <div class="muted">Explore</div>
           <h1 class="title">推薦清單</h1>
-          <div class="muted">📍景點 🍽️餐廳 ☕咖啡 🍰甜點｜收藏 ⭐｜加到精選 ✨</div>
+          <div class="muted">📍景點 🍽️餐廳 ☕咖啡 🍰甜點｜加到精選 ✨</div>
         </div>
       </div>
 
@@ -1824,10 +1799,6 @@ function bindOnce(){
       setDayOpen(day, !openDays.has(day));
       return;
     }
-
-    // favorite toggle
-    const favId = t?.getAttribute?.("data-fav-toggle");
-    if(favId){ toggleFav(favId); return; }
 
     // featured toggle
     const featId = t?.getAttribute?.("data-featured-toggle");
