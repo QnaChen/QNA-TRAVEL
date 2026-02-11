@@ -525,7 +525,109 @@
 
     @media(min-width:920px){
       .bar{ width:180px; }
-    }
+      /* iOS Reminders-like swipe item */
+.swipeItem{
+  position:relative;
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow: 0 10px 24px rgba(15,23,42,.05);
+  margin:10px 0;
+}
+
+/* 背景層：右滑完成 / 左滑更多 */
+.swipeBg{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:space-between;
+  pointer-events:none;
+  padding:0 14px;
+  font-weight:900;
+}
+.swipeBg .doneBg{
+  color:#fff;
+  opacity:0;
+  transform: translateX(-8px);
+  transition: .12s ease;
+}
+.swipeBg .moreBg{
+  display:flex; gap:8px;
+  opacity:0;
+  transform: translateX(8px);
+  transition: .12s ease;
+  pointer-events:none;
+}
+.swipeBg .moreBtn{
+  pointer-events:auto;
+  border:1px solid rgba(255,255,255,.3);
+  background: rgba(255,255,255,.18);
+  color:#fff;
+  height:34px;
+  padding:0 10px;
+  border-radius:12px;
+  font-weight:900;
+  font-size:13px;
+}
+
+/* 依滑動方向顯示背景色 */
+.swipeItem[data-reveal="done"]{ background: linear-gradient(90deg, rgba(31,122,76,.95), rgba(31,122,76,.78)); }
+.swipeItem[data-reveal="more"]{ background: linear-gradient(270deg, rgba(201,58,47,.92), rgba(201,58,47,.75)); }
+.swipeItem[data-reveal="done"] .doneBg{ opacity:1; transform:none; }
+.swipeItem[data-reveal="more"] .moreBg{ opacity:1; transform:none; }
+
+/* 前景層：真的內容（手指拖動這層） */
+.swipeFg{
+  position:relative;
+  background:#fff;
+  padding:12px 12px;
+  transform: translateX(0);
+  transition: transform .18s ease;
+  touch-action: pan-y; /* 允許上下滑，不要被水平全吃掉 */
+}
+.swipeItem.isDragging .swipeFg{ transition:none; }
+
+/* item 內容排版：左圈圈 + 文字 */
+.swipeRow{
+  display:grid;
+  grid-template-columns: 26px 1fr;
+  gap:10px;
+  align-items:flex-start;
+}
+.iosCheck{
+  width:22px; height:22px;
+  border-radius:999px;
+  border:2px solid rgba(15,23,42,.22);
+  margin-top:2px;
+  display:flex; align-items:center; justify-content:center;
+  flex:0 0 auto;
+}
+.iosCheck .tick{
+  font-size:14px;
+  line-height:1;
+  transform: scale(.85);
+  opacity:0;
+}
+.swipeItem[data-done="1"] .iosCheck{
+  border-color: rgba(31,122,76,.9);
+  background: rgba(31,122,76,.92);
+}
+.swipeItem[data-done="1"] .iosCheck .tick{
+  opacity:1;
+  color:#fff;
+}
+.swipeMain{
+  font-size:14px;
+  line-height:1.4;
+}
+.swipeMain .en{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:4px;
+}
+.swipeItem[data-done="1"] .swipeMain{
+  opacity:.55;
+  text-decoration: line-through;
+}
   </style>
 </head>
 
