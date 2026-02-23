@@ -7,33 +7,23 @@
 
   <style>
     :root{
-      /* Italy vibe */
       --it-green:#1f7a4c;
       --it-red:#c93a2f;
-      --it-cream:#fbfaf7;
-
-      /* Base layers */
       --page:#f3f6ff;
       --page-2:#eef2f8;
-
       --card:#ffffff;
       --card-2:#fbfdff;
-
       --text:#0f172a;
       --muted:#64748b;
-
       --border:rgba(15,23,42,.10);
       --border-strong:rgba(15,23,42,.16);
-
       --shadow:0 16px 40px rgba(15,23,42,.10);
       --shadow-soft:0 10px 24px rgba(15,23,42,.08);
-
       --radius:20px;
+
       --brand:linear-gradient(135deg, #1f7a4c, #2aa56f);
       --brand-soft:linear-gradient(135deg, rgba(31,122,76,.14), rgba(42,165,111,.08));
-      --danger:var(--it-red);
 
-      /* colorful blocks */
       --tint-flight: linear-gradient(135deg, rgba(31,122,76,.14), rgba(255,255,255,0));
       --tint-lodging: linear-gradient(135deg, rgba(59,130,246,.14), rgba(255,255,255,0));
       --tint-transport: linear-gradient(135deg, rgba(249,115,22,.14), rgba(255,255,255,0));
@@ -105,7 +95,6 @@
     .right{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
     .tiny{ font-size:12px; color:var(--muted); }
 
-    /* Main buttons */
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:8px;
       height:42px; padding:0 14px;
@@ -146,7 +135,6 @@
       box-shadow:0 0 0 4px rgba(31,122,76,.10);
     }
 
-    /* list item */
     .list{ display:flex; flex-direction:column; gap:10px; }
     .item{
       display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
@@ -158,9 +146,6 @@
     }
     .item h3{ margin:0; font-size:15px; font-weight:900; }
     .item p{ margin:5px 0 0; font-size:13px; color:var(--muted); line-height:1.45; }
-
-    .star{ cursor:pointer; user-select:none; font-size:20px; line-height:1; }
-    .star.on{ color:#f5a623; }
 
     .badge{
       display:inline-flex; align-items:center; gap:6px;
@@ -179,7 +164,6 @@
       color:#92400e;
     }
 
-    /* Subcard (colored) */
     .subcard{
       border:1px solid var(--border-strong);
       border-radius:18px;
@@ -238,15 +222,12 @@
       margin-bottom: 10px;
     }
     .module__title{ font-weight: 900; }
-
     .module__actions{
       display:flex;
       gap:8px;
       align-items:center;
       flex-shrink:0;
     }
-
-    /* Minimal small action buttons (iOS-safe) */
     .btnMini, .btnMiniPrimary{
       display:inline-flex;
       align-items:center;
@@ -275,6 +256,10 @@
       background: var(--brand);
       color:#fff;
       box-shadow: 0 10px 20px rgba(31,122,76,.14);
+    }
+    .btnMiniPrimary.alt{
+      background: linear-gradient(135deg, rgba(245,158,11,.95), rgba(245,158,11,.75));
+      box-shadow: 0 10px 20px rgba(245,158,11,.18);
     }
 
     /* Photos */
@@ -389,7 +374,6 @@
       border-color: rgba(31,122,76,.18);
     }
 
-    /* Responsive */
     @media (max-width: 860px){
       .title{ font-size:24px; }
       .modules{ grid-template-columns: 1fr; }
@@ -414,7 +398,7 @@
     }
     .chip.active{ background: rgba(31,122,76,.10); border-color: rgba(31,122,76,.22); color: var(--it-green); }
 
-    /* Itinerary - collapsed day cards */
+    /* Itinerary - day cards */
     .dayCard{
       border:1px solid var(--border);
       border-radius:18px;
@@ -438,7 +422,6 @@
       overflow:hidden;
     }
     .bar > div{ height:100%; width:0%; background: var(--brand); border-radius:999px; }
-
     .chev{
       width:34px; height:34px;
       border-radius:12px;
@@ -447,7 +430,6 @@
       display:inline-flex; align-items:center; justify-content:center;
       font-weight:900;
     }
-
     .dayBody{ margin-top:10px; display:none; }
     .dayCard.open .dayBody{ display:block; }
 
@@ -475,7 +457,7 @@
       .bar{ width:180px; }
     }
 
-    /* ============ iOS Reminders-like swipe item ============ */
+    /* iOS Reminders-like swipe item */
     .swipeItem{
       position:relative;
       border:1px solid var(--border);
@@ -515,6 +497,7 @@
       border-radius:12px;
       font-weight:900;
       font-size:13px;
+      cursor:pointer;
     }
     .swipeItem[data-reveal="done"]{ background: linear-gradient(90deg, rgba(31,122,76,.95), rgba(31,122,76,.78)); }
     .swipeItem[data-reveal="more"]{ background: linear-gradient(270deg, rgba(201,58,47,.92), rgba(201,58,47,.75)); }
@@ -530,7 +513,6 @@
       touch-action: pan-y;
     }
     .swipeItem.isDragging .swipeFg{ transition:none; }
-
     .swipeRow{
       display:grid;
       grid-template-columns: 26px 1fr;
@@ -575,7 +557,7 @@
       text-decoration: line-through;
     }
 
-    /* ============ iOS Bottom Sheet (add featured) ============ */
+    /* Bottom Sheet */
     .sheetOverlay{
       position:fixed; inset:0; z-index:80;
       background: rgba(15,23,42,.40);
@@ -596,7 +578,6 @@
       padding: 10px 12px 16px;
     }
     .sheet.open{ bottom:0; }
-
     .sheetHandle{
       width:44px; height:5px;
       border-radius:999px;
@@ -607,12 +588,8 @@
       display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
       padding: 0 4px 8px;
     }
-    .sheetTitle{
-      font-weight:900; font-size:15px;
-    }
-    .sheetSub{
-      color: var(--muted); font-size:12px; margin-top:3px;
-    }
+    .sheetTitle{ font-weight:900; font-size:15px; }
+    .sheetSub{ color: var(--muted); font-size:12px; margin-top:3px; }
     .sheetClose{
       width:34px; height:34px;
       border-radius: 12px;
@@ -672,7 +649,7 @@
 
 <div class="container" id="app"></div>
 
-<!-- Bottom Sheet (global, reused) -->
+<!-- Bottom Sheet -->
 <div class="sheetOverlay" id="sheetOverlay"></div>
 <div class="sheet" id="sheet">
   <div class="sheetHandle"></div>
@@ -700,9 +677,9 @@
 </div>
 
 <script>
-/* ---------------------------
+/* ===========================
   Helpers
---------------------------- */
+=========================== */
 const app = document.getElementById("app");
 
 function uuid(){
@@ -739,9 +716,9 @@ function calcDays(startISO, endISO){
   return Math.max(1, Math.round(ms / 86400000));
 }
 
-/* ---------------------------
-  Data
---------------------------- */
+/* ===========================
+  Trip + Places
+=========================== */
 const trip = {
   id:"italy-2026",
   name:"Italy Trip",
@@ -755,7 +732,7 @@ const trip = {
   }
 };
 
-const PLACE_DB = /* === your original PLACE_DB (unchanged) === */ (function(){
+const PLACE_DB = (function(){
   return {
     Italy: {
       Rome: {
@@ -767,115 +744,61 @@ const PLACE_DB = /* === your original PLACE_DB (unchanged) === */ (function(){
           { id:"it-rome-spanish", name:"西班牙台階 Spanish Steps", tags:["逛街","拍照"] },
           { id:"it-rome-navona", name:"納沃納廣場 Piazza Navona", tags:["廣場","散步"] },
           { id:"it-rome-vatican", name:"聖彼得廣場 St. Peter’s Square", tags:["宗教","地標"] },
-
-          { id:"it-rome-aventine-keyhole", name:"阿凡提諾鑰匙孔 Buco della Serratura", tags:["祕密景點","拍照","冷門但超讚"] },
-          { id:"it-rome-giardino-aranci", name:"橘子花園 Giardino degli Aranci", tags:["夕陽","景觀","散步"] },
-          { id:"it-rome-galleria-sciarra", name:"希亞拉拱廊 Galleria Sciarra", tags:["冷門","建築","免費"] },
-          { id:"it-rome-quartiere-coppede", name:"科佩代區 Quartiere Coppedè", tags:["祕密景點","建築控","超好拍"] },
-          { id:"it-rome-palazzo-spada", name:"斯帕達宮 Palazzo Spada（視覺錯覺長廊）", tags:["冷門","建築","超有趣"] },
-          { id:"it-rome-doria-pamphilj", name:"多利亞潘菲利美術館 Galleria Doria Pamphilj", tags:["冷門","室內","收藏超強"] },
-          { id:"it-rome-basilica-s-paolo", name:"城外聖保祿大殿 Basilica of Saint Paul Outside the Walls", tags:["冷門","宗教","震撼"] },
-          { id:"it-rome-villa-farnesina", name:"法爾內西納別墅 Villa Farnesina", tags:["冷門","壁畫","文藝"] },
-          { id:"it-rome-arapacis", name:"奧古斯都和平祭壇 Ara Pacis", tags:["建築","室內","很美"] },
+          { id:"it-rome-aventine-keyhole", name:"阿凡提諾鑰匙孔 Buco della Serratura", tags:["祕密景點","拍照"] },
+          { id:"it-rome-giardino-aranci", name:"橘子花園 Giardino degli Aranci", tags:["夕陽","景觀"] },
+          { id:"it-rome-galleria-sciarra", name:"希亞拉拱廊 Galleria Sciarra", tags:["冷門","免費"] },
         ],
         food: [
           { id:"it-rome-armando", name:"Armando al Pantheon", tags:["傳統料理","高評價"] },
           { id:"it-rome-daenzo", name:"Da Enzo al 29", tags:["在地人氣","排隊"] },
           { id:"it-rome-roscioli", name:"Roscioli Salumeria con Cucina", tags:["義大利麵","熟食"] },
-          { id:"it-rome-aimarmi", name:"Pizzeria Ai Marmi", tags:["披薩","平價"] },
           { id:"it-rome-bonci-pizzarium", name:"Pizzarium Bonci", tags:["披薩","排隊"] },
-          { id:"it-rome-trapizzino", name:"Trapizzino", tags:["街頭美食","方便"] },
-          { id:"it-rome-suppli", name:"Supplì Roma", tags:["炸飯糰","小吃","經典"] },
-          { id:"it-rome-flavio-velavevodetto", name:"Flavio al Velavevodetto", tags:["經典羅馬菜","口碑","Carbonara"] },
-          { id:"it-rome-felice-testaccio", name:"Felice a Testaccio", tags:["cacio e pepe","在地","老牌"] },
-          { id:"it-rome-osteriabonelli", name:"Osteria Bonelli", tags:["在地","冷門","超好吃"] },
-          { id:"it-rome-forno-campo", name:"Forno Campo de' Fiori", tags:["麵包","披薩","外帶"] },
         ],
         cafe: [
           { id:"it-rome-greco", name:"Antico Caffè Greco", tags:["百年咖啡","經典"] },
-          { id:"it-rome-tazza", name:"Tazza d’Oro", tags:["精品咖啡","萬神殿附近"] },
+          { id:"it-rome-tazza", name:"Tazza d’Oro", tags:["萬神殿附近"] },
           { id:"it-rome-eustachio", name:"Sant’Eustachio Il Caffè", tags:["人氣咖啡"] },
-          { id:"it-rome-faro-luminaries", name:"Faro – Luminaries of Coffee", tags:["精品咖啡","好喝","文青"] },
-          { id:"it-rome-barnum", name:"Barnum Roma", tags:["早午餐","咖啡","設計感"] },
-          { id:"it-rome-sciascia", name:"Sciascia Caffè 1919", tags:["在地","老派咖啡","濃縮"] },
         ],
         dessert: [
           { id:"it-rome-giolitti", name:"Giolitti Gelato", tags:["冰淇淋","老店"] },
-          { id:"it-rome-teatro", name:"Gelateria del Teatro", tags:["冰淇淋","高評價"] },
-          { id:"it-rome-pompi", name:"Pompi（提拉米蘇）", tags:["提拉米蘇","名店","外帶"] },
-          { id:"it-rome-regoli", name:"Pasticceria Regoli", tags:["甜點","老店","早餐"] },
-          { id:"it-rome-two-sizes", name:"Two Sizes（提拉米蘇杯）", tags:["提拉米蘇","方便","好拍"] },
+          { id:"it-rome-pompi", name:"Pompi（提拉米蘇）", tags:["提拉米蘇","名店"] },
         ],
       },
-
       Florence: {
         spot: [
           { id:"it-flo-duomo", name:"聖母百花大教堂 Florence Cathedral", tags:["必去","地標"] },
-          { id:"it-flo-duomo-square", name:"主教座堂廣場 Piazza del Duomo", tags:["市中心","散步"] },
           { id:"it-flo-signoria", name:"領主廣場 Piazza della Signoria", tags:["雕塑","廣場"] },
           { id:"it-flo-vecchio", name:"老橋 Ponte Vecchio", tags:["夜景","拍照"] },
           { id:"it-flo-michelangelo", name:"米開朗基羅廣場 Piazzale Michelangelo", tags:["夕陽","展望台"] },
-          { id:"it-flo-mercato", name:"中央市場 Mercato Centrale", tags:["平價美食","市集"] },
-          { id:"it-flo-sanminiato", name:"聖米尼亞托教堂 San Miniato al Monte", tags:["祕密景點","夕陽","景觀"] },
-          { id:"it-flo-rose-garden", name:"玫瑰花園 Giardino delle Rose", tags:["免費","散步","冷門"] },
-          { id:"it-flo-bardini", name:"巴爾迪尼花園 Giardino Bardini", tags:["祕密景點","展望","花園"] },
-          { id:"it-flo-santacroce", name:"聖十字教堂 Basilica di Santa Croce", tags:["經典","建築","文化"] },
-          { id:"it-flo-santamaria-novella", name:"新聖母大殿 Santa Maria Novella", tags:["教堂","市區","好逛"] },
-          { id:"it-flo-oltrarno", name:"Oltrarno 手作區（巷弄散步）", tags:["在地","冷門","生活感"] },
-          { id:"it-flo-piazza-santospirito", name:"聖靈廣場 Piazza Santo Spirito", tags:["在地","夜晚","氣氛"] },
+          { id:"it-flo-oltrarno", name:"Oltrarno 手作區（巷弄散步）", tags:["在地","冷門"] },
         ],
         food: [
           { id:"it-flo-zaza", name:"Trattoria Zà Zà", tags:["托斯卡尼","人氣"] },
-          { id:"it-flo-bucamario", name:"Buca Mario", tags:["丁骨牛排","老店"] },
-          { id:"it-flo-4leoni", name:"Trattoria 4 Leoni", tags:["松露","義大利麵"] },
-          { id:"it-flo-santospirito", name:"Osteria Santo Spirito", tags:["在地餐館"] },
-          { id:"it-flo-allantico", name:"All’Antico Vinaio（牛肚包/佛卡夏）", tags:["必吃","排隊","外帶"] },
-          { id:"it-flo-trattoria-sostanza", name:"Trattoria Sostanza", tags:["經典","牛油雞","老店"] },
-          { id:"it-flo-da-nerbone", name:"Da Nerbone（牛肚包）", tags:["中央市場","在地","便宜"] },
-          { id:"it-flo-io-osteria", name:"I’ OSTERIA DI GIOVANNI", tags:["托斯卡尼","口碑","家常"] },
-          { id:"it-flo-il-latto", name:"Il Latini", tags:["T-bone","氣氛","經典"] },
+          { id:"it-flo-allantico", name:"All’Antico Vinaio（佛卡夏）", tags:["必吃","排隊"] },
         ],
         cafe: [
           { id:"it-flo-gilli", name:"Caffè Gilli", tags:["百年咖啡館"] },
           { id:"it-flo-ditta", name:"Ditta Artigianale", tags:["精品咖啡"] },
-          { id:"it-flo-faro", name:"Faro – Caffè Specialty", tags:["手沖"] },
         ],
         dessert: [
           { id:"it-flo-carraia", name:"La Carraia Gelato", tags:["冰淇淋","高評價"] },
-          { id:"it-flo-percheno", name:"Perché No! Gelato", tags:["老字號"] },
         ],
       },
-
       Venice: {
         spot: [
           { id:"it-ven-stmark", name:"聖馬可廣場 St Mark’s Square", tags:["必去","地標"] },
-          { id:"it-ven-basilica", name:"聖馬可大教堂 St Mark’s Basilica", tags:["宗教","外觀"] },
-          { id:"it-ven-doge", name:"總督宮 Doge’s Palace", tags:["歷史","外觀"] },
           { id:"it-ven-rialto", name:"里亞托橋 Rialto Bridge", tags:["拍照","運河"] },
           { id:"it-ven-burano", name:"布拉諾彩色島 Burano", tags:["彩色小島","拍照"] },
-          { id:"it-ven-accademia", name:"學院橋 Accademia Bridge", tags:["夕陽","橋"] },
-          { id:"it-ven-bovolo", name:"螺旋樓梯 Scala Contarini del Bovolo", tags:["祕密景點","建築","俯瞰"] },
-          { id:"it-ven-ghetto", name:"猶太區 Jewish Ghetto（Cannaregio）", tags:["冷門","在地","散步"] },
-          { id:"it-ven-libreria-acqua", name:"水書店 Libreria Acqua Alta", tags:["祕密景點","書店","好拍"] },
-          { id:"it-ven-zattere", name:"Zattere 海濱長廊散步", tags:["散步","夕陽","在地"] },
-          { id:"it-ven-arsenale", name:"兵工廠 Arsenale（外部散步）", tags:["冷門","歷史","走走"] },
-          { id:"it-ven-sanpietro", name:"San Pietro di Castello 周邊", tags:["超冷門","安靜","在地"] },
-          { id:"it-ven-lido", name:"麗都島 Lido（海邊/單車）", tags:["放鬆","海邊","半日"] },
+          { id:"it-ven-libreria-acqua", name:"水書店 Libreria Acqua Alta", tags:["祕密景點","好拍"] },
         ],
         food: [
-          { id:"it-ven-carampane", name:"Antiche Carampane", tags:["海鮮","高評價"] },
-          { id:"it-ven-daivo", name:"Da Ivo", tags:["傳統"] },
           { id:"it-ven-madonna", name:"Trattoria Alla Madonna", tags:["老字號"] },
-          { id:"it-ven-testiere", name:"Osteria alle Testiere", tags:["需訂位","小而精緻"] },
         ],
         cafe: [
           { id:"it-ven-florian", name:"Caffè Florian", tags:["百年","聖馬可"] },
-          { id:"it-ven-cannaregio", name:"Torrefazione Cannaregio", tags:["在地"] },
-          { id:"it-ven-sullaluna", name:"Sullaluna", tags:["書店咖啡"] },
         ],
         dessert: [
-          { id:"it-ven-nico", name:"Gelateria Nico", tags:["冰淇淋","河岸"] },
-          { id:"it-ven-natura", name:"Gelato di Natura", tags:["冰淇淋","手工"] },
+          { id:"it-ven-nico", name:"Gelateria Nico", tags:["冰淇淋"] },
         ],
       },
     },
@@ -898,70 +821,62 @@ function flattenPlaces(db){
 const places = flattenPlaces(PLACE_DB);
 const placeById = new Map(places.map(p=>[p.id, p]));
 
-/* original default itinerary (template only) */
+/* ===========================
+  Default itinerary template
+=========================== */
 const itinerary = [
   { day:1, date:"4/5", city:"Florence", move:"Rome → Florence", items:[
     { period:"上午", zh:"羅馬搭高鐵前往佛羅倫斯", en:"Train from Rome to Florence" },
     { period:"下午", zh:"佛羅倫斯主教座堂（外觀）", en:"Florence Cathedral (Duomo, exterior)" },
-    { period:"下午", zh:"主教座堂廣場", en:"Piazza del Duomo" },
     { period:"傍晚", zh:"領主廣場", en:"Piazza della Signoria" },
     { period:"晚上", zh:"老橋夜景", en:"Ponte Vecchio" },
   ]},
   { day:2, date:"4/6", city:"Florence", items:[
     { period:"上午", zh:"Oltrarno 奧爾特拉諾生活區散步", en:"Oltrarno district walk" },
-    { period:"下午", zh:"波波里花園", en:"Boboli Gardens" },
     { period:"傍晚", zh:"米開朗基羅廣場看夕陽", en:"Piazzale Michelangelo viewpoint" },
   ]},
   { day:3, date:"4/7", city:"Venice", move:"Florence → Venice", items:[
     { period:"上午", zh:"佛羅倫斯搭高鐵前往威尼斯", en:"Train from Florence to Venice" },
     { period:"下午", zh:"聖馬可廣場", en:"St Mark's Square" },
-    { period:"傍晚", zh:"聖馬可大教堂（外觀）", en:"St Mark's Basilica (exterior)" },
-    { period:"晚上", zh:"總督宮（外觀）", en:"Doge's Palace (exterior)" },
   ]},
   { day:4, date:"4/8", city:"Venice", items:[
     { period:"上午", zh:"里亞托橋", en:"Rialto Bridge" },
-    { period:"上午", zh:"里亞托市場", en:"Rialto Market" },
     { period:"下午", zh:"布拉諾彩色島", en:"Burano Island" },
-    { period:"傍晚", zh:"學院橋夕景", en:"Accademia Bridge" },
   ]},
   { day:5, date:"4/9", city:"Rome", move:"Venice → Rome", items:[
     { period:"上午", zh:"威尼斯搭高鐵回羅馬", en:"Train from Venice to Rome" },
     { period:"下午", zh:"梵蒂岡城散步", en:"Vatican City walk" },
-    { period:"下午", zh:"聖彼得廣場", en:"St. Peter’s Square" },
-    { period:"傍晚", zh:"聖彼得大教堂（外觀）", en:"St. Peter’s Basilica (exterior)" },
-    { period:"晚上", zh:"聖天使堡（外觀散步）", en:"Castel Sant’Angelo (exterior)" },
+    { period:"傍晚", zh:"聖天使堡（外觀散步）", en:"Castel Sant’Angelo (exterior)" },
   ]},
   { day:6, date:"4/10", city:"Rome", items:[
     { period:"上午", zh:"羅馬競技場", en:"Colosseum" },
-    { period:"上午", zh:"古羅馬廣場（外圍散步）", en:"Roman Forum (outside area walk)" },
-    { period:"中午", zh:"真理之口拍照", en:"Bocca della Verità" },
     { period:"傍晚", zh:"威尼斯廣場", en:"Piazza Venezia" },
   ]},
   { day:7, date:"4/11", city:"Rome", items:[
     { period:"上午", zh:"萬神殿（外觀）", en:"Pantheon (exterior)" },
-    { period:"中午", zh:"納沃納廣場", en:"Piazza Navona" },
     { period:"下午", zh:"特雷維噴泉", en:"Trevi Fountain" },
     { period:"傍晚", zh:"西班牙台階", en:"Spanish Steps" },
   ]},
 ];
 
-/* ---------------------------
-  Storage
---------------------------- */
-const KEY_FEATURED = "qna_trip_featured_v1";
-const KEY_PLAN = "qna_trip_plan_v1";
-const KEY_DONE2 = "qna_trip_done_items_v2";
-const KEY_DAY_OPEN = "qna_trip_day_open_v1";
+/* ===========================
+  Storage keys (Featured-only)
+=========================== */
+const KEY_FEATURED = "qna_trip_featured_v2";
+const KEY_PLAN = "qna_trip_plan_v2";
+const KEY_DONE = "qna_trip_done_items_v2";
+const KEY_DAY_OPEN = "qna_trip_day_open_v2";
 
-const KEY_NOTE_GLOBAL = "qna_trip_note_global_v1";
-const KEY_NOTE_DAY = "qna_trip_note_day_v1";
-const KEY_LODGING = "qna_trip_home_lodging_v1";
-const KEY_TRANSPORT = "qna_trip_home_transport_v1";
+const KEY_NOTE_GLOBAL = "qna_trip_note_global_v2";
+const KEY_NOTE_DAY = "qna_trip_note_day_v2";
+const KEY_LODGING = "qna_trip_home_lodging_v2";
+const KEY_TRANSPORT = "qna_trip_home_transport_v2";
 
-const CHECK_KEY = "qna_trip_notes_checklist_v1";
-const DB_NAME = "qna_trip_photos_db";
+const CHECK_KEY = "qna_trip_notes_checklist_v2";
+const DB_NAME = "qna_trip_photos_db_v2";
 const STORE = "photos";
 
+/* utilities */
 function loadJSON(key, fallback){
   try{
     const raw = localStorage.getItem(key);
@@ -976,20 +891,21 @@ function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 
 /* state */
 let featured = new Set(loadJSON(KEY_FEATURED, []));
+let plan = loadJSON(KEY_PLAN, null);
+let doneItems = loadJSON(KEY_DONE, {});
+let openDays = new Set(loadJSON(KEY_DAY_OPEN, []));
+
 let dayNotes = loadJSON(KEY_NOTE_DAY, {});
 let globalNote = loadJSON(KEY_NOTE_GLOBAL, "");
 let lodgingNote = loadJSON(KEY_LODGING, "");
 let transportNote = loadJSON(KEY_TRANSPORT, "");
 let checks = loadJSON(CHECK_KEY, []);
-let doneItems = loadJSON(KEY_DONE2, {});
-let openDays = new Set(loadJSON(KEY_DAY_OPEN, []));
 
-let plan = loadJSON(KEY_PLAN, null);
-
-/* ---------------------------
-  Plan init (from default itinerary)
---------------------------- */
+/* ===========================
+  Plan init
+=========================== */
 const PERIOD_ORDER = ["上午","中午","下午","傍晚","晚上"];
+
 function ensurePlan(){
   if(plan && typeof plan === "object") return;
 
@@ -999,60 +915,29 @@ function ensurePlan(){
     for(const p of PERIOD_ORDER) slots[p] = [];
     d.items.forEach((it, idx)=>{
       const pid = `d${d.day}-i${idx}`;
-      const item = {
-        id: pid,
-        kind: "text",
-        zh: it.zh,
-        en: it.en,
-        city: d.city,
-        period: it.period
-      };
-      if(!slots[it.period]) slots[it.period] = [];
+      const item = { id: pid, kind:"text", zh: it.zh, en: it.en, city: d.city, period: it.period };
       slots[it.period].push(item);
     });
-
-    obj[String(d.day)] = {
-      day: d.day,
-      date: d.date,
-      city: d.city,
-      move: d.move || "",
-      slots
-    };
+    obj[String(d.day)] = { day: d.day, date: d.date, city: d.city, move: d.move || "", slots };
   }
   plan = obj;
   saveJSON(KEY_PLAN, plan);
-
-  const old = loadJSON("qna_trip_done_v1", null);
-  if(old && typeof old === "object"){
-    const migrated = {...doneItems};
-    for(const [k,v] of Object.entries(old)){
-      const m = String(k).match(/^(\d+)-(\d+)$/);
-      if(!m) continue;
-      const day = Number(m[1]);
-      const idx = Number(m[2]);
-      const itemId = `d${day}-i${idx}`;
-      migrated[itemId] = !!v;
-    }
-    doneItems = migrated;
-    saveJSON(KEY_DONE2, doneItems);
-  }
 }
 ensurePlan();
 
-/* ---------------------------
-  Favorites / Featured
---------------------------- */
+/* ===========================
+  Featured
+=========================== */
 function toggleFeatured(id){
   if(featured.has(id)) featured.delete(id);
   else featured.add(id);
-
   saveJSON(KEY_FEATURED, [...featured]);
   render();
 }
 
-/* ---------------------------
-  Plan operations (done / add / remove / reorder)
---------------------------- */
+/* ===========================
+  Plan ops
+=========================== */
 function getDayPlan(day){ return plan?.[String(day)]; }
 
 function setDayOpen(day, open){
@@ -1062,13 +947,11 @@ function setDayOpen(day, open){
   saveJSON(KEY_DAY_OPEN, [...openDays]);
   render();
 }
-
 function toggleDoneByItemId(itemId){
   doneItems[itemId] = !doneItems[itemId];
-  saveJSON(KEY_DONE2, doneItems);
+  saveJSON(KEY_DONE, doneItems);
   render();
 }
-
 function addFeaturedToSlot(day, period, placeId){
   const d = getDayPlan(day);
   if(!d) return;
@@ -1084,21 +967,19 @@ function addFeaturedToSlot(day, period, placeId){
     city: d.city,
     period
   };
-  if(!d.slots[period]) d.slots[period] = [];
+  d.slots[period] ||= [];
   d.slots[period].push(item);
   saveJSON(KEY_PLAN, plan);
   render();
 }
-
 function removeSlotItem(day, period, itemId){
   const d = getDayPlan(day);
   if(!d) return;
   d.slots[period] = (d.slots[period] || []).filter(x=>x.id !== itemId);
-  if(doneItems[itemId]){ delete doneItems[itemId]; saveJSON(KEY_DONE2, doneItems); }
+  if(doneItems[itemId]){ delete doneItems[itemId]; saveJSON(KEY_DONE, doneItems); }
   saveJSON(KEY_PLAN, plan);
   render();
 }
-
 function moveSlotItem(day, period, itemId, dir){
   const d = getDayPlan(day);
   if(!d) return;
@@ -1107,17 +988,15 @@ function moveSlotItem(day, period, itemId, dir){
   if(idx < 0) return;
   const j = idx + dir;
   if(j < 0 || j >= arr.length) return;
-  const tmp = arr[idx];
-  arr[idx] = arr[j];
-  arr[j] = tmp;
+  [arr[idx], arr[j]] = [arr[j], arr[idx]];
   d.slots[period] = arr;
   saveJSON(KEY_PLAN, plan);
   render();
 }
 
-/* ---------------------------
+/* ===========================
   Notes storage
---------------------------- */
+=========================== */
 function saveDayNote(day){
   const el = document.getElementById(`dayNote-${day}`);
   if(!el) return;
@@ -1143,9 +1022,9 @@ function saveTransport(){
   saveJSON(KEY_TRANSPORT, transportNote);
 }
 
-/* ---------------------------
+/* ===========================
   Checklist
---------------------------- */
+=========================== */
 function saveChecks(){ saveJSON(CHECK_KEY, checks); }
 function renderChecks(){
   const box = document.getElementById("checkList");
@@ -1167,9 +1046,9 @@ function renderChecks(){
   if(empty) empty.style.display = checks.length ? "none" : "block";
 }
 
-/* ---------------------------
+/* ===========================
   Photos (IndexedDB)
---------------------------- */
+=========================== */
 function idbOpen(){
   return new Promise((resolve, reject)=>{
     const req = indexedDB.open(DB_NAME, 1);
@@ -1242,9 +1121,9 @@ async function renderPhotos(){
   if(empty) empty.style.display = items.length ? "none" : "block";
 }
 
-/* ---------------------------
+/* ===========================
   Router + Tabs
---------------------------- */
+=========================== */
 function route(){ return (location.hash || "#home").replace("#",""); }
 function setActive(routeName){
   document.querySelectorAll("#tabs .tab").forEach(a=>{
@@ -1253,9 +1132,9 @@ function setActive(routeName){
 }
 window.addEventListener("hashchange", render);
 
-/* ---------------------------
+/* ===========================
   Bottom Sheet Picker (Featured)
---------------------------- */
+=========================== */
 const sheet = document.getElementById("sheet");
 const sheetOverlay = document.getElementById("sheetOverlay");
 const sheetClose = document.getElementById("sheetClose");
@@ -1327,9 +1206,9 @@ function renderSheetList(){
 }
 sheetSearch.addEventListener("input", renderSheetList);
 
-/* ---------------------------
+/* ===========================
   Views
---------------------------- */
+=========================== */
 function renderHome(){
   const featuredArr = [...featured].map(id=>placeById.get(id)).filter(Boolean);
   const days = calcDays(trip.start, trip.end);
@@ -1406,7 +1285,7 @@ function renderHome(){
                     <p>${escapeHTML(p.area)} · ${labelType(p.type)}${p.tags?.length ? ` · #${p.tags.map(escapeHTML).join(" #")}` : ""}</p>
                   </div>
                   <div class="right">
-                    <button class="${featured.has(p.id) ? "btnMiniPrimary" : "btnMini"}"
+                    <button class="${featured.has(p.id) ? "btnMiniPrimary alt" : "btnMini"}"
                       type="button"
                       data-featured-toggle="${p.id}"
                       title="${featured.has(p.id) ? "取消精選" : "加到精選"}">✨</button>
@@ -1424,7 +1303,6 @@ function renderHome(){
   document.getElementById("transportNote")?.addEventListener("input", saveTransport);
 }
 
-
 function renderItinerary(){
   const days = calcDays(trip.start, trip.end);
   const dayList = Object.values(plan).sort((a,b)=>a.day-b.day);
@@ -1438,12 +1316,13 @@ function renderItinerary(){
           <div class="muted">${escapeHTML(trip.city)} · ${days} days · ${escapeHTML(trip.date)}</div>
           <div class="tiny" style="margin-top:6px;">iOS 玩法：右滑完成｜左滑出按鈕（上移/下移/移除）</div>
         </div>
-<div class="right">
-  <button class="${featured.has(p.id) ? "btnMiniPrimary" : "btnMini"}"
-    type="button"
-    data-featured-toggle="${p.id}"
-    title="${featured.has(p.id) ? "取消精選" : "加到精選"}">✨</button>
-</div>
+        <div class="right">
+          <button class="btn secondary" onclick="location.hash='#notes'">📝 去筆記（照片/清單）</button>
+        </div>
+      </div>
+      <div class="hr"></div>
+      ${dayList.map(d=>renderDay(d)).join("")}
+    </div>
   `;
 }
 
@@ -1510,7 +1389,7 @@ function renderPeriod(day, period, city){
       <div class="periodHead">
         <div class="periodTitle">${escapeHTML(period)}</div>
         <div class="periodActions">
-          <button class="btnMiniPrimary" type="button" data-open-picker="${day}|${escapeHTML(period)}|${escapeHTML(city)}">＋ 加入精選</button>
+          <button class="btnMiniPrimary alt" type="button" data-open-picker="${day}|${escapeHTML(period)}|${escapeHTML(city)}">＋ 加入精選</button>
           <span class="badge">共 ${arr.length}</span>
         </div>
       </div>
@@ -1518,7 +1397,7 @@ function renderPeriod(day, period, city){
       ${
         arr.length
           ? arr.map((it, idx)=>renderSwipeRow(day, period, it, idx, arr.length)).join("")
-          : `<div class="muted">尚未安排～點「＋ 加入精選」用 iOS 底部抽屜挑選。</div>`
+          : `<div class="muted">尚未安排～點「＋ 加入精選」用底部抽屜挑選。</div>`
       }
     </div>
   `;
@@ -1530,7 +1409,7 @@ function renderSwipeRow(day, period, it, idx, len){
     ? (placeById.get(it.placeId)?.name || it.zh || "（已刪除的地點）")
     : (it.zh || "");
   const subtitle = it.kind === "place"
-    ? (()=>{
+    ? (()=> {
         const p = placeById.get(it.placeId);
         if(!p) return "";
         const tags = (p.tags||[]).slice(0,4).map(t=>"#"+t).join(" ");
@@ -1569,9 +1448,7 @@ function renderSwipeRow(day, period, it, idx, len){
   `;
 }
 
-/* ---------------------------
-  Explore / Notes (原封不動)
---------------------------- */
+/* Explore */
 function renderExplore(){
   const type = window.__type || "all";
   const countries = [...new Set(places.map(p=>p.country))].sort();
@@ -1628,7 +1505,6 @@ function renderExplore(){
 
   applyFilter();
 }
-
 function renderTypeChips(active){
   const chips = [
     {k:"all", t:"全部"},
@@ -1641,7 +1517,6 @@ function renderTypeChips(active){
     <span class="chip ${active===c.k ? "active":""}" data-type="${c.k}">${c.t}</span>
   `).join("");
 }
-
 function applyFilter(){
   const list = document.getElementById("placeList");
   if(!list) return;
@@ -1655,7 +1530,6 @@ function applyFilter(){
     if(country && p.country !== country) return false;
     if(city !== "all" && p.area !== city) return false;
     if(type !== "all" && p.type !== type) return false;
-
     const hay = (p.name+" "+(p.tags||[]).join(" ")).toLowerCase();
     if(q && !hay.includes(q)) return false;
     return true;
@@ -1684,14 +1558,10 @@ function applyFilter(){
                 <p>${labelType(p.type)}${p.tags?.length ? ` · #${p.tags.map(escapeHTML).join(" #")}` : ""}</p>
               </div>
               <div class="right">
-                <span class="star ${favs.has(p.id) ? "on" : ""}"
-                  data-fav-toggle="${p.id}"
-                  title="${favs.has(p.id) ? "取消收藏" : "加入收藏"}">${favs.has(p.id) ? "★" : "☆"}</span>
-
-                <button class="btnMini ${featured.has(p.id) ? "btnMiniPrimary" : ""}"
+                <button class="${featured.has(p.id) ? "btnMiniPrimary alt" : "btnMini"}"
                   type="button"
                   data-featured-toggle="${p.id}"
-                  title="加到精選">✨</button>
+                  title="${featured.has(p.id) ? "取消精選" : "加到精選"}">✨</button>
               </div>
             </div>
           `).join("")}
@@ -1701,6 +1571,7 @@ function applyFilter(){
   }).join("");
 }
 
+/* Notes */
 function renderNotes(){
   app.innerHTML = `
     <div class="card">
@@ -1764,9 +1635,9 @@ function renderNotes(){
   renderPhotos();
 }
 
-/* ---------------------------
-  Global event delegation (bind once)
---------------------------- */
+/* ===========================
+  Global event delegation
+=========================== */
 let __bound = false;
 function bindOnce(){
   if(__bound) return;
@@ -1816,11 +1687,10 @@ function bindOnce(){
     const pick = t?.closest?.("[data-sheet-pick]")?.getAttribute?.("data-sheet-pick");
     if(pick && pickerTarget){
       addFeaturedToSlot(pickerTarget.day, pickerTarget.period, pick);
-      // 留在 sheet 讓你可連續加
       return;
     }
 
-    // swipe action buttons / tap circle
+    // swipe action buttons
     const act = t?.getAttribute?.("data-action");
     if(act){
       const item = t.closest?.('[data-swipe="item"]');
@@ -1832,22 +1702,10 @@ function bindOnce(){
       const idx = Number(item.getAttribute("data-idx"));
       const len = Number(item.getAttribute("data-len"));
 
-      if(act === "toggleDone"){
-        toggleDoneByItemId(itemId);
-        return;
-      }
-      if(act === "delete"){
-        removeSlotItem(day, period, itemId);
-        return;
-      }
-      if(act === "up"){
-        if(idx > 0) moveSlotItem(day, period, itemId, -1);
-        return;
-      }
-      if(act === "down"){
-        if(idx < len-1) moveSlotItem(day, period, itemId, +1);
-        return;
-      }
+      if(act === "toggleDone"){ toggleDoneByItemId(itemId); return; }
+      if(act === "delete"){ removeSlotItem(day, period, itemId); return; }
+      if(act === "up"){ if(idx > 0) moveSlotItem(day, period, itemId, -1); return; }
+      if(act === "down"){ if(idx < len-1) moveSlotItem(day, period, itemId, +1); return; }
     }
 
     // checklist delete
@@ -1921,7 +1779,7 @@ function bindOnce(){
     input.value = "";
   });
 
-  // --- iOS swipe gesture (right: toggle done, left: reveal actions) ---
+  // swipe gesture
   let swipe = null;
   const clamp = (n, min, max)=> Math.max(min, Math.min(max, n));
 
@@ -1930,18 +1788,9 @@ function bindOnce(){
     if(!fg) return;
     const item = fg.closest?.('[data-swipe="item"]');
     if(!item) return;
-
-    // 點在按鈕上就不拖
     if(e.target?.closest?.("[data-action]")) return;
 
-    swipe = {
-      item,
-      fg,
-      startX: e.clientX,
-      startY: e.clientY,
-      dx: 0,
-      dragging: false,
-    };
+    swipe = { item, fg, startX: e.clientX, startY: e.clientY, dx: 0, dragging: false };
     item.classList.add("isDragging");
     fg.setPointerCapture?.(e.pointerId);
   });
@@ -1977,8 +1826,6 @@ function bindOnce(){
     const { item, fg, dx } = swipe;
     item.classList.remove("isDragging");
 
-    const day = Number(item.getAttribute("data-day"));
-    const period = item.getAttribute("data-period");
     const itemId = item.getAttribute("data-itemid");
 
     if(dx > 64){
@@ -1999,7 +1846,6 @@ function bindOnce(){
     swipe = null;
   });
 
-  // 點其他地方：收回 left reveal
   document.addEventListener("click", (e)=>{
     const open = document.querySelector('.swipeItem[data-reveal="more"]');
     if(!open) return;
@@ -2010,9 +1856,9 @@ function bindOnce(){
   });
 }
 
-/* ---------------------------
+/* ===========================
   Main render
---------------------------- */
+=========================== */
 function render(){
   const r = route();
   setActive(r);
